@@ -1,0 +1,66 @@
+$backgroundHeader: #e4151d;
+
+.header {
+  background-color: $backgroundHeader;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.logo {
+  width: 150px;
+  height: 100%;
+  padding: 10px;
+  position: absolute;
+  left: 0;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 15px;
+
+  &__input {
+    width: 50%;
+    height: 45%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid black;
+    &:focus,
+    &:hover {
+      outline: 4px double black;
+    }
+  }
+
+  &__button {
+    width: 50px;
+    height: 45%;
+    padding: 10px;
+    border-radius: 6px;
+    background-image: url(./src/assets/icons/lens-icon.png);
+    background-size: 90%;
+    background-position: center;
+    border: 1px solid black;
+    cursor: pointer;
+    &:hover {
+      outline: 4px double black;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .logo {
+    display: none;
+  }
+
+  .search-form__input {
+    width: 80%;
+  }
+}
