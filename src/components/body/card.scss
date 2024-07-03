@@ -1,5 +1,6 @@
 .card {
-  width: auto;
+  width: 20%;
+  height: 20%;
   border-radius: 6px;
   border: 4px double black;
   display: flex;
@@ -37,9 +38,22 @@
   }
 }
 
+.stat-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .stats-list {
   &__item {
     list-style: none;
     font-size: 14px;
   }
+}
+
+.pokemons-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 }

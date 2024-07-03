@@ -12,14 +12,13 @@ export interface HeaderState {
 }
 
 export interface AppState {
-  pokemonList: null;
-  pokemonData: null;
-  next: null;
-  previous: null;
+  pokemonData: InfoPokemon | InfoPokemon[];
+  next: string;
+  previous: string;
 }
 
 export interface HeaderProps {
-  fetchData: () => void;
+  fetchData: (url: string) => void;
 }
 
 export interface CardsProps {
@@ -43,3 +42,20 @@ export interface InfoPokemon {
     };
   }[];
 }
+
+export interface PokemonsListProps {
+  pokemonList: InfoPokemon[];
+}
+
+export enum StatName {
+  HP = 'hp',
+  Attack = 'attack',
+  Defense = 'defense',
+  SpecialAttack = 'special-attack',
+  SpecialDefense = 'special-defense',
+  Speed = 'speed',
+}
+
+export type StatIcons = {
+  [key in StatName]: string;
+};

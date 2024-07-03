@@ -6,10 +6,10 @@ const FIRST_LETTER_INDEX = 0;
 const SECOND_LETTER_INDEX = 1;
 
 class Card extends React.Component<CardsProps> {
-  UpperCase(name: string) {
+  UpdateFirstLetterToUpperCase(namePoremon: string) {
     return (
-      name[FIRST_LETTER_INDEX].toUpperCase() +
-      name.slice(SECOND_LETTER_INDEX, name.length)
+      namePoremon[FIRST_LETTER_INDEX].toUpperCase() +
+      namePoremon.slice(SECOND_LETTER_INDEX, namePoremon.length)
     );
   }
 
@@ -18,7 +18,7 @@ class Card extends React.Component<CardsProps> {
       return (
         <div className="card">
           <div className="card-info">
-            <h3>{this.UpperCase(this.props.data.name)}</h3>
+            <h3>{this.UpdateFirstLetterToUpperCase(this.props.data.name)}</h3>
             <img
               className="card-image"
               src={this.props.data.sprites.front_default}
