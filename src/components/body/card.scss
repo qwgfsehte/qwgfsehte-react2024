@@ -1,0 +1,45 @@
+.card {
+  width: auto;
+  border-radius: 6px;
+  border: 4px double black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  gap: 10px;
+
+  &-info {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-image {
+    width: 50%;
+  }
+}
+
+.abilities-title,
+.stats-title {
+  font-size: 16px;
+}
+
+.abilities-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  &__item {
+    list-style: none;
+    font-size: 14px;
+  }
+}
+
+.stats-list {
+  &__item {
+    list-style: none;
+    font-size: 14px;
+  }
+}

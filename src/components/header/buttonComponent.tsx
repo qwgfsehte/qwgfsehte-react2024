@@ -1,23 +1,12 @@
-import axios from 'axios';
 import React from 'react';
+import { SearchButtonProps } from '../../interfaces/interface';
 
-class SearchButton extends React.Component {
-  handleClick() {
-    axios
-      .get('https://pokeapi.co/api/v2/pokemon/ditto')
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      });
-  }
-
+class SearchButton extends React.Component<SearchButtonProps> {
   render(): React.ReactNode {
     return (
       <button
         className="search-form__button"
-        onClick={this.handleClick}
+        onClick={this.props.onClick}
       ></button>
     );
   }
