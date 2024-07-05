@@ -17,10 +17,11 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   };
 
   handleButtonClick = () => {
-    localStorage.setItem('searchValueInput', this.state.inputValue);
-    this.props.fetchData(
-      `https://pokeapi.co/api/v2/pokemon/${localStorage.getItem('searchValueInput')?.toLowerCase().trim()}`
-    );
+    localStorage.setItem(
+      'searchValueInput',
+      this.state.inputValue.trim().toLowerCase()
+    ),
+      this.props.fetchData();
   };
 
   render(): React.ReactNode {

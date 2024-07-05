@@ -10,40 +10,48 @@ class App extends React.Component<object, AppState> {
   constructor(props: object) {
     super(props);
     this.state = {
+      allPokemons: [],
       pokemonData: [],
-      next: '',
-      previous: '',
     };
   }
 
   componentDidMount = () => {
-    this.getInfoPokemons(
-      `https://pokeapi.co/api/v2/pokemon/${localStorage.getItem('searchValueInput')?.toLowerCase().trim()}`
-    );
+    setTimeout(async () => {
+      try {
+        const response = await fetch(
+          'https://pokeapi.co/api/v2/pokemon?limit=2000'
+        );
+        const data = await response.json();
+        this.setState({ allPokemons: data.results }, this.getInfoPokemons);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }, 1000);
   };
 
-  getInfoPokemons = (url: string) => {
-    axios
-      .get(url)
-      .then(response => {
-        if (response.data.results) {
-          if (response.data.previous) {
-            this.setState({ previous: response.data.previous });
-          }
-          this.setState({ next: response.data.next });
-          const pokemonPromises = response.data.results.map(
-            (result: { url: string }) => axios.get(result.url)
-          );
-          Promise.all(pokemonPromises)
-            .then(responses => {
-              this.setState({ pokemonData: responses.map(res => res.data) });
-            })
-            .catch(error => {
-              console.error('There was an error!', error);
-            });
-        } else {
-          this.setState({ pokemonData: response.data });
-        }
+  chunkArray = (array: { name: string; url: string }[], chunkSize = 20) => {
+    const chunks = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      chunks.push(array.slice(i, i + chunkSize));
+    }
+    return chunks;
+  };
+
+  getInfoPokemons = async () => {
+    const filteredPokemons = this.state.allPokemons.filter(
+      (pokemon: { name: string }) =>
+        pokemon.name.includes(localStorage.getItem('searchValueInput') || '')
+    );
+
+    const array = this.chunkArray(filteredPokemons);
+
+    const pokemonPromises = array[0].map((result: { url: string }) =>
+      axios.get(result.url)
+    );
+
+    Promise.all(pokemonPromises)
+      .then(responses => {
+        this.setState({ pokemonData: responses.map(res => res.data) });
       })
       .catch(error => {
         console.error('There was an error!', error);

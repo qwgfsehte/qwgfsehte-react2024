@@ -12,13 +12,12 @@ export interface HeaderState {
 }
 
 export interface AppState {
+  allPokemons: { name: string; url: string }[];
   pokemonData: InfoPokemon | InfoPokemon[];
-  next: string;
-  previous: string;
 }
 
 export interface HeaderProps {
-  fetchData: (url: string) => void;
+  fetchData: () => Promise<void>;
 }
 
 export interface CardsProps {
@@ -41,6 +40,11 @@ export interface InfoPokemon {
       name: string;
     };
   }[];
+  types: {
+    type: {
+      name: string;
+    };
+  }[];
 }
 
 export interface PokemonsListProps {
@@ -58,4 +62,29 @@ export enum StatName {
 
 export type StatIcons = {
   [key in StatName]: string;
+};
+
+export enum TypeName {
+  Normal = 'normal',
+  Fire = 'fire',
+  Water = 'water',
+  Electric = 'electric',
+  Grass = 'grass',
+  Ice = 'ice',
+  Fighting = 'fighting',
+  Poison = 'poison',
+  Ground = 'ground',
+  Flying = 'flying',
+  Psychic = 'psychic',
+  Bug = 'bug',
+  Rock = 'rock',
+  Ghost = 'ghost',
+  Dragon = 'dragon',
+  Dark = 'dark',
+  Steel = 'steel',
+  Fairy = 'fairy',
+}
+
+export type TypeColor = {
+  [key in TypeName]: string;
 };
