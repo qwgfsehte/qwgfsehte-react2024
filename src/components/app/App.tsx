@@ -88,9 +88,10 @@ class App extends React.Component<object, AppState> {
 
     return (
       <>
-        <Header fetchData={this.getInfoPokemons} />
-        <button onClick={this.triggerError}>Trigger Error</button>
-
+        <Header
+          fetchData={this.getInfoPokemons}
+          triggerError={this.triggerError}
+        />
         {this.state.loading && (
           <div className="loading-indicator">
             <img

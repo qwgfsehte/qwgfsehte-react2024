@@ -27,7 +27,10 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   render(): React.ReactNode {
     return (
       <header className="header">
-        <img src="./src/assets/logo/logo.png" alt="" className="logo" />
+        <div className="logo-container">
+          <img src="./src/assets/logo/logo.png" alt="" className="logo" />
+          <p className="logo-title">PokePedia</p>
+        </div>
         <div className="search-form">
           <SearchInput
             value={this.state.inputValue}
@@ -35,6 +38,9 @@ class Header extends React.Component<HeaderProps, HeaderState> {
           />
           <SearchButton onClick={this.handleButtonClick} />
         </div>
+        <button className="button-trigger" onClick={this.props.triggerError}>
+          Trigger Error
+        </button>
       </header>
     );
   }

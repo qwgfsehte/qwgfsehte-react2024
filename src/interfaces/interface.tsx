@@ -23,6 +23,7 @@ export interface AppState {
 
 export interface HeaderProps {
   fetchData: () => Promise<void>;
+  triggerError: () => void;
 }
 
 export interface CardsProps {
@@ -45,6 +46,7 @@ export interface InfoPokemon {
       name: string;
     };
   }[];
+  id: string;
   types: {
     type: {
       name: string;
