@@ -16,12 +16,12 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     this.setState({ inputValue: event.target.value });
   };
 
-  handleButtonClick = () => {
+  handleButtonClick = async () => {
     localStorage.setItem(
       'searchValueInput',
       this.state.inputValue.trim().toLowerCase()
     ),
-      this.props.fetchData();
+      await this.props.fetchData();
   };
 
   render(): React.ReactNode {

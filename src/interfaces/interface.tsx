@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface SearchInputProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,6 +16,9 @@ export interface HeaderState {
 export interface AppState {
   allPokemons: { name: string; url: string }[];
   pokemonData: InfoPokemon | InfoPokemon[];
+  loading: boolean;
+  hasError: boolean;
+  errorMessage: string;
 }
 
 export interface HeaderProps {
@@ -88,3 +93,11 @@ export enum TypeName {
 export type TypeColor = {
   [key in TypeName]: string;
 };
+
+export interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+export interface ErrorBoundaryState {
+  hasError: boolean;
+}
