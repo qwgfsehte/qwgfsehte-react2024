@@ -46,6 +46,7 @@ module.exports = {
     'jsx-a11y/no-redundant-roles': 'error',
     'jsx-a11y/no-target-blank': 'off',
     'prettier/prettier': 'error',
+    'linebreak-style': ['error', 'unix'],
   },
   settings: {
     react: {
