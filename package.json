@@ -14,9 +14,16 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
+    "@babel/plugin-transform-private-methods": "^7.24.7",
+    "@eslint/config-array": "^0.17.0",
+    "@eslint/object-schema": "^2.1.4",
+    "@npmcli/fs": "^3.1.1",
     "axios": "^1.7.2",
+    "glob": "^10.4.3",
+    "lru-cache": "^10.3.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "rimraf": "^5.0.8"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
