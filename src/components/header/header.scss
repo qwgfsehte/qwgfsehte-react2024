@@ -1,0 +1,93 @@
+$backgroundHeader: #e4151d;
+
+.header {
+  background-color: $backgroundHeader;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 20px;
+  gap: 5px;
+}
+
+.logo {
+  width: 40%;
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  &-title {
+    color: white;
+  }
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 15px;
+
+  &__input {
+    width: 50%;
+    height: 45%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid black;
+    transition: 0.2s;
+    &:focus,
+    &:hover {
+      outline: 4px double black;
+    }
+  }
+
+  &__button {
+    width: 50px;
+    height: 45%;
+    padding: 10px;
+    border-radius: 6px;
+    background-image: url(./src/assets/icons/lens-icon.png);
+    background-size: 90%;
+    background-position: center;
+    border: 1px solid black;
+    transition: 0.2s;
+    cursor: pointer;
+    &:hover {
+      outline: 4px double black;
+    }
+  }
+}
+
+.button-trigger {
+  font-size: 12px;
+  height: 45%;
+  width: 20%;
+  border-radius: 6px;
+  border: 1px solid black;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    outline: 4px double black;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo-container {
+    display: none;
+  }
+
+  .search-form__input {
+    width: 80%;
+  }
+
+  .button-trigger {
+    font-size: 6px;
+  }
+}
