@@ -9,16 +9,9 @@ export interface SearchButtonProps {
   onClick: () => void;
 }
 
-export interface HeaderState {
-  inputValue: string;
-}
-
-export interface AppState {
-  allPokemons: { name: string; url: string }[];
-  pokemonData: InfoPokemon | InfoPokemon[];
-  loading: boolean;
-  hasError: boolean;
-  errorMessage: string;
+export interface AllPokemons {
+  name: string;
+  url: string;
 }
 
 export interface HeaderProps {
@@ -55,7 +48,7 @@ export interface InfoPokemon {
 }
 
 export interface PokemonsListProps {
-  pokemonList: InfoPokemon[];
+  pokemonsList: InfoPokemon[];
 }
 
 export enum StatName {
