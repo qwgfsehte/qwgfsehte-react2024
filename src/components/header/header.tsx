@@ -1,21 +1,19 @@
 import SearchInput from './InputComponent';
 import './header.scss';
-import React, { useState } from 'react';
+import React from 'react';
 import { HeaderProps } from '../../interfaces/interface';
 import SearchButton from './buttonComponent';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 function Header({ triggerError, fetchData }: HeaderProps): React.ReactElement {
-  const [inputValue, setInputValue] = useState(
-    localStorage.getItem('searchValueInput') || ''
-  );
+  const [inputValue, setInputValue] = useLocalStorage('searchValueInput');
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(event.target.value);
   }
 
   async function handleButtonClick() {
-    localStorage.setItem('searchValueInput', inputValue.trim().toLowerCase()),
-      await fetchData();
+    await fetchData();
   }
 
   return (
