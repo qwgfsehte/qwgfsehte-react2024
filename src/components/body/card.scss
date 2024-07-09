@@ -1,7 +1,7 @@
 .card {
   width: 20%;
   min-width: 326px;
-  min-height: 490px;
+  text-align: center;
   border-radius: 6px;
   border: 4px double black;
   display: flex;
@@ -58,7 +58,6 @@
   @media (max-width: 1100px) {
     width: 30%;
     min-width: 326px;
-    min-height: 470px;
   }
 
   @media (max-width: 800px) {
@@ -67,7 +66,6 @@
 
   @media (max-width: 700px) {
     width: 100%;
-    min-height: 550px;
     &:hover {
       scale: 1;
     }
@@ -152,4 +150,17 @@
     padding: 7px;
     border-radius: 6px;
   }
+}
+
+.pokemon-details {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 6px;
+  border: 4px double black;
+  flex-direction: column;
+  justify-content: center;
+  transition: 0.4s;
 }

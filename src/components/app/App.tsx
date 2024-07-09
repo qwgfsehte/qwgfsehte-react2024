@@ -3,14 +3,27 @@ import Header from '../header/header';
 import './app.scss';
 import PokemonsList from '../body/pokemonsList';
 import { useGetPokemons } from '../hooks/useGetPokemons';
+import { InfoPokemon } from '../../interfaces/interface';
+import { PokemonDetailsInfo } from '../body/pokemonDetailsInfo';
 
 export function App() {
   const { allPokemons, pokemonData, loading, errorMessage, getInfoPokemons } =
     useGetPokemons();
   const [hasError, setHasError] = useState<boolean>(false);
+  const [selectedPokemon, setSelectedPokemon] = useState<InfoPokemon | null>(
+    null
+  );
 
   function triggerError() {
     setHasError(true);
+  }
+
+  function handlePokemonClick(pokemon: InfoPokemon) {
+    setSelectedPokemon(pokemon);
+  }
+
+  function closePokemonDetails() {
+    setSelectedPokemon(null);
   }
 
   if (hasError) {
@@ -48,9 +61,26 @@ export function App() {
       {!loading && !errorMessage && (
         <div className="container-cards">
           {Array.isArray(pokemonData) && pokemonData.length > 0 ? (
-            <PokemonsList pokemonsList={pokemonData} />
+            <div
+              className={
+                selectedPokemon ? 'pokemons-list half-width' : 'pokemons-list'
+              }
+            >
+              <PokemonsList
+                pokemonsList={pokemonData}
+                onPokemonClick={handlePokemonClick}
+              />
+            </div>
           ) : (
             <p>No pokemons available.</p>
+          )}
+          {selectedPokemon && (
+            <div className="pokemon-details">
+              <PokemonDetailsInfo
+                data={selectedPokemon}
+                onClose={closePokemonDetails}
+              />
+            </div>
           )}
         </div>
       )}

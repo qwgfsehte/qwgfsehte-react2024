@@ -1,12 +1,12 @@
-import { CardsProps, StatName, TypeName } from '../../interfaces/interface';
+import { CardsProps, TypeName } from '../../interfaces/interface';
 import './card.scss';
-import { COLOR_TYPES, STAT_ICONS } from '../../utils/globalConsts';
+import { COLOR_TYPES } from '../../utils/globalConsts';
 import { updateFirstLetterToUpperCase } from '../../utils/utils';
 
-function Card({ data }: CardsProps) {
+function Card({ data, getInfo }: CardsProps) {
   if (data !== null) {
     return (
-      <div className="card">
+      <button className="card" onClick={() => getInfo(data)}>
         <div className="card-name">
           <div className="card-id">{'#' + data.id}</div>
           <img
@@ -37,35 +37,8 @@ function Card({ data }: CardsProps) {
               </div>
             ))}
           </div>
-          <div className="abilities-container">
-            Abilities:
-            <ul className="abilities-list">
-              {data.abilities.map((ability, index) => (
-                <li className="abilities-list__item" key={index}>
-                  {ability.ability.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="stats-container">
-            <h3 className="stats-title">Stats:</h3>
-            <ul className="stats-list">
-              {data.stats.map((stat, index) => (
-                <li className="stats-list__item" key={index}>
-                  {STAT_ICONS[stat.stat.name as StatName] && (
-                    <img
-                      src={STAT_ICONS[stat.stat.name as StatName]}
-                      alt={`${stat.stat.name} icon`}
-                      className="stats-icon"
-                    />
-                  )}
-                  {stat.base_stat}
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
-      </div>
+      </button>
     );
   }
 }

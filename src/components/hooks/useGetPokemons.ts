@@ -36,7 +36,7 @@ export function useGetPokemons() {
       pokemon.name.includes(localStorage.getItem('searchValueInput') || '')
     );
 
-    const array = chunkArray(filteredPokemons);
+    const arrayResultsPokemons = chunkArray(filteredPokemons);
 
     if (filteredPokemons.length === 0) {
       setErrorMessage('No pokemons found. Please try another search term.');
@@ -45,7 +45,9 @@ export function useGetPokemons() {
     }
 
     try {
-      const pokemonPromises = array[0].map(result => axios.get(result.url));
+      const pokemonPromises = arrayResultsPokemons[0].map(result =>
+        axios.get(result.url)
+      );
       const responses = await Promise.all(pokemonPromises);
       setPokemonData(responses.map(res => res.data));
       setLoading(false);
@@ -63,5 +65,11 @@ export function useGetPokemons() {
     getInfoPokemons(allPokemons);
   }, [allPokemons]);
 
-  return { allPokemons, pokemonData, loading, errorMessage, getInfoPokemons };
+  return {
+    allPokemons,
+    pokemonData,
+    loading,
+    errorMessage,
+    getInfoPokemons,
+  };
 }

@@ -2,13 +2,16 @@ import React from 'react';
 import Card from './card';
 import { PokemonsListProps } from '../../interfaces/interface';
 
-function PokemonsList({ pokemonsList }: PokemonsListProps): React.ReactElement {
+function PokemonsList({
+  pokemonsList,
+  onPokemonClick,
+}: PokemonsListProps): React.ReactElement {
   return (
-    <div className="pokemons-list">
+    <>
       {pokemonsList.map((pokemon, index) => (
-        <Card key={index} data={pokemon} />
+        <Card key={index} data={pokemon} getInfo={onPokemonClick} />
       ))}
-    </div>
+    </>
   );
 }
 

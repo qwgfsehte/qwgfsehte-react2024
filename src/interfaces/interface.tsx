@@ -21,6 +21,7 @@ export interface HeaderProps {
 
 export interface CardsProps {
   data: InfoPokemon | null;
+  getInfo: (pokemon: InfoPokemon) => void;
 }
 
 export interface InfoPokemon {
@@ -49,6 +50,12 @@ export interface InfoPokemon {
 
 export interface PokemonsListProps {
   pokemonsList: InfoPokemon[];
+  onPokemonClick: (pokemon: InfoPokemon) => void;
+}
+
+export interface PokemonDetailsInfoProps {
+  data: InfoPokemon;
+  onClose: () => void;
 }
 
 export enum StatName {
