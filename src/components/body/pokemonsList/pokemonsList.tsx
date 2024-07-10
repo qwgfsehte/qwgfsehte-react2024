@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from './card';
-import { PokemonsListProps } from '../../interfaces/interface';
+import Card from '../card';
+import { PokemonsListProps } from '../../../interfaces/interface';
 
 function PokemonsList({
   pokemonsList,

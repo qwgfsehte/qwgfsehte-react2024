@@ -1,5 +1,9 @@
 import { ReactNode } from 'react';
 
+export interface ErrorMessageProps {
+  errorMessage: string;
+}
+
 export interface SearchInputProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,7 +20,6 @@ export interface AllPokemons {
 
 export interface HeaderProps {
   fetchData: () => Promise<void>;
-  triggerError: () => void;
 }
 
 export interface CardsProps {
@@ -53,9 +56,20 @@ export interface PokemonsListProps {
   onPokemonClick: (pokemon: InfoPokemon) => void;
 }
 
+export interface PokemonDetailsContainerProps {
+  selectedPokemon: InfoPokemon | null;
+  closePokemonDetails: () => void;
+}
+
 export interface PokemonDetailsInfoProps {
   data: InfoPokemon;
   onClose: () => void;
+}
+
+export interface PokemonsListContainerProps {
+  pokemonData: InfoPokemon[];
+  selectedPokemon: InfoPokemon | null;
+  handlePokemonClick: (pokemon: InfoPokemon) => void;
 }
 
 export enum StatName {

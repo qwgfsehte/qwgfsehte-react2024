@@ -1,0 +1,23 @@
+.pagination {
+  &-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 20px 20px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-button {
+    height: 100%;
+  }
+}

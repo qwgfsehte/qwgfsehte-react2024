@@ -5,7 +5,7 @@ import { HeaderProps } from '../../interfaces/interface';
 import SearchButton from './buttonComponent';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-function Header({ triggerError, fetchData }: HeaderProps): React.ReactElement {
+function Header({ fetchData }: HeaderProps): React.ReactElement {
   const [inputValue, setInputValue] = useLocalStorage('searchValueInput');
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -26,9 +26,6 @@ function Header({ triggerError, fetchData }: HeaderProps): React.ReactElement {
         <SearchInput value={inputValue} onChange={handleInputChange} />
         <SearchButton onClick={handleButtonClick} />
       </div>
-      <button className="button-trigger" onClick={triggerError}>
-        Trigger Error
-      </button>
     </header>
   );
 }
