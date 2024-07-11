@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Header from './header/header';
 import './app.scss';
 import { useGetPokemons } from './hooks/useGetPokemons';
@@ -24,10 +24,9 @@ export function App() {
     handleNextPage,
     handlePrevPage,
     countPages,
+    selectedPokemon,
+    setSelectedPokemon,
   } = useGetPokemons();
-  const [selectedPokemon, setSelectedPokemon] = useState<InfoPokemon | null>(
-    null
-  );
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -48,10 +47,9 @@ export function App() {
     } else {
       setSelectedPokemon(null);
     }
-  }, [location.search, pokemonData, setCurrentPage]);
+  }, [location.search, pokemonData, setCurrentPage, setSelectedPokemon]);
 
   function handlePokemonClick(pokemon: InfoPokemon) {
-    setSelectedPokemon(pokemon);
     const params = new URLSearchParams(location.search);
     const searchParams = params.get('search');
     navigate(
@@ -68,7 +66,10 @@ export function App() {
 
   return (
     <>
-      <Header fetchData={() => getInfoPokemons(allPokemons, FIRST_PAGE)} />
+      <Header
+        fetchData={() => getInfoPokemons(allPokemons, FIRST_PAGE)}
+        closePokemonDetails={closePokemonDetails}
+      />
       {loading && <LoadingIndicator />}
       {!loading && errorMessage && <ErrorMessage errorMessage={errorMessage} />}
       {!loading && !errorMessage && (
@@ -81,6 +82,7 @@ export function App() {
                 handlePrevPage={handlePrevPage}
                 countPages={countPages}
                 setCurrentPage={setCurrentPage}
+                closePokemonDetails={closePokemonDetails}
               />
               <section className="container-cards">
                 <PokemonsListContainer

@@ -11,6 +11,9 @@ export function useGetPokemons() {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [countPages, setCountPages] = useState<AllPokemons[][]>([]);
+  const [selectedPokemon, setSelectedPokemon] = useState<InfoPokemon | null>(
+    null
+  );
   const itemPage = 20;
   const navigate = useNavigate();
 
@@ -36,16 +39,14 @@ export function useGetPokemons() {
   }, []);
 
   const getInfoPokemons = useCallback(
-    async (pokemons: AllPokemons[], page: number, selectedPokemon = '') => {
+    async (pokemons: AllPokemons[], page: number) => {
       setLoading(true);
       const searchValue = localStorage.getItem('searchValueInput') || '';
-      if (!selectedPokemon) {
-        navigate(`/?search=${encodeURIComponent(searchValue)}&page=${page}`);
-      } else {
-        navigate(
-          `/?search=${encodeURIComponent(searchValue)}&page=${page}&details=${selectedPokemon}`
-        );
-      }
+      const params = new URLSearchParams(location.search);
+      const detailsParams = params.get('details');
+      navigate(
+        `/?search=${encodeURIComponent(searchValue)}&page=${page}${detailsParams ? `&details=${detailsParams}` : ''}`
+      );
 
       const filteredPokemons = pokemons.filter(pokemon =>
         pokemon.name.includes(searchValue)
@@ -99,5 +100,7 @@ export function useGetPokemons() {
     handleNextPage: () => setCurrentPage(prev => prev + 1),
     handlePrevPage: () => setCurrentPage(prev => prev - 1),
     countPages,
+    selectedPokemon,
+    setSelectedPokemon,
   };
 }

@@ -20,6 +20,7 @@ export interface AllPokemons {
 
 export interface HeaderProps {
   fetchData: () => Promise<void>;
+  closePokemonDetails: () => void;
 }
 
 export interface CardsProps {

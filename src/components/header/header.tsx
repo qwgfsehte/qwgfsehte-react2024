@@ -5,7 +5,10 @@ import { HeaderProps } from '../../interfaces/interface';
 import SearchButton from './buttonComponent';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-function Header({ fetchData }: HeaderProps): React.ReactElement {
+function Header({
+  fetchData,
+  closePokemonDetails,
+}: HeaderProps): React.ReactElement {
   const [inputValue, setInputValue] = useLocalStorage('searchValueInput');
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -13,6 +16,7 @@ function Header({ fetchData }: HeaderProps): React.ReactElement {
   }
 
   async function handleButtonClick() {
+    closePokemonDetails();
     await fetchData();
   }
 
