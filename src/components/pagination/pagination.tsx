@@ -44,31 +44,28 @@ export function Pagination({
   return (
     <section className="pagination-container">
       <button
-        className="pagination-button"
+        className="pagination__button button-left"
         disabled={currentPage === FIRST_PAGE}
         onClick={setPrevPage}
-      >
-        Prev
-      </button>
-      <div className="pagination__item">
+      ></button>
+      <div className="pagination">
         {countPages.map((_, index) => (
           <button
             onClick={() => {
               setNewPage(index);
             }}
             key={index}
+            className={`pagination__item ${index + 1 === currentPage ? 'pagination__item_active' : ''}`}
           >
             {index + 1}
           </button>
         ))}
       </div>
       <button
-        className="pagination-button"
+        className="pagination__button button-right"
         disabled={currentPage === countPages.length}
         onClick={setNextPage}
-      >
-        Next
-      </button>
+      ></button>
     </section>
   );
 }

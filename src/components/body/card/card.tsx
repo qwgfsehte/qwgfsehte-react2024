@@ -1,7 +1,7 @@
-import { CardsProps, TypeName } from '../../interfaces/interface';
+import { CardsProps, TypeName } from '../../../interfaces/interface';
+import { COLOR_TYPES } from '../../../utils/globalConsts';
+import { updateFirstLetterToUpperCase } from '../../../utils/utils';
 import './card.scss';
-import { COLOR_TYPES } from '../../utils/globalConsts';
-import { updateFirstLetterToUpperCase } from '../../utils/utils';
 
 function Card({ data, getInfo }: CardsProps) {
   if (data !== null) {

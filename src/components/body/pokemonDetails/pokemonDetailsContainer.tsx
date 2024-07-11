@@ -1,4 +1,4 @@
-import { PokemonDetailsContainerProps } from '../../interfaces/interface';
+import { PokemonDetailsContainerProps } from '../../../interfaces/interface';
 import { PokemonDetailsInfo } from './pokemonDetailsInfo';
 
 const PokemonDetailsContainer: React.FC<PokemonDetailsContainerProps> = ({

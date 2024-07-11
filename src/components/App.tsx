@@ -6,9 +6,9 @@ import { InfoPokemon } from '../interfaces/interface';
 import LoadingIndicator from './loading/loading';
 import ErrorMessage from './errorMessage/errorMessage';
 import PokemonsListContainer from './body/pokemonsList/pokemonsListContainer';
-import PokemonDetailsContainer from './body/pokemonDetailsContainer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Pagination } from './pagination/pagination';
+import PokemonDetailsContainer from './body/pokemonDetails/pokemonDetailsContainer';
 
 const FIRST_PAGE = 1;
 
@@ -76,14 +76,6 @@ export function App() {
         <main>
           {Array.isArray(pokemonData) && pokemonData.length > 0 ? (
             <>
-              <Pagination
-                currentPage={currentPage}
-                handleNextPage={handleNextPage}
-                handlePrevPage={handlePrevPage}
-                countPages={countPages}
-                setCurrentPage={setCurrentPage}
-                closePokemonDetails={closePokemonDetails}
-              />
               <section className="container-cards">
                 <PokemonsListContainer
                   pokemonData={pokemonData}
@@ -95,6 +87,14 @@ export function App() {
                   closePokemonDetails={closePokemonDetails}
                 />
               </section>
+              <Pagination
+                currentPage={currentPage}
+                handleNextPage={handleNextPage}
+                handlePrevPage={handlePrevPage}
+                countPages={countPages}
+                setCurrentPage={setCurrentPage}
+                closePokemonDetails={closePokemonDetails}
+              />
             </>
           ) : (
             <p></p>

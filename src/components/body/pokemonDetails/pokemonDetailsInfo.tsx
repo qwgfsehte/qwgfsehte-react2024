@@ -1,6 +1,9 @@
-import { PokemonDetailsInfoProps, StatName } from '../../interfaces/interface';
-import { STAT_ICONS } from '../../utils/globalConsts';
-import './card.scss';
+import {
+  PokemonDetailsInfoProps,
+  StatName,
+} from '../../../interfaces/interface';
+import { STAT_ICONS } from '../../../utils/globalConsts';
+// import './card.scss';
 
 export function PokemonDetailsInfo({ data, onClose }: PokemonDetailsInfoProps) {
   if (!data) return null;
