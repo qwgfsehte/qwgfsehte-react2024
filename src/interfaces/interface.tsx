@@ -50,6 +50,12 @@ export interface InfoPokemon {
       name: string;
     };
   }[];
+  weight: number;
+  height: number;
+  cries: {
+    latest: string;
+    legacy: string;
+  };
 }
 
 export interface PokemonsListProps {

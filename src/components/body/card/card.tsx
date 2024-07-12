@@ -1,5 +1,4 @@
-import { CardsProps, TypeName } from '../../../interfaces/interface';
-import { COLOR_TYPES } from '../../../utils/globalConsts';
+import { CardsProps } from '../../../interfaces/interface';
 import { updateFirstLetterToUpperCase } from '../../../utils/utils';
 import './card.scss';
 
@@ -19,24 +18,6 @@ function Card({ data, getInfo }: CardsProps) {
             alt="pokemon"
           />
           <h3>{updateFirstLetterToUpperCase(data.name)}</h3>
-        </div>
-        <div className="card-info">
-          <div className="types-list">
-            Types:
-            {data.types.map((type, index) => (
-              <div
-                className="types-list__item"
-                key={index}
-                style={{
-                  backgroundColor: COLOR_TYPES[type.type.name as TypeName],
-                }}
-              >
-                {COLOR_TYPES[type.type.name as TypeName] && (
-                  <p>{type.type.name}</p>
-                )}
-              </div>
-            ))}
-          </div>
         </div>
       </button>
     );
