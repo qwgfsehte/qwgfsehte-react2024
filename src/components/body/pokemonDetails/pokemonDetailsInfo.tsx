@@ -36,11 +36,16 @@ export function PokemonDetailsInfo({ data, onClose }: PokemonDetailsInfoProps) {
             <button
               className="pokemon__button-close"
               onClick={onClose}
+              data-testid="close-button"
             ></button>
           </div>
           <img
             className="pokemon-img"
-            src={data.sprites.front_default}
+            src={
+              data.sprites.front_default
+                ? data.sprites.front_default
+                : './src/assets/imgs/default-img.webp'
+            }
             alt={data.name}
           />
           <div className="pokemon__characteristics-container">
@@ -92,6 +97,7 @@ export function PokemonDetailsInfo({ data, onClose }: PokemonDetailsInfoProps) {
                     src=""
                     srcLang="en"
                     label="Cry pokemon"
+                    data-testid="legacy-audio"
                   />
                 </audio>
               </div>

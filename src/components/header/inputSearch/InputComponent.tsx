@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchInputProps } from '../../interfaces/interface';
+import { SearchInputProps } from '../../../interfaces/interface';
 
 function SearchInput({
   value,

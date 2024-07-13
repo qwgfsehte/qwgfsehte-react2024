@@ -8,9 +8,15 @@ function PokemonsList({
 }: PokemonsListProps): React.ReactElement {
   return (
     <>
-      {pokemonsList.map((pokemon, index) => (
-        <Card key={index} data={pokemon} getInfo={onPokemonClick} />
-      ))}
+      {pokemonsList.map((pokemon, index) =>
+        pokemon ? (
+          <Card key={index} data={pokemon} getInfo={onPokemonClick} />
+        ) : (
+          <div key={index} className="placeholder">
+            pokemon not found
+          </div>
+        )
+      )}
     </>
   );
 }

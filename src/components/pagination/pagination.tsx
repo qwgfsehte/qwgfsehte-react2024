@@ -47,6 +47,7 @@ export function Pagination({
         className="pagination__button button-left"
         disabled={currentPage === FIRST_PAGE}
         onClick={setPrevPage}
+        data-testid="button-prev"
       ></button>
       <div className="pagination">
         {countPages.map((_, index) => (
@@ -65,6 +66,7 @@ export function Pagination({
         className="pagination__button button-right"
         disabled={currentPage === countPages.length}
         onClick={setNextPage}
+        data-testid="button-next"
       ></button>
     </section>
   );

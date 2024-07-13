@@ -36,7 +36,7 @@ export interface InfoPokemon {
   }[];
   name: string;
   sprites: {
-    front_default: string;
+    front_default: string | null;
   };
   stats: {
     base_stat: number;
@@ -59,7 +59,7 @@ export interface InfoPokemon {
 }
 
 export interface PokemonsListProps {
-  pokemonsList: InfoPokemon[];
+  pokemonsList: (InfoPokemon | null | undefined)[];
   onPokemonClick: (pokemon: InfoPokemon) => void;
 }
 
@@ -123,4 +123,8 @@ export interface ErrorBoundaryProps {
 
 export interface ErrorBoundaryState {
   hasError: boolean;
+}
+
+export interface WrapperProps {
+  children: React.ReactNode;
 }

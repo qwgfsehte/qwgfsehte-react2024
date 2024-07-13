@@ -7,7 +7,7 @@ function ErrorMessage({ errorMessage }: ErrorMessageProps): React.ReactElement {
       <img
         className="main-page__error-img"
         src="./src/assets/imgs/error-search.png"
-        alt=""
+        alt="pokemon-for-error"
       />
       <h2>{errorMessage}</h2>
     </div>

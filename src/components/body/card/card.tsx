@@ -7,7 +7,7 @@ function Card({ data, getInfo }: CardsProps) {
     return (
       <button className="card" onClick={() => getInfo(data)}>
         <div className="card-name">
-          <div className="card-id">{'#' + data.id}</div>
+          <div className="card-id">#{`${data.id}`}</div>
           <img
             className="card-image"
             src={
