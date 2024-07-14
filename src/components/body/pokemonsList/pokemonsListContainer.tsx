@@ -6,15 +6,21 @@ const PokemonsListContainer: React.FC<PokemonsListContainerProps> = ({
   pokemonData,
   selectedPokemon,
   handlePokemonClick,
-}) => (
-  <div
-    className={selectedPokemon ? 'pokemons-list half-width' : 'pokemons-list'}
-  >
-    <PokemonsList
-      pokemonsList={pokemonData}
-      onPokemonClick={handlePokemonClick}
-    />
-  </div>
-);
+}) => {
+  return (
+    <>
+      <div
+        className={
+          selectedPokemon ? 'pokemons-list half-width' : 'pokemons-list'
+        }
+      >
+        <PokemonsList
+          pokemonsList={pokemonData}
+          onPokemonClick={handlePokemonClick}
+        />
+      </div>
+    </>
+  );
+};
 
 export default PokemonsListContainer;

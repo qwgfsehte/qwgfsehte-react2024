@@ -77,6 +77,7 @@ export interface PokemonsListContainerProps {
   pokemonData: InfoPokemon[];
   selectedPokemon: InfoPokemon | null;
   handlePokemonClick: (pokemon: InfoPokemon) => void;
+  onClose: () => void;
 }
 
 export enum StatName {

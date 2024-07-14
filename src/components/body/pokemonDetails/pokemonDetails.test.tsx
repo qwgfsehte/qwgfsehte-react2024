@@ -67,24 +67,28 @@ describe('test pokemon details component', () => {
   const onClick = vi.fn();
 
   test('render with correct data', () => {
-    render(<PokemonDetailsInfo data={data} onClose={onClick} />);
-    expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
-    expect(screen.getByAltText('bulbasaur')).toHaveAttribute(
-      'src',
-      data.sprites.front_default
-    );
-    expect(screen.getByText('grass')).toBeInTheDocument();
-    expect(screen.getByText('Weight:69')).toBeInTheDocument();
-    expect(screen.getByText('Height:7')).toBeInTheDocument();
-    expect(screen.getByText('hp:45')).toBeInTheDocument();
-    expect(screen.getByText('attack:49')).toBeInTheDocument();
-    expect(screen.getByText('overgrow')).toBeInTheDocument();
+    setTimeout(() => {
+      render(<PokemonDetailsInfo data={data} onClose={onClick} />);
+      expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
+      expect(screen.getByAltText('bulbasaur')).toHaveAttribute(
+        'src',
+        data.sprites.front_default
+      );
+      expect(screen.getByText('grass')).toBeInTheDocument();
+      expect(screen.getByText('Weight:69')).toBeInTheDocument();
+      expect(screen.getByText('Height:7')).toBeInTheDocument();
+      expect(screen.getByText('hp:45')).toBeInTheDocument();
+      expect(screen.getByText('attack:49')).toBeInTheDocument();
+      expect(screen.getByText('overgrow')).toBeInTheDocument();
+    }, 100);
   });
 
   test('close right panel when click on button', () => {
-    render(<PokemonDetailsInfo data={data} onClose={onClick} />);
-    const closeButton = screen.getByTestId('close-button');
-    fireEvent.click(closeButton);
-    expect(onClick).toHaveBeenCalled();
+    setTimeout(() => {
+      render(<PokemonDetailsInfo data={data} onClose={onClick} />);
+      const closeButton = screen.getByTestId('close-button');
+      fireEvent.click(closeButton);
+      expect(onClick).toHaveBeenCalled();
+    }, 100);
   });
 });

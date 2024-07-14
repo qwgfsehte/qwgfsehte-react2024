@@ -50,11 +50,16 @@ export function App() {
   }, [location.search, pokemonData, setCurrentPage, setSelectedPokemon]);
 
   function handlePokemonClick(pokemon: InfoPokemon) {
-    const params = new URLSearchParams(location.search);
-    const searchParams = params.get('search');
-    navigate(
-      `/?search=${searchParams}&page=${currentPage}&details=${pokemon.id}`
-    );
+    if (selectedPokemon) {
+      closePokemonDetails();
+    }
+    setTimeout(() => {
+      const params = new URLSearchParams(location.search);
+      const searchParams = params.get('search');
+      navigate(
+        `/?search=${searchParams}&page=${currentPage}&details=${pokemon.id}`
+      );
+    }, 100);
   }
 
   function closePokemonDetails() {
@@ -73,14 +78,19 @@ export function App() {
       {loading && <LoadingIndicator />}
       {!loading && errorMessage && <ErrorMessage errorMessage={errorMessage} />}
       {!loading && !errorMessage && (
-        <main>
+        <main style={{ position: 'relative' }}>
           {Array.isArray(pokemonData) && pokemonData.length > 0 ? (
             <>
+              <button
+                className="shadow-button"
+                onClick={closePokemonDetails}
+              ></button>
               <section className="container-cards">
                 <PokemonsListContainer
                   pokemonData={pokemonData}
                   selectedPokemon={selectedPokemon}
                   handlePokemonClick={handlePokemonClick}
+                  onClose={closePokemonDetails}
                 />
                 <PokemonDetailsContainer
                   selectedPokemon={selectedPokemon}
