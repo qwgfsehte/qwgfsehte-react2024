@@ -1,5 +1,9 @@
 import { ReactNode } from 'react';
 
+export interface ErrorMessageProps {
+  errorMessage: string;
+}
+
 export interface SearchInputProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -9,25 +13,19 @@ export interface SearchButtonProps {
   onClick: () => void;
 }
 
-export interface HeaderState {
-  inputValue: string;
-}
-
-export interface AppState {
-  allPokemons: { name: string; url: string }[];
-  pokemonData: InfoPokemon | InfoPokemon[];
-  loading: boolean;
-  hasError: boolean;
-  errorMessage: string;
+export interface AllPokemons {
+  name: string;
+  url: string;
 }
 
 export interface HeaderProps {
   fetchData: () => Promise<void>;
-  triggerError: () => void;
+  closePokemonDetails: () => void;
 }
 
 export interface CardsProps {
   data: InfoPokemon | null;
+  getInfo: (pokemon: InfoPokemon) => void;
 }
 
 export interface InfoPokemon {
@@ -38,7 +36,7 @@ export interface InfoPokemon {
   }[];
   name: string;
   sprites: {
-    front_default: string;
+    front_default: string | null;
   };
   stats: {
     base_stat: number;
@@ -52,10 +50,34 @@ export interface InfoPokemon {
       name: string;
     };
   }[];
+  weight: number;
+  height: number;
+  cries: {
+    latest: string;
+    legacy: string;
+  };
 }
 
 export interface PokemonsListProps {
-  pokemonList: InfoPokemon[];
+  pokemonsList: (InfoPokemon | null | undefined)[];
+  onPokemonClick: (pokemon: InfoPokemon) => void;
+}
+
+export interface PokemonDetailsContainerProps {
+  selectedPokemon: InfoPokemon | null;
+  closePokemonDetails: () => void;
+}
+
+export interface PokemonDetailsInfoProps {
+  data: InfoPokemon;
+  onClose: () => void;
+}
+
+export interface PokemonsListContainerProps {
+  pokemonData: InfoPokemon[];
+  selectedPokemon: InfoPokemon | null;
+  handlePokemonClick: (pokemon: InfoPokemon) => void;
+  onClose: () => void;
 }
 
 export enum StatName {
@@ -102,4 +124,8 @@ export interface ErrorBoundaryProps {
 
 export interface ErrorBoundaryState {
   hasError: boolean;
+}
+
+export interface WrapperProps {
+  children: React.ReactNode;
 }
