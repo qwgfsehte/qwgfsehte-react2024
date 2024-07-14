@@ -197,3 +197,16 @@
     }
   }
 }
+
+.loading-container {
+  width: 50%;
+  height: 50%;
+  border: 4px double;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  position: sticky;
+  top: 20px;
+}
