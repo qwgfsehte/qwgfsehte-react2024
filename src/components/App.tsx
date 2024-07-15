@@ -50,16 +50,11 @@ export function App() {
   }, [location.search, pokemonData, setCurrentPage, setSelectedPokemon]);
 
   function handlePokemonClick(pokemon: InfoPokemon) {
-    if (selectedPokemon) {
-      closePokemonDetails();
-    }
-    setTimeout(() => {
-      const params = new URLSearchParams(location.search);
-      const searchParams = params.get('search');
-      navigate(
-        `/?search=${searchParams}&page=${currentPage}&details=${pokemon.id}`
-      );
-    }, 100);
+    const params = new URLSearchParams(location.search);
+    const searchParams = params.get('search');
+    navigate(
+      `/?search=${searchParams}&page=${currentPage}&details=${pokemon.id}`
+    );
   }
 
   function closePokemonDetails() {

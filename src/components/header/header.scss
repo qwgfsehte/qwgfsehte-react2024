@@ -1,7 +1,7 @@
-$backgroundHeader: #e4151d;
+@import './src/utils/variables.scss';
 
 .header {
-  background-color: $backgroundHeader;
+  background-color: $secondary-color;
   width: 100%;
   height: 100px;
   display: flex;
@@ -22,7 +22,7 @@ $backgroundHeader: #e4151d;
     gap: 5px;
   }
   &-title {
-    color: white;
+    color: $primary-color;
   }
 }
 
@@ -39,11 +39,11 @@ $backgroundHeader: #e4151d;
     height: 45%;
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid black;
+    border: 1px solid $tertiary-color;
     transition: 0.1s;
     &:focus,
     &:hover {
-      outline: 4px double black;
+      outline: 4px double $tertiary-color;
     }
   }
 
@@ -55,11 +55,11 @@ $backgroundHeader: #e4151d;
     background-image: url(./src/assets/icons/lens-icon.png);
     background-size: 90%;
     background-position: center;
-    border: 1px solid black;
+    border: 1px solid $tertiary-color;
     transition: 0.1s;
     cursor: pointer;
     &:hover {
-      outline: 4px double black;
+      outline: 4px double $tertiary-color;
     }
   }
 }
@@ -69,12 +69,12 @@ $backgroundHeader: #e4151d;
   height: 45%;
   width: 20%;
   border-radius: 6px;
-  border: 1px solid black;
-  background-color: white;
+  border: 1px solid $tertiary-color;
+  background-color: $primary-color;
   cursor: pointer;
   transition: 0.2s;
   &:hover {
-    outline: 4px double black;
+    outline: 4px double $tertiary-color;
   }
 }
 

@@ -1,12 +1,14 @@
+@import './src/utils/variables.scss';
+
 .pokemon {
   &-details {
     display: flex;
     width: 50%;
     height: 100%;
-    background-color: white;
+    background-color: $primary-color;
     padding: 20px;
     border-radius: 6px;
-    border: 4px double black;
+    border: 4px double $tertiary-color;
     flex-direction: column;
     justify-content: center;
     transition: 0.4s;
@@ -79,7 +81,7 @@
   }
 
   &__button-close {
-    background-color: white;
+    background-color: $primary-color;
     border: 1px solid;
     border-radius: 6px;
     padding: 10px;
@@ -95,9 +97,9 @@
     height: 35px;
 
     &:hover {
-      background-color: #e4151d;
-      color: white;
-      outline: 4px double black;
+      background-color: $secondary-color;
+      color: $primary-color;
+      outline: 4px double $tertiary-color;
       background-image: url(./src/assets/icons/icon-close-inver.png);
     }
   }
@@ -123,20 +125,20 @@
     height: 30px;
     background-size: 100%;
     background-position: center;
-    background-color: white;
+    background-color: $primary-color;
     border-radius: 6px;
     border: 1px solid;
     cursor: pointer;
 
     &:hover {
-      background-color: #e4151d;
-      color: white;
-      outline: 4px double black;
+      background-color: $secondary-color;
+      color: $primary-color;
+      outline: 4px double $tertiary-color;
       background-image: url(./src/assets/icons/icon-play-inver.png);
     }
 
     &:disabled {
-      background-color: gray;
+      background-color: $disabled-color;
       pointer-events: none;
     }
   }

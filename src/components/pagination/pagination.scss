@@ -78,7 +78,7 @@
     outline: 4px double $primary-color;
   }
   &:disabled {
-    background-color: gray;
+    background-color: $disabled-color;
     pointer-events: none;
   }
 }
@@ -92,7 +92,7 @@
     outline: 4px double $primary-color;
   }
   &:disabled {
-    background-color: gray;
+    background-color: $disabled-color;
     pointer-events: none;
   }
 }

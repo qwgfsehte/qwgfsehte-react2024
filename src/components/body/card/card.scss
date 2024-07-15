@@ -1,13 +1,15 @@
+@import './src/utils/variables.scss';
+
 .card {
   width: 20%;
   min-width: 326px;
   text-align: center;
   border-radius: 6px;
-  border: 4px double black;
+  border: 4px double $tertiary-color;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: white;
+  background-color: $primary-color;
   padding: 10px;
   gap: 10px;
   text-wrap: wrap;
@@ -30,9 +32,9 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-color: #e4151d;
+    background-color: $secondary-color;
     padding: 15px;
-    color: white;
+    color: $primary-color;
     border-bottom-right-radius: 6px;
     font-size: 14px;
   }
