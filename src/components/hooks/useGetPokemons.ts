@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AllPokemons, InfoPokemon } from '../../interfaces/interface';
 import { chunkArray } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
+import { pokemonAPI } from '../pokemonAPI';
 
 export function useGetPokemons() {
   const [allPokemons, setAllPokemons] = useState<AllPokemons[]>([]);
@@ -16,6 +17,10 @@ export function useGetPokemons() {
   );
   const itemPage = 20;
   const navigate = useNavigate();
+
+  const { data, isLoading, isError, isSuccess } =
+    pokemonAPI.useGetAllPokemonsQuery();
+  console.log(data, isLoading, isError, isSuccess);
 
   const fetchPokemons = async () => {
     setLoading(true);
@@ -31,7 +36,6 @@ export function useGetPokemons() {
         'An error occurred while fetching the pokemons. Please try again later.'
       );
     }
-    setLoading(false);
   };
 
   useEffect(() => {
