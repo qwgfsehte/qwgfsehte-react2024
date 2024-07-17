@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import Header from './header/header';
 import './app.scss';
 import { useGetPokemons } from './hooks/useGetPokemons';
-import { InfoPokemon } from '../interfaces/interface';
 import LoadingIndicator from './loading/loading';
 import ErrorMessage from './errorMessage/errorMessage';
-import PokemonsListContainer from './body/pokemonsList/pokemonsListContainer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Pagination } from './pagination/pagination';
-import PokemonDetailsContainer from './body/pokemonDetails/pokemonDetailsContainer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
+import PokemonsList from './body/pokemonsList/pokemonsList';
+import PokemonDetailsContainer from './body/pokemonDetails/pokemonDetailsContainer';
+import { setNameSelectedPokemon } from './body/pokemonsList/pokemonList.slice';
 
 const FIRST_PAGE = 1;
 
@@ -22,11 +22,11 @@ export function App() {
     setCurrentPage,
     handleNextPage,
     handlePrevPage,
-    selectedPokemon,
     setSelectedPokemon,
   } = useGetPokemons();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const loading = useSelector(
     (state: RootState) => state.updatePokemons.loading
   );
@@ -48,34 +48,23 @@ export function App() {
     }
 
     if (detailsParams && detailsForPokemons.length > 0) {
-      const pokemon = detailsForPokemons.find(
-        p => Number(p.id) === parseInt(detailsParams, 10)
-      );
+      const pokemon = detailsForPokemons.find(p => p.name === detailsParams);
       setSelectedPokemon(pokemon || null);
     } else {
       setSelectedPokemon(null);
     }
   }, [detailsForPokemons, location.search, setCurrentPage, setSelectedPokemon]);
 
-  function handlePokemonClick(pokemon: InfoPokemon) {
-    const params = new URLSearchParams(location.search);
-    const searchParams = params.get('search');
-    navigate(
-      `/?search=${searchParams}&page=${currentPage}&details=${pokemon.id}`
-    );
-  }
-
   function closePokemonDetails() {
-    setSelectedPokemon(null);
+    dispatch(setNameSelectedPokemon(''));
     const params = new URLSearchParams(location.search);
     const searchParams = params.get('search');
     navigate(`/?search=${searchParams}&page=${currentPage}`);
   }
 
   const pokemonPage = useSelector(
-    (state: RootState) => state.pokemonSlice.pokemonPage
+    (state: RootState) => state.pokemonListSlice.pokemonPage
   );
-  console.log(pokemonPage);
 
   return (
     <>
@@ -94,16 +83,8 @@ export function App() {
                 onClick={closePokemonDetails}
               ></button>
               <section className="container-cards">
-                <PokemonsListContainer
-                  pokemonData={pokemonPage}
-                  selectedPokemon={selectedPokemon}
-                  handlePokemonClick={handlePokemonClick}
-                  onClose={closePokemonDetails}
-                />
-                <PokemonDetailsContainer
-                  selectedPokemon={selectedPokemon}
-                  closePokemonDetails={closePokemonDetails}
-                />
+                <PokemonsList />
+                <PokemonDetailsContainer />
               </section>
               <Pagination
                 currentPage={currentPage}

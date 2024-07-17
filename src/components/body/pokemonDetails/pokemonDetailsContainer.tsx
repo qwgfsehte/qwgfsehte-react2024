@@ -1,30 +1,26 @@
-import { useEffect, useState } from 'react';
-import { PokemonDetailsContainerProps } from '../../../interfaces/interface';
+import { useState } from 'react';
 import { PokemonDetailsInfo } from './pokemonDetailsInfo';
+import { RootState } from '../../../store';
+import { useSelector } from 'react-redux';
 
-function PokemonDetailsContainer({
-  selectedPokemon,
-  closePokemonDetails,
-}: PokemonDetailsContainerProps) {
+function PokemonDetailsContainer() {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  }, [selectedPokemon]);
+  const nameSelectedPokemon = useSelector(
+    (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
+  );
 
-  if (selectedPokemon) {
+  setTimeout(() => {
+    setLoading(false);
+  }, 100);
+
+  if (nameSelectedPokemon) {
     return (
       <>
         {loading && <div className="loading-container">Loading...</div>}
         {!loading && (
           <div className="pokemon-details">
-            <PokemonDetailsInfo
-              data={selectedPokemon}
-              onClose={closePokemonDetails}
-            />
+            <PokemonDetailsInfo />
           </div>
         )}
       </>

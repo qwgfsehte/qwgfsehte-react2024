@@ -9,7 +9,7 @@ export const pokemonAPI = createApi({
         return 'pokemon?limit=2000';
       },
     }),
-    fetchPokemonDetails: builder.query<InfoPokemon[], string>({
+    fetchPokemonDetails: builder.query<InfoPokemon, string>({
       query(name: string) {
         return `pokemon/${name}`;
       },

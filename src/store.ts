@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { pokemonAPI } from './components/pokemonAPI';
 import { updatePokemons } from './components/hooks/useGetPokemons.slice';
-import { pokemonSlice } from './components/body/pokemonsList/pokemonList.slice';
+import { pokemonDetailsSlice } from './components/body/pokemonDetails/pokemonDetails.slice';
+import { pokemonListSlice } from './components/body/pokemonsList/pokemonList.slice';
 
 const store = configureStore({
   reducer: {
     [pokemonAPI.reducerPath]: pokemonAPI.reducer,
     updatePokemons: updatePokemons.reducer,
-    pokemonSlice: pokemonSlice.reducer,
+    pokemonListSlice: pokemonListSlice.reducer,
+    pokemonDetailsSlice: pokemonDetailsSlice.reducer,
   },
 
   middleware: getDefaultMiddleware =>

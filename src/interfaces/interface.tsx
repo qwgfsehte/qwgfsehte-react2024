@@ -74,22 +74,18 @@ export interface InfoPokemon {
 }
 
 export interface PokemonsListProps {
-  pokemonsList: (AllPokemons | null | undefined)[];
   onPokemonClick: (pokemon: InfoPokemon) => void;
 }
 
 export interface PokemonDetailsContainerProps {
-  selectedPokemon: InfoPokemon | null;
   closePokemonDetails: () => void;
 }
 
 export interface PokemonDetailsInfoProps {
-  data: InfoPokemon;
   onClose: () => void;
 }
 
 export interface PokemonsListContainerProps {
-  pokemonData: AllPokemons[];
   selectedPokemon: InfoPokemon | null;
   handlePokemonClick: (pokemon: InfoPokemon) => void;
   onClose: () => void;

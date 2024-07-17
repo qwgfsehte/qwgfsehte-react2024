@@ -42,10 +42,9 @@ export function useGetPokemons() {
 
   const getInfoPokemons = useCallback(
     async (pokemons: AllPokemons[], page: number) => {
-      dispatch(setErrorMessage(''));
       const searchValue = localStorage.getItem('searchValueInput') || '';
       const params = new URLSearchParams(location.search);
-      const detailsParams = params.get('details');
+      const detailsParams = params.get('');
       navigate(
         `/?search=${encodeURIComponent(searchValue)}&page=${page}${detailsParams ? `&details=${detailsParams}` : ''}`
       );
