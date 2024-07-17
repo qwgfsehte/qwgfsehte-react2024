@@ -1,5 +1,20 @@
 import { ReactNode } from 'react';
 
+export interface ApiResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: AllPokemons[];
+}
+
+export interface Pokemon {
+  allPokemons: AllPokemons[];
+  filteredPokemons: AllPokemons[][];
+  detailsForPokemons: InfoPokemon[];
+  loading: boolean;
+  errorMessage: string;
+}
+
 export interface ErrorMessageProps {
   errorMessage: string;
 }
@@ -24,7 +39,7 @@ export interface HeaderProps {
 }
 
 export interface CardsProps {
-  data: InfoPokemon | null;
+  name: string;
   getInfo: (pokemon: InfoPokemon) => void;
 }
 
@@ -59,7 +74,7 @@ export interface InfoPokemon {
 }
 
 export interface PokemonsListProps {
-  pokemonsList: (InfoPokemon | null | undefined)[];
+  pokemonsList: (AllPokemons | null | undefined)[];
   onPokemonClick: (pokemon: InfoPokemon) => void;
 }
 
@@ -74,7 +89,7 @@ export interface PokemonDetailsInfoProps {
 }
 
 export interface PokemonsListContainerProps {
-  pokemonData: InfoPokemon[];
+  pokemonData: AllPokemons[];
   selectedPokemon: InfoPokemon | null;
   handlePokemonClick: (pokemon: InfoPokemon) => void;
   onClose: () => void;

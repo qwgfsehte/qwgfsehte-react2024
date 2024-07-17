@@ -1,11 +1,12 @@
-import { AllPokemons } from '../../interfaces/interface';
+import { useDispatch, useSelector } from 'react-redux';
 import './pagination.scss';
+import { RootState } from '../../store';
+import { setNewStateLoading } from '../hooks/useGetPokemons.slice';
 
 interface PaginationProps {
   handleNextPage: () => void;
   handlePrevPage: () => void;
   currentPage: number;
-  countPages: AllPokemons[][];
   setCurrentPage: (page: number) => void;
   closePokemonDetails: () => void;
 }
@@ -16,15 +17,21 @@ export function Pagination({
   handleNextPage,
   handlePrevPage,
   currentPage,
-  countPages,
   setCurrentPage,
   closePokemonDetails,
 }: PaginationProps) {
+  const filteredpokemons = useSelector(
+    (state: RootState) => state.updatePokemons.filteredPokemons
+  );
+  const dispatch = useDispatch();
+
   function setNextPage() {
     closePokemonDetails();
+    dispatch(setNewStateLoading(true)); // при клике в пагинации
     setTimeout(() => {
       handleNextPage();
     });
+    dispatch(setNewStateLoading(false));
   }
 
   function setPrevPage() {
@@ -50,7 +57,7 @@ export function Pagination({
         data-testid="button-prev"
       ></button>
       <div className="pagination">
-        {countPages.map((_, index) => (
+        {filteredpokemons.map((_, index) => (
           <button
             onClick={() => {
               setNewPage(index);
@@ -64,7 +71,7 @@ export function Pagination({
       </div>
       <button
         className="pagination__button button-right"
-        disabled={currentPage === countPages.length}
+        disabled={currentPage === filteredpokemons.length}
         onClick={setNextPage}
         data-testid="button-next"
       ></button>
