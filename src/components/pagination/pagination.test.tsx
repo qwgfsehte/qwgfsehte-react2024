@@ -15,7 +15,6 @@ describe('test pagination component', () => {
         handleNextPage={handleNextPage}
         handlePrevPage={handlePrevPage}
         currentPage={3}
-        countPages={[[], [], [], [], []]}
         setCurrentPage={setCurrentPage}
         closePokemonDetails={closePokemonDetails}
       />

@@ -13,7 +13,6 @@ import {
 import { setPokemonPage } from '../body/pokemonsList/pokemonList.slice';
 
 export function useGetPokemons() {
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedPokemon, setSelectedPokemon] = useState<InfoPokemon | null>(
     null
   );
@@ -22,6 +21,9 @@ export function useGetPokemons() {
   const dispatch: AppDispatch = useDispatch();
   const allPokemons = useSelector(
     (state: RootState) => state.updatePokemons.allPokemons
+  );
+  const currentPage = useSelector(
+    (state: RootState) => state.paginationSlice.currentPage
   );
 
   const { data, isLoading, isError, isSuccess } =
@@ -44,7 +46,7 @@ export function useGetPokemons() {
     async (pokemons: AllPokemons[], page: number) => {
       const searchValue = localStorage.getItem('searchValueInput') || '';
       const params = new URLSearchParams(location.search);
-      const detailsParams = params.get('');
+      const detailsParams = params.get('search');
       navigate(
         `/?search=${encodeURIComponent(searchValue)}&page=${page}${detailsParams ? `&details=${detailsParams}` : ''}`
       );
@@ -79,10 +81,6 @@ export function useGetPokemons() {
   return {
     allPokemons,
     getInfoPokemons,
-    currentPage,
-    setCurrentPage,
-    handleNextPage: () => setCurrentPage(prev => prev + 1),
-    handlePrevPage: () => setCurrentPage(prev => prev - 1),
     selectedPokemon,
     setSelectedPokemon,
   };

@@ -19,21 +19,27 @@ export function PokemonDetailsInfo() {
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
   );
 
+  const currentPage = useSelector(
+    (state: RootState) => state.paginationSlice.currentPage
+  );
+
   const { data } = pokemonAPI.useFetchPokemonDetailsQuery(nameSelectedPokemon);
 
   useEffect(() => {
     if (data !== undefined) {
       const params = new URLSearchParams(location.search);
       const searchParams = params.get('search');
-      navigate(`/?search=${searchParams}&page=${1}&details=${data?.name}`);
+      navigate(
+        `/?search=${searchParams}&page=${currentPage}&details=${data?.name}`
+      );
     }
-  }, [data, data?.name, navigate]);
+  }, [currentPage, data, data?.name, navigate]);
 
   function closePokemonDetails() {
     dispatch(setNameSelectedPokemon(''));
     const params = new URLSearchParams(location.search);
     const searchParams = params.get('search');
-    navigate(`/?search=${searchParams}&page=${1}`);
+    navigate(`/?search=${searchParams}&page=${currentPage}`);
   }
 
   const playLatestCry = () => {

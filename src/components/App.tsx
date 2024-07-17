@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Header from './header/header';
 import './app.scss';
 import { useGetPokemons } from './hooks/useGetPokemons';
@@ -15,15 +14,7 @@ import { setNameSelectedPokemon } from './body/pokemonsList/pokemonList.slice';
 const FIRST_PAGE = 1;
 
 export function App() {
-  const {
-    allPokemons,
-    getInfoPokemons,
-    currentPage,
-    setCurrentPage,
-    handleNextPage,
-    handlePrevPage,
-    setSelectedPokemon,
-  } = useGetPokemons();
+  const { allPokemons, getInfoPokemons } = useGetPokemons();
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -34,26 +25,9 @@ export function App() {
     (state: RootState) => state.updatePokemons.errorMessage
   );
 
-  const detailsForPokemons = useSelector(
-    (state: RootState) => state.updatePokemons.detailsForPokemons
+  const currentPage = useSelector(
+    (state: RootState) => state.paginationSlice.currentPage
   );
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const detailsParams = params.get('details');
-    const pageParam = params.get('page');
-
-    if (pageParam) {
-      setCurrentPage(parseInt(pageParam, 10));
-    }
-
-    if (detailsParams && detailsForPokemons.length > 0) {
-      const pokemon = detailsForPokemons.find(p => p.name === detailsParams);
-      setSelectedPokemon(pokemon || null);
-    } else {
-      setSelectedPokemon(null);
-    }
-  }, [detailsForPokemons, location.search, setCurrentPage, setSelectedPokemon]);
 
   function closePokemonDetails() {
     dispatch(setNameSelectedPokemon(''));
@@ -86,13 +60,7 @@ export function App() {
                 <PokemonsList />
                 <PokemonDetailsContainer />
               </section>
-              <Pagination
-                currentPage={currentPage}
-                handleNextPage={handleNextPage}
-                handlePrevPage={handlePrevPage}
-                setCurrentPage={setCurrentPage}
-                closePokemonDetails={closePokemonDetails}
-              />
+              <Pagination />
             </>
           ) : (
             <p></p>
