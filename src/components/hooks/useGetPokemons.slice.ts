@@ -37,7 +37,7 @@ export const updatePokemons = createSlice({
         state.errorMessage = '';
       })
       .addMatcher(pokemonAPI.endpoints.getAllPokemons.matchRejected, state => {
-        state.errorMessage = 'fghfgh';
+        state.errorMessage = '';
         state.loading = false;
       });
   },

@@ -2,9 +2,9 @@ import { describe, vi, test, expect, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
-import { App } from './App';
-import { useGetPokemons } from './hooks/useGetPokemons';
-import { InfoPokemon } from '../interfaces/interface';
+import { InfoPokemon } from '../../interfaces/interface';
+import { useGetPokemons } from '../hooks/useGetPokemons';
+import { App } from '../App';
 
 vi.mock('./hooks/useGetPokemons');
 

@@ -1,11 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './pagination.scss';
 import { RootState } from '../../store';
-import {
-  handleNextPage,
-  handlePrevPage,
-  setCurrentPage,
-} from './pagination.slice';
+import { setCurrentPage } from './pagination.slice';
+import { Link, useNavigate } from 'react-router-dom';
 
 const FIRST_PAGE = 1;
 
@@ -17,32 +14,39 @@ export function Pagination() {
     (state: RootState) => state.paginationSlice.currentPage
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handlePageChange = (newPage: number) => {
+    dispatch(setCurrentPage(newPage));
+    navigate(`/search/page/${newPage}`);
+  };
 
   return (
     <section className="pagination-container">
       <button
         className="pagination__button button-left"
         disabled={currentPage === FIRST_PAGE}
-        onClick={() => dispatch(handlePrevPage())}
+        onClick={() => handlePageChange(currentPage - 1)}
         data-testid="button-prev"
       ></button>
       <div className="pagination">
         {filteredPokemons.map((_, index) => (
-          <button
+          <Link
             onClick={() => {
-              dispatch(setCurrentPage(index + 1));
+              handlePageChange(index + 1);
             }}
             key={index}
             className={`pagination__item ${index + 1 === currentPage ? 'pagination__item_active' : ''}`}
+            to={`/search/page/${index + 1}`}
           >
             {index + 1}
-          </button>
+          </Link>
         ))}
       </div>
       <button
         className="pagination__button button-right"
         disabled={currentPage === filteredPokemons.length}
-        onClick={() => dispatch(handleNextPage())}
+        onClick={() => handlePageChange(currentPage + 1)}
         data-testid="button-next"
       ></button>
     </section>

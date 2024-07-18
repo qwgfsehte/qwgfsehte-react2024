@@ -11,14 +11,7 @@ export const paginationSlice = createSlice({
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
-    handleNextPage: state => {
-      state.currentPage += 1;
-    },
-    handlePrevPage: state => {
-      state.currentPage -= 1;
-    },
   },
 });
 
-export const { setCurrentPage, handleNextPage, handlePrevPage } =
-  paginationSlice.actions;
+export const { setCurrentPage } = paginationSlice.actions;

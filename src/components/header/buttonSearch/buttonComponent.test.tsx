@@ -8,7 +8,7 @@ describe('test search button component', () => {
     const clickButton = vi.fn();
 
     test('render search button and click', () => {
-      render(<SearchButton onClick={clickButton} />);
+      render(<SearchButton />);
       fireEvent.click(screen.getByRole('button'));
       expect(clickButton).toHaveBeenCalledTimes(1);
     });

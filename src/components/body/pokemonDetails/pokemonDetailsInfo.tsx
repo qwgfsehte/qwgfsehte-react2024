@@ -1,19 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { StatName, TypeName } from '../../../interfaces/interface';
 import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
 import { updateFirstLetterToUpperCase } from '../../../utils/utils';
 import './pokemonDetails.scss';
 import { pokemonAPI } from '../../pokemonAPI';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
-import { useNavigate } from 'react-router-dom';
-import { setNameSelectedPokemon } from '../pokemonsList/pokemonList.slice';
+import { Link } from 'react-router-dom';
 
 export function PokemonDetailsInfo() {
   const audioLatestRef = useRef<HTMLAudioElement>(null);
   const audioLegacyRef = useRef<HTMLAudioElement>(null);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const nameSelectedPokemon = useSelector(
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
@@ -24,23 +21,6 @@ export function PokemonDetailsInfo() {
   );
 
   const { data } = pokemonAPI.useFetchPokemonDetailsQuery(nameSelectedPokemon);
-
-  useEffect(() => {
-    if (data !== undefined) {
-      const params = new URLSearchParams(location.search);
-      const searchParams = params.get('search');
-      navigate(
-        `/?search=${searchParams}&page=${currentPage}&details=${data?.name}`
-      );
-    }
-  }, [currentPage, data, data?.name, navigate]);
-
-  function closePokemonDetails() {
-    dispatch(setNameSelectedPokemon(''));
-    const params = new URLSearchParams(location.search);
-    const searchParams = params.get('search');
-    navigate(`/?search=${searchParams}&page=${currentPage}`);
-  }
 
   const playLatestCry = () => {
     if (audioLatestRef.current) {
@@ -61,11 +41,11 @@ export function PokemonDetailsInfo() {
           <div className="pokemon__info-container">
             <div className="pokemon__name-container">
               <h2>{updateFirstLetterToUpperCase(data.name)}</h2>
-              <button
+              <Link
+                to={`/search/page/${currentPage}`}
                 className="pokemon__button-close"
-                onClick={closePokemonDetails}
                 data-testid="close-button"
-              ></button>
+              ></Link>
             </div>
             <img
               alt={data.name}

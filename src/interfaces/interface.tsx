@@ -34,7 +34,6 @@ export interface AllPokemons {
 }
 
 export interface HeaderProps {
-  fetchData: () => Promise<void>;
   closePokemonDetails: () => void;
 }
 
