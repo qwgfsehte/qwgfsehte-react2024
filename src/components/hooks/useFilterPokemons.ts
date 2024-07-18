@@ -21,6 +21,7 @@ export function filterPokemons(
   pokemons: AllPokemons[],
   page: number
 ) {
+  dispatch(setErrorMessage(''));
   const searchValue = localStorage.getItem('searchValueInput') || '';
   const filteredPokemons = pokemons.filter(pokemon =>
     pokemon.name.includes(searchValue)

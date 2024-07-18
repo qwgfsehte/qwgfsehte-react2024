@@ -4,23 +4,28 @@ import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
 import { updateFirstLetterToUpperCase } from '../../../utils/utils';
 import './pokemonDetails.scss';
 import { pokemonAPI } from '../../pokemonAPI';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { Link } from 'react-router-dom';
+import { setNameSelectedPokemon } from '../pokemonsList/pokemonList.slice';
 
 export function PokemonDetailsInfo() {
   const audioLatestRef = useRef<HTMLAudioElement>(null);
   const audioLegacyRef = useRef<HTMLAudioElement>(null);
+  const dispatch = useDispatch();
 
   const nameSelectedPokemon = useSelector(
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
   );
-
   const currentPage = useSelector(
     (state: RootState) => state.paginationSlice.currentPage
   );
+  const errorMessage = useSelector(
+    (state: RootState) => state.pokemonDetailsSlice.error
+  );
 
-  const { data } = pokemonAPI.useFetchPokemonDetailsQuery(nameSelectedPokemon);
+  const { data, isLoading, error } =
+    pokemonAPI.useFetchPokemonDetailsQuery(nameSelectedPokemon);
 
   const playLatestCry = () => {
     if (audioLatestRef.current) {
@@ -36,6 +41,8 @@ export function PokemonDetailsInfo() {
 
   return (
     <>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>{errorMessage}</p>}
       {data !== undefined && (
         <div className="pokemon__details-container">
           <div className="pokemon__info-container">
@@ -45,6 +52,7 @@ export function PokemonDetailsInfo() {
                 to={`/search/page/${currentPage}`}
                 className="pokemon__button-close"
                 data-testid="close-button"
+                onClick={() => dispatch(setNameSelectedPokemon(''))}
               ></Link>
             </div>
             <img
@@ -53,7 +61,7 @@ export function PokemonDetailsInfo() {
               src={
                 data.sprites.front_default
                   ? data.sprites.front_default
-                  : './src/assets/imgs/default-img.webp'
+                  : '/src/assets/imgs/default-img.webp'
               }
             />
             <div className="pokemon__characteristics-container">

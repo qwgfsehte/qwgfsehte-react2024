@@ -64,9 +64,7 @@ describe('test pokemon list component', () => {
       },
     }));
 
-    render(
-      <PokemonsList pokemonsList={pokemonData} onPokemonClick={() => {}} />
-    );
+    render(<PokemonsList />);
 
     const pokemonCards = screen.getAllByAltText('pokemon');
     expect(pokemonCards).toHaveLength(COUNT_POKEMONS);

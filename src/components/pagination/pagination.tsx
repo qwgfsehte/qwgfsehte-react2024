@@ -3,6 +3,7 @@ import './pagination.scss';
 import { RootState } from '../../store';
 import { setCurrentPage } from './pagination.slice';
 import { Link, useNavigate } from 'react-router-dom';
+import { setNameSelectedPokemon } from '../body/pokemonsList/pokemonList.slice';
 
 const FIRST_PAGE = 1;
 
@@ -18,6 +19,7 @@ export function Pagination() {
 
   const handlePageChange = (newPage: number) => {
     dispatch(setCurrentPage(newPage));
+    dispatch(setNameSelectedPokemon(''));
     navigate(`/search/page/${newPage}`);
   };
 

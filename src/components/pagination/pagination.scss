@@ -55,6 +55,9 @@
     border: 1px solid;
     cursor: pointer;
     transition: 0.1s;
+    color: $tertiary-color;
+    text-decoration: none;
+    text-align: center;
 
     &:hover {
       outline: 4px double $primary-color;

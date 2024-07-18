@@ -42,7 +42,7 @@ export function AppContent() {
     <>
       <Header />
       {loading && <LoadingIndicator />}
-      {!loading && errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+      {!loading && errorMessage && <ErrorMessage />}
       {!loading && !errorMessage && (
         <main style={{ position: 'relative' }}>
           {Array.isArray(pokemonPage) && pokemonPage.length > 0 ? (

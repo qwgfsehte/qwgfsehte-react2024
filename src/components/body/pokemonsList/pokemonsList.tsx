@@ -5,6 +5,7 @@ import './pokemonList.scss';
 import { setNameSelectedPokemon } from './pokemonList.slice';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Pokeball } from './pokeball';
 
 function PokemonsList(): React.ReactElement {
   const dispatch = useDispatch();
@@ -39,9 +40,8 @@ function PokemonsList(): React.ReactElement {
               onClick={() => dispatch(setNameSelectedPokemon(pokemon.name))}
               to={`details/${pokemon.name}`}
             >
-              <div className="card-name">
-                <h3>{updateFirstLetterToUpperCase(pokemon.name)}</h3>
-              </div>
+              <h3>{updateFirstLetterToUpperCase(pokemon.name)}</h3>
+              <Pokeball />
             </Link>
           ) : (
             <div key={index} className="placeholder">

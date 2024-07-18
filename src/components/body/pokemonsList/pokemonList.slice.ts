@@ -10,6 +10,8 @@ export const initialState: {
 };
 
 export const pokemonListSlice = createSlice({
+  name: 'pokemonList',
+  initialState: initialState,
   reducers: {
     setPokemonPage: (state, action: PayloadAction<AllPokemons[]>) => {
       state.pokemonPage = action.payload;
@@ -18,8 +20,6 @@ export const pokemonListSlice = createSlice({
       state.nameSelectedPokemon = action.payload;
     },
   },
-  name: 'pokemonList',
-  initialState: initialState,
 });
 
 export const { setPokemonPage, setNameSelectedPokemon } =

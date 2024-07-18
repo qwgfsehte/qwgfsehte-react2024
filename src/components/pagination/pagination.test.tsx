@@ -12,8 +12,6 @@ describe('test pagination component', () => {
   test('render pagination', () => {
     render(
       <Pagination
-        handleNextPage={handleNextPage}
-        handlePrevPage={handlePrevPage}
         currentPage={3}
         setCurrentPage={setCurrentPage}
         closePokemonDetails={closePokemonDetails}
