@@ -1,8 +1,7 @@
 @import './src/utils/variables.scss';
 
 .card {
-  width: 20%;
-  min-width: 326px;
+  min-width: 400px;
   text-align: center;
   border-radius: 6px;
   display: flex;
@@ -32,6 +31,10 @@
     .pokeball {
       animation: shake 0.5s infinite alternate;
     }
+  }
+
+  &-container {
+    position: relative;
   }
 
   &-id {

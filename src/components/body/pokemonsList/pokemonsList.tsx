@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { updateFirstLetterToUpperCase } from '../../../utils/utils';
 import './pokemonList.scss';
-import { setNameSelectedPokemon } from './pokemonList.slice';
+import {
+  addItem,
+  removeItem,
+  setNameSelectedPokemon,
+} from './pokemonList.slice';
 import { Link, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { Pokeball } from './pokeball';
 
 function PokemonsList(): React.ReactElement {
@@ -17,6 +20,18 @@ function PokemonsList(): React.ReactElement {
     (state: RootState) => state.pokemonListSlice.pokemonPage
   );
 
+  const selectedItems = useSelector(
+    (state: RootState) => state.pokemonListSlice.selectedPokemons
+  );
+
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      dispatch(addItem(event.target.id));
+    } else {
+      dispatch(removeItem(event.target.id));
+    }
+  };
+
   const { name } = useParams();
 
   useEffect(() => {
@@ -26,34 +41,40 @@ function PokemonsList(): React.ReactElement {
   }, [dispatch, name]);
 
   return (
-    <>
-      <div
-        className={
-          nameSelectedPokemon ? 'pokemons-list half-width' : 'pokemons-list'
-        }
-      >
-        {pokemonPage.map((pokemon, index) =>
-          pokemon ? (
-            <div key={index} style={{ position: 'relative' }}>
-              <input className="pokemon-select" type="checkbox"></input>
-              <Link
-                key={index}
-                className="card"
-                onClick={() => dispatch(setNameSelectedPokemon(pokemon.name))}
-                to={`details/${pokemon.name}`}
-              >
-                <h3>{updateFirstLetterToUpperCase(pokemon.name)}</h3>
-                <Pokeball />
-              </Link>
-            </div>
-          ) : (
-            <div key={index} className="placeholder">
-              pokemon not found
-            </div>
-          )
-        )}
-      </div>
-    </>
+    <div
+      className={
+        nameSelectedPokemon ? 'pokemons-list half-width' : 'pokemons-list'
+      }
+    >
+      {pokemonPage.map((pokemon, index) =>
+        pokemon ? (
+          <div key={index} className="card-container">
+            <input
+              id={pokemon.name + ' - ' + pokemon.url}
+              className="pokemon-select"
+              type="checkbox"
+              checked={selectedItems.includes(
+                pokemon.name + ' - ' + pokemon.url
+              )}
+              onChange={handleCheckboxChange}
+            ></input>
+            <Link
+              key={index}
+              className="card"
+              onClick={() => dispatch(setNameSelectedPokemon(pokemon.name))}
+              to={`details/${pokemon.name}`}
+            >
+              <Pokeball />
+              <h3 className="pokemon-name">{pokemon.name}</h3>
+            </Link>
+          </div>
+        ) : (
+          <div key={index} className="placeholder">
+            pokemon not found
+          </div>
+        )
+      )}
+    </div>
   );
 }
 

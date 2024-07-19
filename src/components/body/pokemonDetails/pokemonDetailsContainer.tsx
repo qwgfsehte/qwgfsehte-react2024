@@ -7,16 +7,12 @@ function PokemonDetailsContainer() {
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
   );
 
-  if (nameSelectedPokemon) {
-    return (
-      <>
-        <div className="pokemon-details">
-          <PokemonDetailsInfo />
-        </div>
-      </>
-    );
-  } else {
-    return null;
-  }
+  if (!nameSelectedPokemon) return null;
+
+  return (
+    <div className="pokemon-details">
+      <PokemonDetailsInfo />
+    </div>
+  );
 }
 export default PokemonDetailsContainer;

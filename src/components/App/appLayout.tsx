@@ -11,6 +11,7 @@ import { Pagination } from '../pagination/pagination';
 import { setCurrentPage } from '../pagination/pagination.slice';
 import { RootState } from '../store';
 import './app.scss';
+import { ModalWindow } from '../body/flyout/flyout';
 
 const FIRST_PAGE = 1;
 
@@ -57,6 +58,7 @@ export function AppContent() {
                 <Outlet />
               </section>
               <Pagination />
+              <ModalWindow />
             </>
           ) : (
             <p></p>

@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { StatName, TypeName } from '../../../interfaces/interface';
 import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
-import { updateFirstLetterToUpperCase } from '../../../utils/utils';
 import './pokemonDetails.scss';
 import { pokemonApi } from '../../pokemonAPI';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,7 +46,7 @@ export function PokemonDetailsInfo() {
         <div className="pokemon__details-container">
           <div className="pokemon__info-container">
             <div className="pokemon__name-container">
-              <h2>{updateFirstLetterToUpperCase(data.name)}</h2>
+              <h2 className="pokemon-name">{data.name}</h2>
               <Link
                 to={`/search/page/${currentPage}`}
                 className="pokemon__button-close"

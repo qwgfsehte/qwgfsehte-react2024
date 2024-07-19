@@ -12,3 +12,7 @@
 body {
   background-color: rgb(255, 255, 255);
 }
+
+.pokemon-name:first-letter {
+  text-transform: uppercase;
+}
