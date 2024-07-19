@@ -34,15 +34,18 @@ function PokemonsList(): React.ReactElement {
       >
         {pokemonPage.map((pokemon, index) =>
           pokemon ? (
-            <Link
-              key={index}
-              className="card"
-              onClick={() => dispatch(setNameSelectedPokemon(pokemon.name))}
-              to={`details/${pokemon.name}`}
-            >
-              <h3>{updateFirstLetterToUpperCase(pokemon.name)}</h3>
-              <Pokeball />
-            </Link>
+            <div key={index} style={{ position: 'relative' }}>
+              <input className="pokemon-select" type="checkbox"></input>
+              <Link
+                key={index}
+                className="card"
+                onClick={() => dispatch(setNameSelectedPokemon(pokemon.name))}
+                to={`details/${pokemon.name}`}
+              >
+                <h3>{updateFirstLetterToUpperCase(pokemon.name)}</h3>
+                <Pokeball />
+              </Link>
+            </div>
           ) : (
             <div key={index} className="placeholder">
               pokemon not found
