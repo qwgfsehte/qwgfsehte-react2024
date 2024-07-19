@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { pokemonAPI } from '../pokemonAPI';
-import { AppDispatch, RootState } from '../../store';
+import { pokemonApi } from '../pokemonAPI';
+import { AppDispatch, RootState } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPokemons, setErrorMessage } from './useGetPokemons.slice';
 import { useFilterPokemons } from './useFilterPokemons';
@@ -15,7 +15,7 @@ export function useGetPokemons() {
   );
 
   const { data, isLoading, isError, isSuccess } =
-    pokemonAPI.useGetAllPokemonsQuery();
+    pokemonApi.useGetAllPokemonsQuery();
 
   useEffect(() => {
     if (isSuccess && data && allPokemons.length === 0) {

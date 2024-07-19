@@ -9,7 +9,7 @@ import { useGetPokemons } from '../hooks/useGetPokemons';
 import LoadingIndicator from '../loading/loading';
 import { Pagination } from '../pagination/pagination';
 import { setCurrentPage } from '../pagination/pagination.slice';
-import { RootState } from '../../store';
+import { RootState } from '../store';
 import './app.scss';
 
 const FIRST_PAGE = 1;

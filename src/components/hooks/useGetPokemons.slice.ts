@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AllPokemons, Pokemon } from '../../interfaces/interface';
-import { pokemonAPI } from '../pokemonAPI';
+import { pokemonApi } from '../pokemonAPI';
 
 export const initialState: Pokemon = {
   allPokemons: [],
@@ -28,15 +28,15 @@ export const updatePokemons = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addMatcher(pokemonAPI.endpoints.getAllPokemons.matchPending, state => {
+      .addMatcher(pokemonApi.endpoints.getAllPokemons.matchPending, state => {
         state.loading = true;
         state.errorMessage = '';
       })
-      .addMatcher(pokemonAPI.endpoints.getAllPokemons.matchFulfilled, state => {
+      .addMatcher(pokemonApi.endpoints.getAllPokemons.matchFulfilled, state => {
         state.loading = false;
         state.errorMessage = '';
       })
-      .addMatcher(pokemonAPI.endpoints.getAllPokemons.matchRejected, state => {
+      .addMatcher(pokemonApi.endpoints.getAllPokemons.matchRejected, state => {
         state.errorMessage = '';
         state.loading = false;
       });
@@ -50,3 +50,5 @@ export const {
   setFilteredPokemons,
   setNewStateLoading,
 } = updatePokemons.actions;
+
+export default updatePokemons.reducer;

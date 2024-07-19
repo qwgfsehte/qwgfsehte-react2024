@@ -24,3 +24,4 @@ export const pokemonListSlice = createSlice({
 
 export const { setPokemonPage, setNameSelectedPokemon } =
   pokemonListSlice.actions;
+export default pokemonListSlice.reducer;

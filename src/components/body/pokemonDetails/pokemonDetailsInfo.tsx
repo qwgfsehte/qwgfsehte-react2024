@@ -3,9 +3,9 @@ import { StatName, TypeName } from '../../../interfaces/interface';
 import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
 import { updateFirstLetterToUpperCase } from '../../../utils/utils';
 import './pokemonDetails.scss';
-import { pokemonAPI } from '../../pokemonAPI';
+import { pokemonApi } from '../../pokemonAPI';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { RootState } from '../../store';
 import { Link } from 'react-router-dom';
 import { setNameSelectedPokemon } from '../pokemonsList/pokemonList.slice';
 
@@ -25,7 +25,7 @@ export function PokemonDetailsInfo() {
   );
 
   const { data, isLoading, error } =
-    pokemonAPI.useFetchPokemonDetailsQuery(nameSelectedPokemon);
+    pokemonApi.useFetchPokemonDetailsQuery(nameSelectedPokemon);
 
   const playLatestCry = () => {
     if (audioLatestRef.current) {

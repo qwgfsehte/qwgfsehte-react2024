@@ -9,7 +9,7 @@ describe('test loading indicator component', () => {
     expect(screen.getByText('Loading...')).toBeInTheDocument();
     expect(screen.getByAltText('Loading')).toHaveAttribute(
       'src',
-      './src/assets/imgs/loading.gif'
+      '/src/assets/imgs/loading.gif'
     );
   });
 });

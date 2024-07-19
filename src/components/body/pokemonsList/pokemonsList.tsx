@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { RootState } from '../../store';
 import { updateFirstLetterToUpperCase } from '../../../utils/utils';
 import './pokemonList.scss';
 import { setNameSelectedPokemon } from './pokemonList.slice';

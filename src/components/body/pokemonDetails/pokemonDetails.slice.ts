@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { pokemonAPI } from '../../pokemonAPI';
+import { pokemonApi } from '../../pokemonAPI';
 
 export const initialState: {
-  nameSelectedPokemon: string;
   loading: boolean;
   error: string | null;
 } = {
-  nameSelectedPokemon: '',
   loading: true,
   error: null,
 };
@@ -22,21 +20,21 @@ export const pokemonDetailsSlice = createSlice({
   extraReducers: builder => {
     builder
       .addMatcher(
-        pokemonAPI.endpoints.fetchPokemonDetails.matchPending,
+        pokemonApi.endpoints.fetchPokemonDetails.matchPending,
         state => {
           state.loading = true;
           state.error = null;
         }
       )
       .addMatcher(
-        pokemonAPI.endpoints.fetchPokemonDetails.matchFulfilled,
+        pokemonApi.endpoints.fetchPokemonDetails.matchFulfilled,
         state => {
           state.loading = false;
           state.error = null;
         }
       )
       .addMatcher(
-        pokemonAPI.endpoints.fetchPokemonDetails.matchRejected,
+        pokemonApi.endpoints.fetchPokemonDetails.matchRejected,
         state => {
           state.loading = false;
           state.error = 'Failed to fetch details';
@@ -44,3 +42,6 @@ export const pokemonDetailsSlice = createSlice({
       );
   },
 });
+
+export const { setNewStateLoading } = pokemonDetailsSlice.actions;
+export default pokemonDetailsSlice.reducer;

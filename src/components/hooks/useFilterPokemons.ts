@@ -3,7 +3,7 @@ import { chunkArray } from '../../utils/utils';
 import { setPokemonPage } from '../body/pokemonsList/pokemonList.slice';
 import { setFilteredPokemons, setErrorMessage } from './useGetPokemons.slice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
+import { AppDispatch } from '../store';
 import { useEffect } from 'react';
 
 const ITEM_PAGE = 20;

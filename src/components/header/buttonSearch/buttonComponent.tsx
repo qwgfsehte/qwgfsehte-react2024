@@ -1,7 +1,7 @@
 import React from 'react';
 import { filterPokemons } from '../../hooks/useFilterPokemons';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../store';
+import { AppDispatch, RootState } from '../../store';
 import { setCurrentPage } from '../../pagination/pagination.slice';
 import { useNavigate } from 'react-router-dom';
 import { setNameSelectedPokemon } from '../../body/pokemonsList/pokemonList.slice';

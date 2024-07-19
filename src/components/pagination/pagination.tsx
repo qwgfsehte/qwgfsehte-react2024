@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './pagination.scss';
-import { RootState } from '../../store';
+import { RootState } from '../store';
 import { setCurrentPage } from './pagination.slice';
 import { Link, useNavigate } from 'react-router-dom';
 import { setNameSelectedPokemon } from '../body/pokemonsList/pokemonList.slice';

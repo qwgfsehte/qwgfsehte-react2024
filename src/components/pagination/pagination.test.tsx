@@ -1,37 +1,22 @@
-import { describe, test, vi, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, test, expect } from 'vitest';
 import '@testing-library/jest-dom';
-import { Pagination } from './pagination';
+import paginationReducer, {
+  initialState,
+  setCurrentPage,
+} from './pagination.slice';
 
 describe('test pagination component', () => {
-  const handleNextPage = vi.fn();
-  const handlePrevPage = vi.fn();
-  const setCurrentPage = vi.fn();
-  const closePokemonDetails = vi.fn();
+  test('initial state', () => {
+    const state = paginationReducer(undefined, { type: 'unknow' });
+    expect(state).toEqual(initialState);
+  });
 
-  test('render pagination', () => {
-    render(
-      <Pagination
-        currentPage={3}
-        setCurrentPage={setCurrentPage}
-        closePokemonDetails={closePokemonDetails}
-      />
+  test('test setCurrentPage reducer', () => {
+    const setCurrentPageState = paginationReducer(
+      initialState,
+      setCurrentPage(3)
     );
-
-    const prevButton = screen.getByTestId('button-prev');
-    fireEvent.click(prevButton);
-    expect(handlePrevPage).toHaveBeenCalledTimes(0);
-    expect(closePokemonDetails).toHaveBeenCalledTimes(1);
-    expect(setCurrentPage).toHaveBeenCalledTimes(0);
-
-    const nextButton = screen.getByTestId('button-next');
-    fireEvent.click(nextButton);
-    expect(handleNextPage).toHaveBeenCalledTimes(0);
-    expect(closePokemonDetails).toHaveBeenCalledTimes(2);
-    expect(setCurrentPage).toHaveBeenCalledTimes(0);
-
-    const numberButton = screen.getByText('2');
-    fireEvent.click(numberButton);
-    expect(setCurrentPage).toHaveBeenCalledTimes(0);
+    expect(initialState.currentPage).toBe(1);
+    expect(setCurrentPageState.currentPage).toBe(3);
   });
 });

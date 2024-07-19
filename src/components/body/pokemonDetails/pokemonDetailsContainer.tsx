@@ -1,5 +1,5 @@
 import { PokemonDetailsInfo } from './pokemonDetailsInfo';
-import { RootState } from '../../../store';
+import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 
 function PokemonDetailsContainer() {
