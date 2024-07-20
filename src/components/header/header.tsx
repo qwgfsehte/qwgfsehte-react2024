@@ -2,8 +2,11 @@ import './header.scss';
 import React from 'react';
 import SearchButton from './buttonSearch/buttonComponent';
 import SearchInput from './inputSearch/InputComponent';
+import { useToggleTheme } from '../context/useContext';
 
 function Header(): React.ReactElement {
+  const { toggleTheme } = useToggleTheme();
+
   return (
     <header className="header">
       <div className="logo-container">
@@ -18,6 +21,7 @@ function Header(): React.ReactElement {
         <SearchInput />
         <SearchButton />
       </div>
+      <button className="button-theme" onClick={toggleTheme}></button>
     </header>
   );
 }

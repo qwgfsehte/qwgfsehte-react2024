@@ -11,11 +11,15 @@ import { Pagination } from '../pagination/pagination';
 import { setCurrentPage } from '../pagination/pagination.slice';
 import { RootState } from '../store';
 import './app.scss';
+import './../context/theme.scss';
 import { ModalWindow } from '../body/flyout/flyout';
+import { useToggleTheme } from '../context/useContext';
+import { Footer } from '../footer/footer';
 
 const FIRST_PAGE = 1;
 
 export function AppContent() {
+  const { isDark } = useToggleTheme();
   const dispatch = useDispatch();
   const { page } = useParams<{ page?: string }>();
   const loading = useSelector(
@@ -40,7 +44,7 @@ export function AppContent() {
   useGetPokemons();
 
   return (
-    <>
+    <div className={isDark ? 'dark' : 'light'}>
       <Header />
       {loading && <LoadingIndicator />}
       {!loading && errorMessage && <ErrorMessage />}
@@ -58,6 +62,7 @@ export function AppContent() {
                 <Outlet />
               </section>
               <Pagination />
+              <Footer />
               <ModalWindow />
             </>
           ) : (
@@ -65,6 +70,6 @@ export function AppContent() {
           )}
         </main>
       )}
-    </>
+    </div>
   );
 }

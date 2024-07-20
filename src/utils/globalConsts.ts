@@ -5,7 +5,7 @@ export const STAT_ICONS: StatIcons = {
   [StatName.Attack]: '/src/assets/icons/icon-knife.png',
   [StatName.Defense]: '/src/assets/icons/icon-defence.png',
   [StatName.SpecialAttack]: '/src/assets/icons/icon-scull.png',
-  [StatName.SpecialDefense]: '/src/assets/icons/icon-specialDefence.avif',
+  [StatName.SpecialDefense]: '/src/assets/icons/icon-specialDefence.png',
   [StatName.Speed]: '/src/assets/icons/icon-speed.png',
 };
 

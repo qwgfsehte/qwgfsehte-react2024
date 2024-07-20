@@ -1,0 +1,10 @@
+@import './src/utils/variables.scss';
+
+.footer-container {
+  background-color: $secondary-color;
+  height: 70px;
+  color: $primary-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
