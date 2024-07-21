@@ -59,13 +59,13 @@
     text-align: center;
 
     &:hover {
-      outline: 4px double $primary-color;
+      outline: 4px double $tertiary-color;
       color: $primary-color;
       background: $tertiary-color;
     }
 
     &_active {
-      border: 2px solid $primary-color;
+      outline: 1px solid $primary-color;
       color: $primary-color;
       background: $tertiary-color;
     }
@@ -77,7 +77,7 @@
   &:hover {
     background-image: url(/src/assets/icons/icon-arrow-inver.png);
     background-color: $tertiary-color;
-    outline: 4px double $primary-color;
+    outline: 4px double $tertiary-color;
   }
   &:disabled {
     background-color: $disabled-color;
@@ -91,7 +91,7 @@
   &:hover {
     background-image: url(/src/assets/icons/icon-arrow-inver.png);
     background-color: $tertiary-color;
-    outline: 4px double $primary-color;
+    outline: 4px double $tertiary-color;
   }
   &:disabled {
     background-color: $disabled-color;

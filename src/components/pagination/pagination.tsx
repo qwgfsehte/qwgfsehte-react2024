@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './pagination.scss';
 import { RootState } from '../store';
-import { setCurrentPage } from './pagination.slice';
+import { setCurrentGroup, setCurrentPage } from './pagination.slice';
 import { Link, useNavigate } from 'react-router-dom';
 import { setNameSelectedPokemon } from '../body/pokemonsList/pokemonList.slice';
 
-const FIRST_PAGE = 1;
+const PAGES_PER_GROUP = 10;
 
 export function Pagination() {
   const filteredPokemons = useSelector(
@@ -14,6 +14,10 @@ export function Pagination() {
   const currentPage = useSelector(
     (state: RootState) => state.paginationSlice.currentPage
   );
+  const currentGroup = useSelector(
+    (state: RootState) => state.paginationSlice.currentGroup
+  );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,33 +27,42 @@ export function Pagination() {
     navigate(`/search/page/${newPage}`);
   };
 
+  const startPage = currentGroup * PAGES_PER_GROUP;
+  const endPage = Math.min(
+    startPage + PAGES_PER_GROUP,
+    filteredPokemons.length
+  );
+
   return (
     <section className="pagination-container">
       <button
+        disabled={currentGroup === 0}
         className="pagination__button button-left"
-        disabled={currentPage === FIRST_PAGE}
-        onClick={() => handlePageChange(currentPage - 1)}
-        data-testid="button-prev"
+        onClick={() => dispatch(setCurrentGroup(currentGroup - 1))}
       ></button>
       <div className="pagination">
-        {filteredPokemons.map((_, index) => (
-          <Link
-            onClick={() => {
-              handlePageChange(index + 1);
-            }}
-            key={index}
-            className={`pagination__item ${index + 1 === currentPage ? 'pagination__item_active' : ''}`}
-            to={`/search/page/${index + 1}`}
-          >
-            {index + 1}
-          </Link>
-        ))}
+        {filteredPokemons.slice(startPage, endPage).map((_, index) => {
+          const pageIndex = startPage + index + 1;
+          return (
+            <Link
+              onClick={() => {
+                handlePageChange(pageIndex);
+              }}
+              key={pageIndex}
+              className={`pagination__item ${pageIndex === currentPage ? 'pagination__item_active' : ''}`}
+              to={`/search/page/${pageIndex}`}
+            >
+              {pageIndex}
+            </Link>
+          );
+        })}
       </div>
       <button
+        disabled={
+          currentGroup === filteredPokemons.slice(startPage, endPage).length
+        }
         className="pagination__button button-right"
-        disabled={currentPage === filteredPokemons.length}
-        onClick={() => handlePageChange(currentPage + 1)}
-        data-testid="button-next"
+        onClick={() => dispatch(setCurrentGroup(currentGroup + 1))}
       ></button>
     </section>
   );

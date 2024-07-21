@@ -104,3 +104,11 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.dark .button-right,
+.dark .button-left,
+.dark .pagination__item {
+  &:hover {
+    outline: 4px double $primary-color;
+  }
+}
