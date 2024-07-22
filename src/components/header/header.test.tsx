@@ -6,6 +6,7 @@ import Header from './header';
 import { Store, UnknownAction } from '@reduxjs/toolkit/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '../context/themeContext';
 
 const mockStore = configureStore([]);
 
@@ -34,7 +35,9 @@ describe('test header component', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <Header />
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
         </MemoryRouter>
       </Provider>
     );
@@ -46,7 +49,9 @@ describe('test header component', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <Header />
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
         </MemoryRouter>
       </Provider>
     );
@@ -58,7 +63,9 @@ describe('test header component', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <Header />
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
         </MemoryRouter>
       </Provider>
     );

@@ -50,6 +50,7 @@ function PokemonsList(): React.ReactElement {
         pokemon ? (
           <div key={index} className="card-container">
             <input
+              data-testid={`checkbox-${pokemon.name}-${index}`}
               id={pokemon.name + ' - ' + pokemon.url}
               className="pokemon-select"
               type="checkbox"

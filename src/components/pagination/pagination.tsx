@@ -39,6 +39,7 @@ export function Pagination() {
         disabled={currentGroup === 0}
         className="pagination__button button-left"
         onClick={() => dispatch(setCurrentGroup(currentGroup - 1))}
+        data-testid="button-left"
       ></button>
       <div className="pagination">
         {filteredPokemons.slice(startPage, endPage).map((_, index) => {
@@ -63,6 +64,7 @@ export function Pagination() {
         }
         className="pagination__button button-right"
         onClick={() => dispatch(setCurrentGroup(currentGroup + 1))}
+        data-testid="button-right"
       ></button>
     </section>
   );

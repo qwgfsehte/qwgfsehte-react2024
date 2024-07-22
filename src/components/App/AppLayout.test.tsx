@@ -5,13 +5,16 @@ import { MemoryRouter } from 'react-router-dom';
 import { AppContent } from './appLayout';
 import { Provider } from 'react-redux';
 import store from '../store';
+import { ThemeProvider } from '../context/themeContext';
 
 describe('test app component', () => {
   test('render header and loading indicator components', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <AppContent />
+          <ThemeProvider>
+            <AppContent />
+          </ThemeProvider>
         </MemoryRouter>
       </Provider>
     );
