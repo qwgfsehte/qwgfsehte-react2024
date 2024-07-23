@@ -159,9 +159,36 @@
   margin-right: 10px;
   transition: 0.1s;
   cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid $tertiary-color;
+  border-radius: 6px;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 6px 20px rgba(0, 0, 0, 0.1);
 
   &:hover {
     outline: 4px double;
+  }
+
+  &:checked {
+    background-color: #d2405b;
+  }
+
+  &:checked::after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    background-image: url(/src/assets/icons/icon-check.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
   }
 }
 

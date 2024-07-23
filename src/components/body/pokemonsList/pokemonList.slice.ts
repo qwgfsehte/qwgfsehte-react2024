@@ -8,7 +8,9 @@ export const initialState: {
 } = {
   pokemonPage: [],
   nameSelectedPokemon: '',
-  selectedPokemons: [],
+  selectedPokemons: localStorage.getItem('selectedItems')
+    ? JSON.parse(localStorage.getItem('selectedItems') as string)
+    : [],
 };
 
 export const pokemonListSlice = createSlice({

@@ -32,6 +32,8 @@ function PokemonsList(): React.ReactElement {
     }
   };
 
+  localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+
   const { name } = useParams();
 
   useEffect(() => {

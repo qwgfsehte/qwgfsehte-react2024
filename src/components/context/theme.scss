@@ -49,8 +49,20 @@
 }
 
 .dark .pokemon-select {
+  box-shadow:
+    0 4px 8px rgba(255, 255, 255, 0.1),
+    0 6px 20px rgba(255, 255, 255, 0.1);
+  border: 1px solid $primary-color;
+
   &:hover {
     outline: 4px double $primary-color;
+    box-shadow:
+      0 8px 16px rgba(255, 255, 255, 0.2),
+      0 12px 40px rgba(255, 255, 255, 0.2);
+  }
+
+  &:checked::after {
+    background-image: url(/src/assets/icons/icon-check-light.png);
   }
 }
 
