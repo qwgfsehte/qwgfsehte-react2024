@@ -2,21 +2,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import './flyout.scss';
 import { RootState } from '../../store';
 import { clearItems } from '../pokemonsList/pokemonList.slice';
-import { createCSV, downloadCSV } from './createAndDownloadCSV';
+import { createCSV } from './createCSV';
+import { useEffect, useRef, useState } from 'react';
 
-export function ModalWindow() {
-  const dispatch = useDispatch();
+export const ModalWindow: React.FC = () => {
+  const downloadLinkRef = useRef<HTMLAnchorElement>(null);
+  const [csvData, setCsvData] = useState<string | null>(null);
+  const [filename, setFilename] = useState<string | null>(null);
+
   const selectedItems = useSelector(
     (state: RootState) => state.pokemonListSlice.selectedPokemons
   );
+  const dispatch = useDispatch();
 
   const handleDownload = () => {
     if (selectedItems.length > 0) {
       const csv = createCSV(selectedItems);
       const filename = `${selectedItems.length}_pokemons.csv`;
-      downloadCSV(csv, filename);
+      setCsvData(csv);
+      setFilename(filename);
     }
   };
+
+  useEffect(() => {
+    if (csvData && filename && downloadLinkRef.current) {
+      downloadLinkRef.current.click();
+      setCsvData(null);
+      setFilename(null);
+    }
+  }, [csvData, filename]);
 
   const clearSelectedPokemons = () => {
     dispatch(clearItems([]));
@@ -35,6 +49,16 @@ export function ModalWindow() {
       <button onClick={handleDownload} className="button-download">
         Download
       </button>
+      {csvData && filename && (
+        <a
+          href={`data:text/csv;charset=utf-8,${encodeURIComponent(csvData)}`}
+          download={filename}
+          style={{ display: 'none' }}
+          ref={downloadLinkRef}
+        >
+          Download
+        </a>
+      )}
     </div>
   );
-}
+};
