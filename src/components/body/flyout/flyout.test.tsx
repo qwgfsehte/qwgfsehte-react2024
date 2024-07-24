@@ -4,6 +4,7 @@ import { ModalWindow } from './flyout';
 import { Provider } from 'react-redux';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { clearItems } from '../pokemonsList/pokemonList.slice';
+import { createCSV } from './createCSV';
 
 const mockStore = configureStore([]);
 
@@ -49,5 +50,22 @@ describe('test flyout component', () => {
 
     const actions = store.getActions();
     expect(actions).to.deep.include(clearItems([]));
+  });
+
+  test('create CSV string from array of selected items', () => {
+    const selectedItems = ['bulbasaur', 'charmander', 'squirtle'];
+    expect(createCSV(selectedItems)).toBe(
+      '1. bulbasaur\n2. charmander\n3. squirtle'
+    );
+  });
+
+  test('return an empty string when the array is empty', () => {
+    const selectedItems: string[] = [];
+    expect(createCSV(selectedItems)).toBe('');
+  });
+
+  test('create CSV string for a single item array', () => {
+    const selectedItems = ['pikachu'];
+    expect(createCSV(selectedItems)).toBe('1. pikachu');
   });
 });
