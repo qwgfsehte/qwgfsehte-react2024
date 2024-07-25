@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from '../../store';
 import { setCurrentPage } from '../../pagination/pagination.slice';
 import { useNavigate } from 'react-router-dom';
 import { setNameSelectedPokemon } from '../../body/pokemonsList/pokemonList.slice';
+import { setNewStateLoading } from '../../hooks/useGetPokemons.slice';
 
 const FIRST_PAGE = 1;
 
@@ -20,7 +21,12 @@ function SearchButton(): React.ReactElement {
     dispatch(setCurrentPage(FIRST_PAGE));
     navigate(`/search/page/${FIRST_PAGE}`);
     dispatch(setNameSelectedPokemon(''));
+    dispatch(setNewStateLoading(true));
   };
+
+  setTimeout(() => {
+    dispatch(setNewStateLoading(false));
+  }, 100);
 
   return (
     <button

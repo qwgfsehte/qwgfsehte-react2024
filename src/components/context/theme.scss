@@ -124,3 +124,8 @@
     outline: 4px double $primary-color;
   }
 }
+
+.dark .error-container {
+  background-color: $tertiary-color;
+  color: $primary-color;
+}
