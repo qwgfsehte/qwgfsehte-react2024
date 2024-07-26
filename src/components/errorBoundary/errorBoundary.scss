@@ -1,3 +1,5 @@
+@import './src/utils/variables.scss';
+
 .error-container {
   position: absolute;
   top: 0;
@@ -17,14 +19,14 @@
   width: auto;
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid black;
-  background-color: white;
+  border: 1px solid $tertiary-color;
+  background-color: $primary-color;
   cursor: pointer;
   transition: 0.2s;
   &:hover {
-    outline: 4px double black;
-    background-color: #e4151d;
-    color: white;
+    outline: 4px double $tertiary-color;
+    background-color: $secondary-color;
+    color: $primary-color;
   }
 }
 

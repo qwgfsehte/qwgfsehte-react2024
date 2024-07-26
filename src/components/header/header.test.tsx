@@ -1,11 +1,27 @@
 import { describe, vi, test, expect, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
 import '@testing-library/jest-dom';
 import Header from './header';
+import { Store, UnknownAction } from '@reduxjs/toolkit/react';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '../context/themeContext';
+
+const mockStore = configureStore([]);
 
 describe('test header component', () => {
-  const testFetchData = vi.fn();
-  const testClosePokemonDetails = vi.fn();
+  let store: Store<unknown, UnknownAction, unknown>;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+
+    store = mockStore({
+      updatePokemons: {
+        filteredPokemons: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      },
+    });
+  });
 
   beforeEach(() => {
     localStorage.setItem('searchValueInput', 'bulbasaur');
@@ -17,35 +33,27 @@ describe('test header component', () => {
 
   test('render logo and title', () => {
     render(
-      <Header
-        fetchData={testFetchData}
-        closePokemonDetails={testClosePokemonDetails}
-      />
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
     expect(screen.getByAltText('logo-pokepedia')).toBeInTheDocument();
     expect(screen.getByText('PokePedia')).toBeInTheDocument();
   });
 
-  test('calls fetchData and closePokemonDetails on button click', async () => {
-    render(
-      <Header
-        fetchData={testFetchData}
-        closePokemonDetails={testClosePokemonDetails}
-      />
-    );
-    fireEvent.click(screen.getByRole('button'));
-    await waitFor(() => {
-      expect(testClosePokemonDetails).toHaveBeenCalled();
-      expect(testFetchData).toHaveBeenCalled();
-    });
-  });
-
   test('get value from localStorage and uses value as input value', () => {
     render(
-      <Header
-        fetchData={testFetchData}
-        closePokemonDetails={testClosePokemonDetails}
-      />
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
     const input = screen.getByRole('textbox');
     expect((input as HTMLInputElement).value).toBe('bulbasaur');
@@ -53,15 +61,16 @@ describe('test header component', () => {
 
   test('handles input change and updates localStorage', () => {
     render(
-      <Header
-        fetchData={testFetchData}
-        closePokemonDetails={testClosePokemonDetails}
-      />
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
-
     const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: 'pikachu' } });
-
     expect(localStorage.getItem('searchValueInput')).toBe('pikachu');
   });
 });

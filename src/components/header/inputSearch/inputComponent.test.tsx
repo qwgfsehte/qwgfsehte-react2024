@@ -7,7 +7,7 @@ describe('test input search component', () => {
   describe('test basic props', () => {
     test('render input search', () => {
       const onChangeInput = vi.fn();
-      render(<SearchInput value="test" onChange={onChangeInput} />);
+      render(<SearchInput />);
       const inputElement = screen.getByPlaceholderText('Search');
       fireEvent.change(inputElement, { target: { value: 'test' } });
       expect(onChangeInput).toHaveBeenCalledTimes(0);

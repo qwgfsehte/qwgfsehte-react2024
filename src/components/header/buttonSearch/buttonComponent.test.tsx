@@ -1,16 +1,35 @@
-import { describe, vi, test, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, test, vi, beforeEach, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import SearchButton from './buttonComponent';
+import { Store, UnknownAction } from '@reduxjs/toolkit/react';
+import configureStore from 'redux-mock-store';
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
+const mockStore = configureStore([]);
 
 describe('test search button component', () => {
-  describe('test basic props', () => {
-    const clickButton = vi.fn();
+  let store: Store<unknown, UnknownAction, unknown>;
 
-    test('render search button and click', () => {
-      render(<SearchButton onClick={clickButton} />);
-      fireEvent.click(screen.getByRole('button'));
-      expect(clickButton).toHaveBeenCalledTimes(1);
+  beforeEach(() => {
+    vi.clearAllMocks();
+
+    store = mockStore({
+      updatePokemons: {
+        filteredPokemons: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      },
     });
+  });
+
+  test('render search button and click', () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <SearchButton />
+        </MemoryRouter>
+      </Provider>
+    );
+    expect(screen.getByRole('button')).toBeInTheDocument();
   });
 });

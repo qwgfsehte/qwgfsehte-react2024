@@ -42,7 +42,6 @@
     padding: 20px 20px;
     justify-content: center;
     align-items: center;
-    background-color: $secondary-color;
     z-index: 99;
     position: relative;
   }
@@ -55,15 +54,18 @@
     border: 1px solid;
     cursor: pointer;
     transition: 0.1s;
+    color: $tertiary-color;
+    text-decoration: none;
+    text-align: center;
 
     &:hover {
-      outline: 4px double $primary-color;
+      outline: 4px double $tertiary-color;
       color: $primary-color;
       background: $tertiary-color;
     }
 
     &_active {
-      border: 2px solid $primary-color;
+      outline: 1px solid $primary-color;
       color: $primary-color;
       background: $tertiary-color;
     }
@@ -71,28 +73,28 @@
 }
 
 .button-left {
-  background-image: url(./src/assets/icons/icon-arrow.png);
+  background-image: url(/src/assets/icons/icon-arrow.png);
   &:hover {
-    background-image: url(./src/assets/icons/icon-arrow-inver.png);
+    background-image: url(/src/assets/icons/icon-arrow-inver.png);
     background-color: $tertiary-color;
-    outline: 4px double $primary-color;
+    outline: 4px double $tertiary-color;
   }
   &:disabled {
-    background-color: gray;
+    background-color: $disabled-color;
     pointer-events: none;
   }
 }
 
 .button-right {
-  background-image: url(./src/assets/icons/icon-arrow.png);
+  background-image: url(/src/assets/icons/icon-arrow.png);
   transform: rotateY(180deg);
   &:hover {
-    background-image: url(./src/assets/icons/icon-arrow-inver.png);
+    background-image: url(/src/assets/icons/icon-arrow-inver.png);
     background-color: $tertiary-color;
-    outline: 4px double $primary-color;
+    outline: 4px double $tertiary-color;
   }
   &:disabled {
-    background-color: gray;
+    background-color: $disabled-color;
     pointer-events: none;
   }
 }

@@ -1,12 +1,13 @@
+@import './src/utils/variables.scss';
+
 .pokemon {
   &-details {
     display: flex;
     width: 50%;
     height: 100%;
-    background-color: white;
+    background-color: $primary-color;
     padding: 20px;
     border-radius: 6px;
-    border: 4px double black;
     flex-direction: column;
     justify-content: center;
     transition: 0.4s;
@@ -79,7 +80,7 @@
   }
 
   &__button-close {
-    background-color: white;
+    background-color: $primary-color;
     border: 1px solid;
     border-radius: 6px;
     padding: 10px;
@@ -88,17 +89,17 @@
     position: absolute;
     top: 0;
     right: 0;
-    background-image: url(./src/assets/icons/icon-close.png);
+    background-image: url(/src/assets/icons/icon-close.png);
     background-size: 100%;
     background-position: center;
     width: 40px;
     height: 35px;
 
     &:hover {
-      background-color: #e4151d;
-      color: white;
-      outline: 4px double black;
-      background-image: url(./src/assets/icons/icon-close-inver.png);
+      background-color: $secondary-color;
+      color: $primary-color;
+      outline: 4px double $tertiary-color;
+      background-image: url(/src/assets/icons/icon-close-inver.png);
     }
   }
 
@@ -118,25 +119,25 @@
   gap: 10px;
 
   &-button {
-    background-image: url(./src/assets/icons/icon-play.png);
+    background-image: url(/src/assets/icons/icon-play.png);
     width: 30px;
     height: 30px;
     background-size: 100%;
     background-position: center;
-    background-color: white;
+    background-color: $primary-color;
     border-radius: 6px;
     border: 1px solid;
     cursor: pointer;
 
     &:hover {
-      background-color: #e4151d;
-      color: white;
-      outline: 4px double black;
-      background-image: url(./src/assets/icons/icon-play-inver.png);
+      background-color: $secondary-color;
+      color: $primary-color;
+      outline: 4px double $tertiary-color;
+      background-image: url(/src/assets/icons/icon-play-inver.png);
     }
 
     &:disabled {
-      background-color: gray;
+      background-color: $disabled-color;
       pointer-events: none;
     }
   }
@@ -152,6 +153,7 @@
   &__item {
     padding: 7px;
     border-radius: 6px;
+    color: $tertiary-color;
   }
 }
 

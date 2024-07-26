@@ -32,7 +32,7 @@ class ErrorBoundary extends React.Component<
         <div className="error-container">
           <img
             className="error-img"
-            src="./src/assets/imgs/loading.gif"
+            src="/src/assets/imgs/loading.gif"
             alt=""
           />
           <h1>Oops!</h1>

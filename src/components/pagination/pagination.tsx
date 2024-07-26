@@ -1,72 +1,70 @@
-import { AllPokemons } from '../../interfaces/interface';
+import { useDispatch, useSelector } from 'react-redux';
 import './pagination.scss';
+import { RootState } from '../store';
+import { setCurrentGroup, setCurrentPage } from './pagination.slice';
+import { Link, useNavigate } from 'react-router-dom';
+import { setNameSelectedPokemon } from '../body/pokemonsList/pokemonList.slice';
 
-interface PaginationProps {
-  handleNextPage: () => void;
-  handlePrevPage: () => void;
-  currentPage: number;
-  countPages: AllPokemons[][];
-  setCurrentPage: (page: number) => void;
-  closePokemonDetails: () => void;
-}
+const PAGES_PER_GROUP = 10;
 
-const FIRST_PAGE = 1;
+export function Pagination() {
+  const filteredPokemons = useSelector(
+    (state: RootState) => state.updatePokemons.filteredPokemons
+  );
+  const currentPage = useSelector(
+    (state: RootState) => state.paginationSlice.currentPage
+  );
+  const currentGroup = useSelector(
+    (state: RootState) => state.paginationSlice.currentGroup
+  );
 
-export function Pagination({
-  handleNextPage,
-  handlePrevPage,
-  currentPage,
-  countPages,
-  setCurrentPage,
-  closePokemonDetails,
-}: PaginationProps) {
-  function setNextPage() {
-    closePokemonDetails();
-    setTimeout(() => {
-      handleNextPage();
-    });
-  }
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  function setPrevPage() {
-    closePokemonDetails();
-    setTimeout(() => {
-      handlePrevPage();
-    });
-  }
+  const handlePageChange = (newPage: number) => {
+    dispatch(setCurrentPage(newPage));
+    dispatch(setNameSelectedPokemon(''));
+    navigate(`/search/page/${newPage}`);
+  };
 
-  function setNewPage(index: number) {
-    closePokemonDetails();
-    setTimeout(() => {
-      setCurrentPage(index + 1);
-    });
-  }
+  const startPage = currentGroup * PAGES_PER_GROUP;
+  const endPage = Math.min(
+    startPage + PAGES_PER_GROUP,
+    filteredPokemons.length
+  );
 
   return (
     <section className="pagination-container">
       <button
+        disabled={currentGroup === 0}
         className="pagination__button button-left"
-        disabled={currentPage === FIRST_PAGE}
-        onClick={setPrevPage}
-        data-testid="button-prev"
+        onClick={() => dispatch(setCurrentGroup(currentGroup - 1))}
+        data-testid="button-left"
       ></button>
       <div className="pagination">
-        {countPages.map((_, index) => (
-          <button
-            onClick={() => {
-              setNewPage(index);
-            }}
-            key={index}
-            className={`pagination__item ${index + 1 === currentPage ? 'pagination__item_active' : ''}`}
-          >
-            {index + 1}
-          </button>
-        ))}
+        {filteredPokemons.slice(startPage, endPage).map((_, index) => {
+          const pageIndex = startPage + index + 1;
+          return (
+            <Link
+              onClick={() => {
+                handlePageChange(pageIndex);
+              }}
+              key={pageIndex}
+              className={`pagination__item ${pageIndex === currentPage ? 'pagination__item_active' : ''}`}
+              to={`/search/page/${pageIndex}`}
+            >
+              {pageIndex}
+            </Link>
+          );
+        })}
       </div>
       <button
+        disabled={
+          currentGroup === filteredPokemons.slice(startPage, endPage).length
+        }
         className="pagination__button button-right"
-        disabled={currentPage === countPages.length}
-        onClick={setNextPage}
-        data-testid="button-next"
+        onClick={() => dispatch(setCurrentGroup(currentGroup + 1))}
+        data-testid="button-right"
       ></button>
     </section>
   );

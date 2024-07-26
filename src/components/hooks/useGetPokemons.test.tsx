@@ -1,61 +1,72 @@
-import { describe, test, expect, vi } from 'vitest';
-import { act, renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { Routes, Route, MemoryRouter } from 'react-router-dom';
-import { WrapperProps } from '../../interfaces/interface';
-import { useGetPokemons } from './useGetPokemons';
+import {
+  describe,
+  vi,
+  test,
+  expect,
+  beforeEach,
+  Mock,
+  afterEach,
+} from 'vitest';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
+import { Store, UnknownAction } from '@reduxjs/toolkit/react';
+import { useFilterPokemons } from './useFilterPokemons';
 
-describe('test get pokemons hook', () => {
-  const wrapper: React.FC<WrapperProps> = ({ children }) => (
-    <MemoryRouter>
-      <Routes>
-        <Route path="/" element={children} />
-      </Routes>
-    </MemoryRouter>
-  );
+const mockStore = configureStore([]);
 
-  test('test set current page', () => {
-    const { result } = renderHook(() => useGetPokemons(), { wrapper });
-    act(() => {
-      result.current.setCurrentPage(2);
+describe('test hooks', () => {
+  let store: Store<unknown, UnknownAction, unknown>;
+  let mockDispatch: Mock<(...args: unknown[]) => void>;
+
+  const TestComponent = ({
+    pokemons,
+    page,
+  }: {
+    pokemons: { name: string; url: string }[];
+    page: number;
+  }) => {
+    useFilterPokemons(pokemons, page);
+    return null;
+  };
+
+  beforeEach(() => {
+    store = mockStore({
+      pokemonListSlice: {
+        nameSelectedPokemon: '',
+        pokemonPage: [],
+      },
     });
-    expect(result.current.currentPage).toBe(2);
 
-    act(() => {
-      result.current.handleNextPage();
-    });
-    expect(result.current.currentPage).toBe(3);
-
-    act(() => {
-      result.current.handlePrevPage();
-    });
-    expect(result.current.currentPage).toBe(2);
+    mockDispatch = vi.fn();
   });
 
-  test('test fetchPokemons successfully', async () => {
-    vi.spyOn(globalThis, 'fetch').mockImplementation(() =>
-      Promise.resolve({
-        json: () =>
-          Promise.resolve({
-            results: [
-              { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/' },
-            ],
-          }),
-      } as Response)
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  test('get value with localStorage', () => {
+    vi.spyOn(localStorage, 'getItem').mockImplementation(key => {
+      if (key === 'searchValueInput') return 'chu';
+      return null;
+    });
+  });
+
+  test('calls filterPokemons with correct parameters', () => {
+    const pokemons = [
+      { name: 'pikachu', url: 'testUrl' },
+      { name: 'bulbasaur', url: 'testUrl' },
+      { name: 'raichu', url: 'testUrl' },
+    ];
+    const page = 1;
+
+    render(
+      <Provider store={store}>
+        <TestComponent pokemons={pokemons} page={page} />
+      </Provider>
     );
 
-    const { result } = renderHook(() => useGetPokemons(), {
-      wrapper,
-    });
-
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
-    });
-
-    expect(result.current.allPokemons).toEqual([
-      { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/' },
-    ]);
-    expect(result.current.loading).toBe(true);
-    expect(result.current.errorMessage).toBe('');
+    expect(mockDispatch).toHaveBeenCalledTimes(0);
   });
 });

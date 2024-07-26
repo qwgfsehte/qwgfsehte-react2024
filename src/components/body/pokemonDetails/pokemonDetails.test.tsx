@@ -1,90 +1,119 @@
 import '@testing-library/jest-dom';
-import { describe, vi, test, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, test, expect, vi, beforeEach, Mock } from 'vitest';
+import { Provider } from 'react-redux';
+import { render, screen } from '@testing-library/react';
 import { PokemonDetailsInfo } from './pokemonDetailsInfo';
+import { MemoryRouter } from 'react-router-dom';
+import configureStore from 'redux-mock-store';
+import { pokemonApi } from '../../pokemonAPI';
 
-describe('test pokemon details component', () => {
-  const data = {
-    id: '1',
-    name: 'bulbasaur',
-    sprites: {
-      front_default:
-        'https://raw.example.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-    },
-    types: [{ type: { name: 'grass' } }, { type: { name: 'poison' } }],
-    weight: 69,
-    height: 7,
-    abilities: [
-      { ability: { name: 'overgrow' } },
-      { ability: { name: 'chlorophyll' } },
-    ],
-    stats: [
-      {
-        base_stat: 45,
-        stat: {
-          name: 'hp',
-        },
-      },
-      {
-        base_stat: 49,
-        stat: {
-          name: 'attack',
-        },
-      },
-      {
-        base_stat: 49,
-        stat: {
-          name: 'defense',
-        },
-      },
-      {
-        base_stat: 65,
-        stat: {
-          name: 'special-attack',
-        },
-      },
-      {
-        base_stat: 65,
-        stat: {
-          name: 'special-defense',
-        },
-      },
-      {
-        base_stat: 45,
-        stat: {
-          name: 'speed',
-        },
-      },
-    ],
-    cries: {
-      latest:
-        'https://raw.example.com/PokeAPI/cries/main/cries/pokemon/latest/1.ogg',
-      legacy:
-        'https://raw.example.com/PokeAPI/cries/main/cries/pokemon/legacy/1.ogg',
-    },
-  };
+const mockStore = configureStore([]);
+const initialState = {
+  pokemonListSlice: {
+    nameSelectedPokemon: 'pikachu',
+    pokemonPage: [],
+    selectedPokemons: [],
+  },
+  paginationSlice: {
+    currentPage: 1,
+    currentGroup: 0,
+  },
+  pokemonDetailsSlice: {
+    error: 'Error message',
+  },
+};
 
-  const onClick = vi.fn();
+const mockData = {
+  name: 'pikachu',
+  sprites: { front_default: 'pikachu.png' },
+  types: [{ type: { name: 'electric' } }],
+  cries: { latest: 'latest.mp3', legacy: 'legacy.mp3' },
+  weight: 60,
+  height: 4,
+  abilities: [{ ability: { name: 'static' } }],
+  stats: [{ stat: { name: 'speed' }, base_stat: 90 }],
+};
 
-  test('render with correct data', () => {
-    render(<PokemonDetailsInfo data={data} onClose={onClick} />);
-    expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
-    expect(screen.getByAltText('bulbasaur')).toHaveAttribute(
-      'src',
-      data.sprites.front_default
-    );
-    expect(screen.getByText('grass')).toBeInTheDocument();
-    expect(screen.getByText('Weight:69')).toBeInTheDocument();
-    expect(screen.getByText('Height:7')).toBeInTheDocument();
-    expect(screen.getByText('hp:45')).toBeInTheDocument();
-    expect(screen.getByText('attack:49')).toBeInTheDocument();
-    expect(screen.getByText('overgrow')).toBeInTheDocument();
+vi.mock('../../pokemonAPI', () => ({
+  pokemonApi: {
+    useFetchPokemonDetailsQuery: vi.fn(),
+  },
+}));
+
+describe('PokemonDetailsInfo', () => {
+  let store: ReturnType<typeof mockStore>;
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+
+    (pokemonApi.useFetchPokemonDetailsQuery as Mock).mockReset();
   });
 
-  test('close right panel when click on button', () => {
-    render(<PokemonDetailsInfo data={data} onClose={onClick} />);
-    const closeButton = screen.getByTestId('close-button');
-    fireEvent.click(closeButton);
-    expect(onClick).toHaveBeenCalled();
+  test('render loading state', () => {
+    (pokemonApi.useFetchPokemonDetailsQuery as Mock).mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      error: false,
+    });
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PokemonDetailsInfo />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  });
+
+  test('render error state', () => {
+    (pokemonApi.useFetchPokemonDetailsQuery as Mock).mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      error: 'Error message',
+    });
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PokemonDetailsInfo />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    expect(screen.getByText('Error message')).toBeInTheDocument();
+  });
+
+  test('render pokemon details', () => {
+    (pokemonApi.useFetchPokemonDetailsQuery as Mock).mockReturnValue({
+      data: mockData,
+      isLoading: false,
+      error: false,
+    });
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PokemonDetailsInfo />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    expect(screen.getByText('pikachu')).toBeInTheDocument();
+    expect(screen.getByAltText('pikachu')).toHaveAttribute(
+      'src',
+      'pikachu.png'
+    );
+    expect(screen.getByText('Types:')).toBeInTheDocument();
+    expect(screen.getByText('electric')).toBeInTheDocument();
+    expect(screen.getByText('Latest cry:')).toBeInTheDocument();
+    expect(screen.getByText('Legacy cry:')).toBeInTheDocument();
+    expect(screen.getByText('Weight:60')).toBeInTheDocument();
+    expect(screen.getByText('Height:4')).toBeInTheDocument();
+    expect(screen.getByText('Abilities:')).toBeInTheDocument();
+    expect(screen.getByText('static')).toBeInTheDocument();
+    expect(screen.getByText('Stats:')).toBeInTheDocument();
+    expect(screen.getByText('speed:90')).toBeInTheDocument();
   });
 });

@@ -1,17 +1,20 @@
 import React from 'react';
-import { SearchInputProps } from '../../../interfaces/interface';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
-function SearchInput({
-  value,
-  onChange,
-}: SearchInputProps): React.ReactElement {
+function SearchInput(): React.ReactElement {
+  const [inputValue, setInputValue] = useLocalStorage('searchValueInput');
+
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setInputValue(event.target.value);
+  }
+
   return (
     <input
-      value={value}
+      value={inputValue}
       placeholder="Search"
       type="text"
       className="search-form__input"
-      onChange={onChange}
+      onChange={handleInputChange}
     ></input>
   );
 }

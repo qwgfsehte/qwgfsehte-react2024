@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ErrorPage404 from './pageError404';
 import { MemoryRouter } from 'react-router-dom';
@@ -27,7 +27,10 @@ describe('test error page', () => {
         <ErrorPage404 />
       </MemoryRouter>
     );
-    screen.getByRole('link', { name: 'Go to home' }).click();
+    act(() => {
+      screen.getByRole('link', { name: 'Go to home' }).click();
+    });
+
     expect(window.location.pathname).toBe('/');
   });
 });

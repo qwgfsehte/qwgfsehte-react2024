@@ -3,7 +3,7 @@ function LoadingIndicator() {
     <div className="loading-indicator">
       <img
         className="loading-img"
-        src="./src/assets/imgs/loading.gif"
+        src="/src/assets/imgs/loading.gif"
         alt="Loading"
       />
       Loading...

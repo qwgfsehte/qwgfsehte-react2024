@@ -1,7 +1,7 @@
-$backgroundHeader: #e4151d;
+@import './src/utils/variables.scss';
 
 .header {
-  background-color: $backgroundHeader;
+  background-color: $secondary-color;
   width: 100%;
   height: 100px;
   display: flex;
@@ -11,6 +11,7 @@ $backgroundHeader: #e4151d;
   position: relative;
   padding: 0 20px;
   gap: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -22,7 +23,7 @@ $backgroundHeader: #e4151d;
     gap: 5px;
   }
   &-title {
-    color: white;
+    color: $primary-color;
   }
 }
 
@@ -39,11 +40,11 @@ $backgroundHeader: #e4151d;
     height: 45%;
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid black;
+    border: 1px solid $tertiary-color;
     transition: 0.1s;
     &:focus,
     &:hover {
-      outline: 4px double black;
+      outline: 4px double $tertiary-color;
     }
   }
 
@@ -52,14 +53,14 @@ $backgroundHeader: #e4151d;
     height: 45%;
     padding: 10px;
     border-radius: 6px;
-    background-image: url(./src/assets/icons/lens-icon.png);
+    background-image: url(/src/assets/icons/lens-icon.png);
     background-size: 90%;
     background-position: center;
-    border: 1px solid black;
+    border: 1px solid $tertiary-color;
     transition: 0.1s;
     cursor: pointer;
     &:hover {
-      outline: 4px double black;
+      outline: 4px double $tertiary-color;
     }
   }
 }
@@ -69,13 +70,26 @@ $backgroundHeader: #e4151d;
   height: 45%;
   width: 20%;
   border-radius: 6px;
-  border: 1px solid black;
-  background-color: white;
+  border: 1px solid $tertiary-color;
+  background-color: $primary-color;
   cursor: pointer;
   transition: 0.2s;
   &:hover {
-    outline: 4px double black;
+    outline: 4px double $tertiary-color;
   }
+}
+
+.button-theme {
+  background-image: url(/src/assets/icons/icon-moon.png);
+  transform: rotateY(180deg);
+  width: 50px;
+  height: 45%;
+  background-size: 110%;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
 }
 
 @media (max-width: 600px) {
