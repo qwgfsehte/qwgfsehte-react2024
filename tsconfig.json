@@ -1,15 +1,50 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
   "compilerOptions": {
-    "jsx": "react",
-    "types": ["vitest/globals"]
-  }
+    "target": "es5",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "Components/*": [
+        "Components/*"
+      ],
+      "pages/*": [
+        "pages/*"
+      ],
+      "styles/*": [
+        "styles/*"
+      ]
+    },
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "noImplicitAny": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.mjs",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
