@@ -16,6 +16,7 @@ import styles from './app.module.scss';
 import stylesTheme from 'Components/context/theme.module.scss';
 import { setCurrentPage } from 'Components/pagination/pagination.slice';
 import { useRouter } from 'next/router';
+import PokemonDetailsContainer from 'Components/body/pokemonDetails/pokemonDetailsContainer';
 
 const FIRST_PAGE = 1;
 
@@ -23,7 +24,7 @@ export function AppContent() {
   const { isDark } = useToggleTheme();
   const dispatch = useDispatch();
   const router = useRouter();
-  const { pageNumber } = router.query;
+  const { pageNumber, details } = router.query;
   const loading = useSelector(
     (state: RootState) => state.updatePokemons.loading
   );
@@ -38,6 +39,18 @@ export function AppContent() {
     (state: RootState) => state.pokemonListSlice.pokemonPage
   );
 
+  const nameSelectedPokemon = useSelector(
+    (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
+  );
+
+  useEffect(() => {
+    if (typeof details === 'string') {
+      dispatch(setNameSelectedPokemon(details));
+    } else {
+      dispatch(setNameSelectedPokemon(''));
+    }
+  }, [dispatch, details]);
+
   useEffect(() => {
     const pageParam = Number(pageNumber) ? Number(pageNumber) : FIRST_PAGE;
     dispatch(setCurrentPage(pageParam));
@@ -46,7 +59,7 @@ export function AppContent() {
   useGetPokemons();
 
   return (
-    <div className={isDark ? stylesTheme['dark'] : stylesTheme['light']}>
+    <div className={`${styles.main} ${isDark ? stylesTheme.dark : ''}`}>
       <Header />
       <main style={{ position: 'relative' }}>
         {loading && <LoadingIndicator />}
@@ -63,6 +76,11 @@ export function AppContent() {
               ></Link>
               <section className={styles['container-cards']}>
                 <PokemonsList />
+                {nameSelectedPokemon ? (
+                  <PokemonDetailsContainer />
+                ) : (
+                  <div></div>
+                )}
               </section>
               <Pagination />
               <ModalWindow />

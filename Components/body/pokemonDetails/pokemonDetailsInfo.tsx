@@ -1,17 +1,18 @@
 import { useRef } from 'react';
 import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
-import './pokemonDetails.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNameSelectedPokemon } from '../pokemonsList/pokemonList.slice';
 import { RootState } from 'Components/store';
 import { pokemonApi } from 'Components/pokemonAPI';
-import Link from 'next/link';
 import { StatName, TypeName } from 'interfaces/interface';
+import styles from './pokemonDetails.module.scss';
+import { useRouter } from 'next/router';
 
 export function PokemonDetailsInfo() {
   const audioLatestRef = useRef<HTMLAudioElement>(null);
   const audioLegacyRef = useRef<HTMLAudioElement>(null);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const nameSelectedPokemon = useSelector(
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
@@ -38,38 +39,44 @@ export function PokemonDetailsInfo() {
     }
   };
 
+  const handleClose = () => {
+    dispatch(setNameSelectedPokemon(''));
+    router.push(`/search/page/${currentPage}`, undefined, { shallow: true });
+  };
+
   return (
     <>
       {isLoading && <p>Loading...</p>}
       {error && <p>{errorMessage}</p>}
       {data !== undefined && (
-        <div className="pokemon__details-container">
-          <div className="pokemon__info-container">
-            <div className="pokemon__name-container">
-              <h2 className="pokemon-name">{data.name}</h2>
-              <Link
-                href={`/search/page/${currentPage}`}
-                className="pokemon__button-close"
+        <div className={styles['pokemon__details-container']}>
+          <div className={styles['pokemon__info-container']}>
+            <div className={styles['pokemon__name-container']}>
+              <h2 className={styles['pokemon-name']}>
+                {data.name.charAt(0).toUpperCase() + data.name.slice(1)}
+              </h2>
+              <button
+                onClick={handleClose}
+                className={styles['pokemon__button-close']}
                 data-testid="close-button"
-                onClick={() => dispatch(setNameSelectedPokemon(''))}
-              ></Link>
+              ></button>
             </div>
             <img
               alt={data.name}
-              className="pokemon-img"
+              className={styles['pokemon-img']}
               src={
                 data.sprites.front_default
                   ? data.sprites.front_default
-                  : '/src/assets/imgs/default-img.webp'
+                  : '/assets/imgs/default-img.webp'
               }
             />
-            <div className="pokemon__characteristics-container">
-              <div className="pokemon__types-container">
-                <div className="types-list">
+            <div className={styles['pokemon__characteristics-container']}>
+              <div className={styles['pokemon__types-container']}>
+                <div className={styles['types-list']}>
                   Types:
                   {data.types.map((type, index) => (
                     <div
-                      className="types-list__item"
+                      className={styles['types-list__item']}
                       key={index}
                       style={{
                         backgroundColor:
@@ -83,13 +90,13 @@ export function PokemonDetailsInfo() {
                   ))}
                 </div>
               </div>
-              <div className="pokemon__cries-list">
-                <div className="cries-list___item">
+              <div className={styles['pokemon__cries-list']}>
+                <div className={styles['cries-list___item']}>
                   Latest cry:
                   <button
                     onClick={playLatestCry}
                     disabled={data.cries.latest === null}
-                    className="cries-list___item-button"
+                    className={styles['cries-list___item-button']}
                   ></button>
                   <audio ref={audioLatestRef} src={data.cries.latest}>
                     <track
@@ -100,12 +107,12 @@ export function PokemonDetailsInfo() {
                     />
                   </audio>
                 </div>
-                <div className="cries-list___item">
+                <div className={styles['cries-list___item']}>
                   Legacy cry:
                   <button
                     disabled={data.cries.legacy === null}
                     onClick={playLegacyCry}
-                    className="cries-list___item-button"
+                    className={styles['cries-list___item-button']}
                   ></button>
                   <audio ref={audioLegacyRef} src={data.cries.legacy}>
                     <track
@@ -118,30 +125,30 @@ export function PokemonDetailsInfo() {
                   </audio>
                 </div>
               </div>
-              <div className="pokemon__physical-info">
+              <div className={styles['pokemon__physical-info']}>
                 <p>Weight:{data.weight}</p>
                 <p>Height:{data.height}</p>
               </div>
-              <div className="pokemon__abilities-container">
+              <div className={styles['pokemon__abilities-container']}>
                 Abilities:
-                <ul className="abilities-list">
+                <ul className={styles['abilities-list']}>
                   {data.abilities.map((ability, index) => (
-                    <li className="abilities-list__item" key={index}>
+                    <li className={styles['abilities-list__item']} key={index}>
                       {ability.ability.name}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="pokemon__stats-container">
-                <h3 className="stats-title">Stats:</h3>
-                <ul className="stats-list">
+              <div className={styles['pokemon__stats-container']}>
+                <h3 className={styles['stats-title']}>Stats:</h3>
+                <ul className={styles['stats-list']}>
                   {data.stats.map((stat, index) => (
-                    <li className="stats-list__item" key={index}>
+                    <li className={styles['stats-list__item']} key={index}>
                       {STAT_ICONS[stat.stat.name as StatName] && (
                         <img
                           src={STAT_ICONS[stat.stat.name as StatName]}
                           alt={`${stat.stat.name} icon`}
-                          className="stats-icon"
+                          className={styles['stats-icon']}
                         />
                       )}
                       {stat.stat.name + ':' + stat.base_stat}

@@ -1,12 +1,12 @@
 import { StatIcons, StatName, TypeName } from '../interfaces/interface';
 
 export const STAT_ICONS: StatIcons = {
-  [StatName.HP]: '/src/assets/icons/icon-heart.png',
-  [StatName.Attack]: '/src/assets/icons/icon-knife.png',
-  [StatName.Defense]: '/src/assets/icons/icon-defence.png',
-  [StatName.SpecialAttack]: '/src/assets/icons/icon-scull.png',
-  [StatName.SpecialDefense]: '/src/assets/icons/icon-specialDefence.png',
-  [StatName.Speed]: '/src/assets/icons/icon-speed.png',
+  [StatName.HP]: '/assets/icons/icon-heart.png',
+  [StatName.Attack]: '/assets/icons/icon-knife.png',
+  [StatName.Defense]: '/assets/icons/icon-defence.png',
+  [StatName.SpecialAttack]: '/assets/icons/icon-scull.png',
+  [StatName.SpecialDefense]: '/assets/icons/icon-specialDefence.png',
+  [StatName.Speed]: '/assets/icons/icon-speed.png',
 };
 
 export const COLOR_TYPES = {

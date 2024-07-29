@@ -3,9 +3,8 @@ import { describe, test, expect, vi, beforeEach, Mock } from 'vitest';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 import { PokemonDetailsInfo } from './pokemonDetailsInfo';
-import { MemoryRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
-import { pokemonApi } from '../../../../Components/pokemonAPI';
+import { pokemonApi } from 'Components/pokemonAPI';
 
 const mockStore = configureStore([]);
 const initialState = {
@@ -58,9 +57,7 @@ describe('PokemonDetailsInfo', () => {
 
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <PokemonDetailsInfo />
-        </MemoryRouter>
+        <PokemonDetailsInfo />
       </Provider>
     );
 
@@ -76,9 +73,7 @@ describe('PokemonDetailsInfo', () => {
 
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <PokemonDetailsInfo />
-        </MemoryRouter>
+        <PokemonDetailsInfo />
       </Provider>
     );
 
@@ -94,9 +89,7 @@ describe('PokemonDetailsInfo', () => {
 
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <PokemonDetailsInfo />
-        </MemoryRouter>
+        <PokemonDetailsInfo />
       </Provider>
     );
 

@@ -2,7 +2,7 @@ import styles from './footer.module.scss';
 
 export function Footer() {
   return (
-    <div className={styles['footer-container']}>
+    <footer className={styles['footer-container']}>
       <a
         target="_blank"
         href="https://pokeapi.co/"
@@ -12,6 +12,6 @@ export function Footer() {
         {''}
       </a>
       <div>2024</div>
-    </div>
+    </footer>
   );
 }

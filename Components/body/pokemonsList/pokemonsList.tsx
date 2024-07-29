@@ -5,20 +5,23 @@ import {
   removeItem,
   setNameSelectedPokemon,
 } from './pokemonList.slice';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent } from 'react';
 import { RootState } from '../../store';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
 import { Pokeball } from './pokeball';
+import { useRouter } from 'next/router';
 
 function PokemonsList(): React.ReactElement {
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const nameSelectedPokemon = useSelector(
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
   );
   const pokemonPage = useSelector(
     (state: RootState) => state.pokemonListSlice.pokemonPage
+  );
+
+  const currentPage = useSelector(
+    (state: RootState) => state.paginationSlice.currentPage
   );
 
   const selectedItems = useSelector(
@@ -33,15 +36,13 @@ function PokemonsList(): React.ReactElement {
     }
   };
 
+  const handlePokemonClick = (pokemonName: string) => {
+    const href = `/search/page/${currentPage}/?details=${pokemonName}`;
+    router.push(href, undefined, { shallow: true });
+    dispatch(setNameSelectedPokemon(pokemonName));
+  };
+
   localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
-
-  const { name } = useParams();
-
-  useEffect(() => {
-    if (name) {
-      dispatch(setNameSelectedPokemon(name as string));
-    }
-  }, [dispatch, name]);
 
   return (
     <div
@@ -64,15 +65,15 @@ function PokemonsList(): React.ReactElement {
               )}
               onChange={handleCheckboxChange}
             ></input>
-            <Link
-              key={index}
+            <button
               className={styles['card']}
-              onClick={() => dispatch(setNameSelectedPokemon(pokemon.name))}
-              href={`details/${pokemon.name}`}
+              onClick={() => handlePokemonClick(pokemon.name)}
             >
               <Pokeball />
-              <h3 className={styles['card-name']}>{pokemon.name}</h3>
-            </Link>
+              <h3 className={styles['card-name']}>
+                {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+              </h3>
+            </button>
           </div>
         ) : (
           <div key={index} className={styles['placeholder']}>

@@ -1,4 +1,4 @@
-import { AppContent } from '../../../Components/App/appLayout';
+import { AppContent } from 'Components/App/appLayout';
 
 const PageNumber = () => {
   return <AppContent />;

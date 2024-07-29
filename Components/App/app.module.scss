@@ -1,5 +1,12 @@
 @import '/utils/variables.scss';
 
+.main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .container-cards {
   padding: 30px 20px;
   display: flex;

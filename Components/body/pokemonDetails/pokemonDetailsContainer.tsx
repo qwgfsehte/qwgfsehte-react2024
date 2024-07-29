@@ -1,6 +1,7 @@
 import { RootState } from 'Components/store';
 import { PokemonDetailsInfo } from './pokemonDetailsInfo';
 import { useSelector } from 'react-redux';
+import styles from './pokemonDetails.module.scss';
 
 function PokemonDetailsContainer() {
   const nameSelectedPokemon = useSelector(
@@ -10,7 +11,7 @@ function PokemonDetailsContainer() {
   if (!nameSelectedPokemon) return null;
 
   return (
-    <div className="pokemon-details">
+    <div className={styles['pokemon-details']}>
       <PokemonDetailsInfo />
     </div>
   );
