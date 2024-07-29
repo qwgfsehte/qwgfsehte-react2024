@@ -53,7 +53,7 @@
     height: 45%;
     padding: 10px;
     border-radius: 6px;
-    background-image: url(/src/assets/icons/lens-icon.png);
+    background-image: url(/assets/icons/lens-icon.png);
     background-size: 90%;
     background-position: center;
     border: 1px solid $tertiary-color;
@@ -80,7 +80,7 @@
 }
 
 .button-theme {
-  background-image: url(/src/assets/icons/icon-moon.png);
+  background-image: url(/assets/icons/icon-moon.png);
   transform: rotateY(180deg);
   width: 50px;
   height: 45%;

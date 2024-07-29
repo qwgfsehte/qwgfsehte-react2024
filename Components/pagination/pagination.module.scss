@@ -73,9 +73,9 @@
 }
 
 .button-left {
-  background-image: url(/src/assets/icons/icon-arrow.png);
+  background-image: url(/assets/icons/icon-arrow.png);
   &:hover {
-    background-image: url(/src/assets/icons/icon-arrow-inver.png);
+    background-image: url(/assets/icons/icon-arrow-inver.png);
     background-color: $tertiary-color;
     outline: 4px double $tertiary-color;
   }
@@ -86,10 +86,10 @@
 }
 
 .button-right {
-  background-image: url(/src/assets/icons/icon-arrow.png);
+  background-image: url(/assets/icons/icon-arrow.png);
   transform: rotateY(180deg);
   &:hover {
-    background-image: url(/src/assets/icons/icon-arrow-inver.png);
+    background-image: url(/assets/icons/icon-arrow-inver.png);
     background-color: $tertiary-color;
     outline: 4px double $tertiary-color;
   }

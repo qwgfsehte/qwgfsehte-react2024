@@ -1,12 +1,12 @@
-import './footer.module.scss';
+import styles from './footer.module.scss';
 
 export function Footer() {
   return (
-    <div className="footer-container">
+    <div className={styles['footer-container']}>
       <a
         target="_blank"
         href="https://pokeapi.co/"
-        className="logo-api"
+        className={styles['logo-api']}
         rel="noreferrer"
       >
         {''}

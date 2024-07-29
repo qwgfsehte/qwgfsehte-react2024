@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { setCurrentPage } from '../../pagination/pagination.slice';
 import { setNewStateLoading } from '../../hooks/useGetPokemons.slice';
+import styles from 'Components/header/header.module.scss';
 
 const FIRST_PAGE = 1;
 
@@ -17,16 +18,16 @@ function SearchButton(): React.ReactElement {
     filterPokemons(dispatch, allPokemons, FIRST_PAGE);
     dispatch(setCurrentPage(FIRST_PAGE));
     dispatch(setNewStateLoading(true));
-  };
 
-  setTimeout(() => {
-    dispatch(setNewStateLoading(false));
-  }, 100);
+    setTimeout(() => {
+      dispatch(setNewStateLoading(false));
+    }, 100);
+  };
 
   return (
     <button
       data-testid="search-button"
-      className="search-form__button"
+      className={styles['search-form__button']}
       onClick={() => handleSearch()}
     ></button>
   );

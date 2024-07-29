@@ -1,9 +1,11 @@
+import styles from 'Components/App/app.module.scss';
+
 function LoadingIndicator() {
   return (
-    <div className="loading-indicator">
+    <div className={styles['loading-indicator']}>
       <img
-        className="loading-img"
-        src="../assets/imgs/loading.gif"
+        className={styles['loading-img']}
+        src="/assets/imgs/loading.gif"
         alt="Loading"
       />
       Loading...

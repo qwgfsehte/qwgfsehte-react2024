@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import './flyout.module.scss';
+import styles from './flyout.module.scss';
 import { createCSV } from './createCSV';
 import { useEffect, useRef, useState } from 'react';
 import { RootState } from '../../store';
@@ -36,17 +36,20 @@ export const ModalWindow: React.FC = () => {
     dispatch(clearItems([]));
   };
 
-  if (selectedItems === undefined) {
+  if (selectedItems.length === 0) {
     return null;
   }
 
   return (
-    <div className="modal-window">
+    <div className={styles['modal-window']}>
       <p>{selectedItems.length} items are selected</p>
-      <button onClick={clearSelectedPokemons} className="button-unselect">
+      <button
+        onClick={clearSelectedPokemons}
+        className={styles['button-unselect']}
+      >
         Unselect all
       </button>
-      <button onClick={handleDownload} className="button-download">
+      <button onClick={handleDownload} className={styles['button-download']}>
         Download
       </button>
       {csvData && filename && (

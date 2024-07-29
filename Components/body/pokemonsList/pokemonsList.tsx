@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import './pokemonList.module.scss';
+import styles from 'Components/body/pokemonsList/pokemonList.module.scss';
 import {
   addItem,
   removeItem,
@@ -46,16 +46,18 @@ function PokemonsList(): React.ReactElement {
   return (
     <div
       className={
-        nameSelectedPokemon ? 'pokemons-list half-width' : 'pokemons-list'
+        nameSelectedPokemon
+          ? `${styles['pokemons-list']} ${styles['half-width']}`
+          : styles['pokemons-list']
       }
     >
       {pokemonPage.map((pokemon, index) =>
         pokemon ? (
-          <div key={index} className="card-container">
+          <div key={index} className={styles['card-container']}>
             <input
               data-testid={`checkbox-${pokemon.name}-${index}`}
               id={pokemon.name + ' - ' + pokemon.url}
-              className="pokemon-select"
+              className={styles['pokemon-select']}
               type="checkbox"
               checked={selectedItems?.includes(
                 pokemon.name + ' - ' + pokemon.url
@@ -64,16 +66,16 @@ function PokemonsList(): React.ReactElement {
             ></input>
             <Link
               key={index}
-              className="card"
+              className={styles['card']}
               onClick={() => dispatch(setNameSelectedPokemon(pokemon.name))}
               href={`details/${pokemon.name}`}
             >
               <Pokeball />
-              <h3 className="pokemon-name">{pokemon.name}</h3>
+              <h3 className={styles['card-name']}>{pokemon.name}</h3>
             </Link>
           </div>
         ) : (
-          <div key={index} className="placeholder">
+          <div key={index} className={styles['placeholder']}>
             pokemon not found
           </div>
         )

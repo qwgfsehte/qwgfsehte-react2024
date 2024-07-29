@@ -11,17 +11,17 @@ function Header(): React.ReactElement {
     <header className={styles.header}>
       <div className={styles['logo-container']}>
         <img
-          src="../assets/logo/logo.png"
+          src="/assets/logo/logo.png"
           alt="logo-pokepedia"
-          className="logo"
+          className={styles['logo']}
         />
-        <p className="logo-title">PokePedia</p>
+        <p className={styles['logo-title']}>PokePedia</p>
       </div>
-      <div className="search-form">
+      <div className={styles['search-form']}>
         <SearchInput />
         <SearchButton />
       </div>
-      <button className="button-theme" onClick={toggleTheme}></button>
+      <button className={styles['button-theme']} onClick={toggleTheme}></button>
     </header>
   );
 }

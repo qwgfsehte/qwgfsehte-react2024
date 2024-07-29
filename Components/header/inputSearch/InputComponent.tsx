@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import styles from 'Components/header/header.module.scss';
 
 function SearchInput(): React.ReactElement {
   const [inputValue, setInputValue] = useLocalStorage('searchValueInput');
@@ -13,7 +14,7 @@ function SearchInput(): React.ReactElement {
       value={inputValue}
       placeholder="Search"
       type="text"
-      className="search-form__input"
+      className={styles['search-form__input']}
       onChange={handleInputChange}
     ></input>
   );

@@ -4,7 +4,6 @@ import '@testing-library/jest-dom';
 import SearchButton from './buttonComponent';
 import { Store, UnknownAction } from '@reduxjs/toolkit/react';
 import configureStore from 'redux-mock-store';
-import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 const mockStore = configureStore([]);
@@ -25,9 +24,7 @@ describe('test search button component', () => {
   test('render search button and click', () => {
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <SearchButton />
-        </MemoryRouter>
+        <SearchButton />
       </Provider>
     );
     expect(screen.getByRole('button')).toBeInTheDocument();
