@@ -1,6 +1,7 @@
 import React, { ErrorInfo } from 'react';
 import styles from './errorBoundary.module.scss';
 import { ErrorBoundaryProps, ErrorBoundaryState } from 'interfaces/interface';
+import Image from 'next/image';
 
 class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,
@@ -27,7 +28,7 @@ class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <div className={styles['error-container']}>
-          <img
+          <Image
             className="error-img"
             src="/src/assets/imgs/loading.gif"
             alt=""

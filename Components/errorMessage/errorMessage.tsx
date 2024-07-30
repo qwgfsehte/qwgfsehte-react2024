@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import styles from 'Components/App/app.module.scss';
+import Image from 'next/image';
 
 function ErrorMessage(): React.ReactElement {
   const errorMessage = useSelector(
@@ -10,7 +11,7 @@ function ErrorMessage(): React.ReactElement {
 
   return (
     <div className={styles['error-container']}>
-      <img
+      <Image
         className={styles['main-page__error-img']}
         src="/assets/imgs/error-search.png"
         alt="pokemon-for-error"

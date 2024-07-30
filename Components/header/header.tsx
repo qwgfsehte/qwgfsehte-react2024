@@ -3,6 +3,7 @@ import React from 'react';
 import SearchInput from './inputSearch/InputComponent';
 import { useToggleTheme } from '../context/useContext';
 import SearchButton from './buttonSearch/buttonComponent';
+import Image from 'next/image';
 
 function Header(): React.ReactElement {
   const { toggleTheme } = useToggleTheme();
@@ -10,10 +11,12 @@ function Header(): React.ReactElement {
   return (
     <header className={styles.header}>
       <div className={styles['logo-container']}>
-        <img
+        <Image
           src="/assets/logo/logo.png"
           alt="logo-pokepedia"
           className={styles['logo']}
+          width={60}
+          height={60}
         />
         <p className={styles['logo-title']}>PokePedia</p>
       </div>

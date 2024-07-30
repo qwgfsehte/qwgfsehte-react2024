@@ -6,6 +6,7 @@ import { RootState } from 'Components/store';
 import { InfoPokemon, StatName, TypeName } from 'interfaces/interface';
 import styles from './pokemonDetails.module.scss';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 interface PokemonDetailsInfoProps {
   data: InfoPokemon;
@@ -53,7 +54,7 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
                 data-testid="close-button"
               ></button>
             </div>
-            <img
+            <Image
               alt={data.name}
               className={styles['pokemon-img']}
               src={
@@ -61,6 +62,8 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
                   ? data.sprites.front_default
                   : '/assets/imgs/default-img.webp'
               }
+              width={300}
+              height={300}
             />
             <div className={styles['pokemon__characteristics-container']}>
               <div className={styles['pokemon__types-container']}>
@@ -137,10 +140,12 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
                   {data.stats.map((stat, index) => (
                     <li className={styles['stats-list__item']} key={index}>
                       {STAT_ICONS[stat.stat.name as StatName] && (
-                        <img
+                        <Image
                           src={STAT_ICONS[stat.stat.name as StatName]}
                           alt={`${stat.stat.name} icon`}
                           className={styles['stats-icon']}
+                          width={20}
+                          height={20}
                         />
                       )}
                       {stat.stat.name + ':' + stat.base_stat}

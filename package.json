@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "next lint",
     "format:fix": "prettier --write .",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,scss}\"",
     "prepare": "husky install",
@@ -23,6 +23,7 @@
     "@npmcli/fs": "^3.1.1",
     "@reduxjs/toolkit": "^2.2.6",
     "axios": "^1.7.2",
+    "eslint-config-next": "^14.2.5",
     "glob": "^10.4.3",
     "lru-cache": "^10.3.1",
     "next": "^14.2.5",
@@ -35,6 +36,7 @@
     "rimraf": "^5.0.8"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^14.2.5",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@types/node": "22.0.0",
