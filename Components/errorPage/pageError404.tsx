@@ -1,19 +1,19 @@
-import { Link } from 'react-router-dom';
-import './pageError404.scss';
+import Link from 'next/link';
+import styles from './pageError404.module.scss';
 
 export default function ErrorPage404() {
   return (
-    <div id="error-page" className="error-page">
-      <div className="error-page__error-container">
+    <div id="error-page" className={styles['error-page']}>
+      <div className={styles['error-page__error-container']}>
         <h1 style={{ fontSize: '45px' }}>404</h1>
         <h2>Not Found</h2>
         <img
-          src="./src/assets/imgs/img-for-error-page.png"
+          src="/assets/imgs/img-for-error-page.png"
           alt="pokemon-error"
-          className="error-page__img"
+          className={styles['error-page__img']}
         />
         <p>This page doesn’t exist.</p>
-        <Link className="error-page__button" to="/">
+        <Link className={styles['error-page__button']} href={`/search/page/1`}>
           Go to home
         </Link>
       </div>

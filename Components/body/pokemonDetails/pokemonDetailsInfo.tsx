@@ -3,29 +3,23 @@ import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNameSelectedPokemon } from '../pokemonsList/pokemonList.slice';
 import { RootState } from 'Components/store';
-import { pokemonApi } from 'Components/pokemonAPI';
-import { StatName, TypeName } from 'interfaces/interface';
+import { InfoPokemon, StatName, TypeName } from 'interfaces/interface';
 import styles from './pokemonDetails.module.scss';
 import { useRouter } from 'next/router';
 
-export function PokemonDetailsInfo() {
+interface PokemonDetailsInfoProps {
+  data: InfoPokemon;
+}
+
+export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
   const audioLatestRef = useRef<HTMLAudioElement>(null);
   const audioLegacyRef = useRef<HTMLAudioElement>(null);
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const nameSelectedPokemon = useSelector(
-    (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
-  );
   const currentPage = useSelector(
     (state: RootState) => state.paginationSlice.currentPage
   );
-  const errorMessage = useSelector(
-    (state: RootState) => state.pokemonDetailsSlice.error
-  );
-
-  const { data, isLoading, error } =
-    pokemonApi.useFetchPokemonDetailsQuery(nameSelectedPokemon);
 
   const playLatestCry = () => {
     if (audioLatestRef.current) {
@@ -46,8 +40,6 @@ export function PokemonDetailsInfo() {
 
   return (
     <>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>{errorMessage}</p>}
       {data !== undefined && (
         <div className={styles['pokemon__details-container']}>
           <div className={styles['pokemon__info-container']}>

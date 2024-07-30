@@ -89,7 +89,7 @@ describe('PokemonDetailsInfo', () => {
 
     render(
       <Provider store={store}>
-        <PokemonDetailsInfo />
+        <PokemonDetailsInfo data={mockData} />
       </Provider>
     );
 

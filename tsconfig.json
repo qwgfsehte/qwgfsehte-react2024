@@ -6,15 +6,9 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "Components/*": [
-        "Components/*"
-      ],
-      "pages/*": [
-        "pages/*"
-      ],
-      "styles/*": [
-        "styles/*"
-      ]
+      "Components/*": ["Components/*"],
+      "pages/*": ["pages/*"],
+      "styles/*": ["styles/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
@@ -31,20 +25,15 @@
         "name": "next"
       }
     ],
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ]
+    "lib": ["dom", "dom.iterable", "esnext"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.mjs",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts", "pages/search/page/[pageNumber]tsx",
+    ".next/types/**/*.ts",
+    "pages/search/page/[pageNumber]tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

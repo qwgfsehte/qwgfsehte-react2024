@@ -7,11 +7,14 @@ import { setPokemonPage } from 'Components/body/pokemonsList/pokemonList.slice';
 
 const ITEM_PAGE = 20;
 
-export function useFilterPokemons(pokemons: AllPokemons[], page: number) {
+export function useFilterPokemons(
+  pokemons: { allPokemons: AllPokemons[] },
+  page: number
+) {
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    filterPokemons(dispatch, pokemons, page);
+    filterPokemons(dispatch, pokemons.allPokemons, page);
   }, [dispatch, page, pokemons]);
 }
 

@@ -12,6 +12,7 @@
   color: $tertiary-color;
   padding: 10px;
   gap: 10px;
+  border: 0;
   text-wrap: wrap;
   position: relative;
   cursor: pointer;
@@ -146,6 +147,10 @@
   gap: 55px;
   justify-content: center;
   align-items: center;
+}
+
+.half-width {
+  width: 50%;
 }
 
 .pokemon-select {
