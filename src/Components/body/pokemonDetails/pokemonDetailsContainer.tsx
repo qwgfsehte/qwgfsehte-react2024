@@ -2,27 +2,33 @@ import { PokemonDetailsInfo } from './pokemonDetailsInfo';
 import { useSelector } from 'react-redux';
 import styles from './pokemonDetails.module.scss';
 import { RootState } from 'src/Components/store';
-import useDetailsPokemon from '../../hooks/useDetailsPokemon';
+import { InfoPokemon } from 'src/interfaces/interface';
 
-function PokemonDetailsContainer() {
+type InfoPokemonState = {
+  infoPokemon: InfoPokemon | null | undefined;
+  loading: boolean;
+};
+
+function PokemonDetailsContainer(infoPokemon: {
+  infoPokemon: InfoPokemonState;
+}) {
   const nameSelectedPokemon = useSelector(
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
   );
 
-  const { infoPokemon } = useDetailsPokemon(nameSelectedPokemon);
-
   if (!nameSelectedPokemon) return null;
-  const hasError = !infoPokemon;
+
+  if (infoPokemon.infoPokemon.loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!infoPokemon.infoPokemon.infoPokemon) {
+    return;
+  }
 
   return (
     <div className={styles['pokemon-details']}>
-      {hasError ? (
-        <p>An error occurred or Pokémon not found</p>
-      ) : infoPokemon ? (
-        <PokemonDetailsInfo data={infoPokemon} />
-      ) : (
-        <p>Loading...</p>
-      )}
+      <PokemonDetailsInfo data={infoPokemon.infoPokemon.infoPokemon} />
     </div>
   );
 }

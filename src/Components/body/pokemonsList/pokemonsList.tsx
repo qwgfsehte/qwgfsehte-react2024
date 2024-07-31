@@ -9,21 +9,18 @@ import { ChangeEvent } from 'react';
 import { RootState } from '../../store';
 import { Pokeball } from './pokeball';
 import { useRouter } from 'next/router';
+import { filterPokemons } from 'src/Components/hooks/useFilterPokemons';
+import { AllPokemonsProps, PokemonCardInfo } from 'src/interfaces/interface';
 
-function PokemonsList(): React.ReactElement {
+function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
   const dispatch = useDispatch();
   const router = useRouter();
   const nameSelectedPokemon = useSelector(
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
   );
-  const pokemonPage = useSelector(
-    (state: RootState) => state.pokemonListSlice.pokemonPage
-  );
-
   const currentPage = useSelector(
     (state: RootState) => state.paginationSlice.currentPage
   );
-
   const selectedItems = useSelector(
     (state: RootState) => state.pokemonListSlice.selectedPokemons
   );
@@ -42,7 +39,9 @@ function PokemonsList(): React.ReactElement {
     dispatch(setNameSelectedPokemon(pokemonName));
   };
 
-  // localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+  const inputValue = useSelector(
+    (state: RootState) => state.pokemonListSlice.searchValue
+  );
 
   return (
     <div
@@ -52,26 +51,39 @@ function PokemonsList(): React.ReactElement {
           : styles['pokemons-list']
       }
     >
-      {pokemonPage.map((pokemon, index) =>
+      {filterPokemons(
+        pokemonList.allPokemons.allPokemons,
+        currentPage,
+        inputValue
+      ).map((pokemon, index) =>
         pokemon ? (
           <div key={index} className={styles['card-container']}>
             <input
-              data-testid={`checkbox-${pokemon.name}-${index}`}
-              id={pokemon.name + ' - ' + pokemon.url}
+              data-testid={`checkbox-${(pokemon as PokemonCardInfo).name}-${index}`}
+              id={
+                (pokemon as PokemonCardInfo).name +
+                ' - ' +
+                (pokemon as PokemonCardInfo).url
+              }
               className={styles['pokemon-select']}
               type="checkbox"
               checked={selectedItems?.includes(
-                pokemon.name + ' - ' + pokemon.url
+                (pokemon as PokemonCardInfo).name +
+                  ' - ' +
+                  (pokemon as PokemonCardInfo).url
               )}
               onChange={handleCheckboxChange}
             ></input>
             <button
               className={styles['card']}
-              onClick={() => handlePokemonClick(pokemon.name)}
+              onClick={() =>
+                handlePokemonClick((pokemon as PokemonCardInfo).name)
+              }
             >
               <Pokeball />
               <h3 className={styles['card-name']}>
-                {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+                {(pokemon as PokemonCardInfo).name.charAt(0).toUpperCase() +
+                  (pokemon as PokemonCardInfo).name.slice(1)}
               </h3>
             </button>
           </div>

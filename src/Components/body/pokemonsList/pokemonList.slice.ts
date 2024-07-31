@@ -5,10 +5,12 @@ export const initialState: {
   pokemonPage: AllPokemons[];
   nameSelectedPokemon: string;
   selectedPokemons: string[];
+  searchValue: string;
 } = {
   pokemonPage: [],
   nameSelectedPokemon: '',
   selectedPokemons: [],
+  searchValue: '',
 };
 
 export const pokemonListSlice = createSlice({
@@ -33,6 +35,9 @@ export const pokemonListSlice = createSlice({
     clearItems: (state, action: PayloadAction<string[]>) => {
       state.selectedPokemons = action.payload;
     },
+    setSearchValue: (state, action: PayloadAction<string>) => {
+      state.searchValue = action.payload;
+    },
   },
 });
 
@@ -42,5 +47,6 @@ export const {
   addItem,
   removeItem,
   clearItems,
+  setSearchValue,
 } = pokemonListSlice.actions;
 export default pokemonListSlice.reducer;

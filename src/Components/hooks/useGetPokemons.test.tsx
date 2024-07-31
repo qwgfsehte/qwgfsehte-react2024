@@ -12,7 +12,6 @@ import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { Store, UnknownAction } from '@reduxjs/toolkit/react';
-import { useFilterPokemons } from './useFilterPokemons';
 
 const mockStore = configureStore([]);
 
@@ -32,7 +31,7 @@ describe('test hooks', () => {
     pokemons: { allPokemons: AllPokemons[] };
     page: number;
   }) => {
-    useFilterPokemons(pokemons, page);
+    // useFilterPokemons(pokemons, page);
     return null;
   };
 

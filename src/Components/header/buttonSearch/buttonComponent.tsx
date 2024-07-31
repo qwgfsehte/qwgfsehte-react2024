@@ -1,27 +1,18 @@
 import React from 'react';
-import { filterPokemons } from '../../hooks/useFilterPokemons';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
 import { setCurrentPage } from '../../pagination/pagination.slice';
-import { setNewStateLoading } from '../../hooks/useGetPokemons.slice';
 import styles from '../header.module.scss';
+import { setSearchValue } from 'src/Components/body/pokemonsList/pokemonList.slice';
 
 const FIRST_PAGE = 1;
 
 function SearchButton(): React.ReactElement {
   const dispatch: AppDispatch = useDispatch();
-  const allPokemons = useSelector(
-    (state: RootState) => state.updatePokemons.allPokemons
-  );
 
   const handleSearch = () => {
-    filterPokemons(dispatch, allPokemons, FIRST_PAGE);
     dispatch(setCurrentPage(FIRST_PAGE));
-    dispatch(setNewStateLoading(true));
-
-    setTimeout(() => {
-      dispatch(setNewStateLoading(false));
-    }, 100);
+    dispatch(setSearchValue(localStorage.getItem('searchValueInput') || ''));
   };
 
   return (

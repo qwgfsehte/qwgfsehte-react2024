@@ -2,10 +2,11 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import 'src/styles/global.scss';
 import Head from 'next/head';
-import store from 'src/Components/store';
+import { wrapper } from 'src/Components/store';
 import { ThemeProvider } from 'src/Components/context/themeContext';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, ...rest }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
   return (
     <>
       <Head>
@@ -13,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Provider store={store}>
         <ThemeProvider>
-          <Component {...pageProps} />
+          <Component {...props.pageProps} />
         </ThemeProvider>
       </Provider>
     </>

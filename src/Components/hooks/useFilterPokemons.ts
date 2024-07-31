@@ -1,30 +1,13 @@
-import { setFilteredPokemons, setErrorMessage } from './useGetPokemons.slice';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store';
-import { useEffect } from 'react';
 import { AllPokemons } from 'src/interfaces/interface';
-import { setPokemonPage } from '../body/pokemonsList/pokemonList.slice';
 
 const ITEM_PAGE = 20;
 
-export function useFilterPokemons(
-  pokemons: { allPokemons: AllPokemons[] },
-  page: number
-) {
-  const dispatch: AppDispatch = useDispatch();
-
-  useEffect(() => {
-    filterPokemons(dispatch, pokemons.allPokemons, page);
-  }, [dispatch, page, pokemons]);
-}
-
 export function filterPokemons(
-  dispatch: AppDispatch,
   pokemons: AllPokemons[],
-  page: number
+  page: number,
+  searchValue: string,
+  pagination = false
 ) {
-  dispatch(setErrorMessage(''));
-  const searchValue = localStorage.getItem('searchValueInput') || '';
   const filteredPokemons = pokemons.filter(pokemon =>
     pokemon.name.includes(searchValue)
   );
@@ -33,14 +16,10 @@ export function filterPokemons(
   const endIndex = startIndex + ITEM_PAGE;
   const pokemonPages = filteredPokemons.slice(startIndex, endIndex);
 
-  dispatch(setFilteredPokemons(chunkArray(filteredPokemons)));
-  dispatch(setPokemonPage(pokemonPages));
-
-  if (filteredPokemons.length === 0) {
-    dispatch(
-      setErrorMessage('No pokemons found. Please try another search term.')
-    );
+  if (pagination) {
+    return chunkArray(filteredPokemons);
   }
+  return pokemonPages;
 }
 
 function chunkArray(array: { name: string; url: string }[], chunkSize = 20) {

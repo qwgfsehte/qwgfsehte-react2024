@@ -34,6 +34,7 @@ export const pokemonApi = createApi({
       query(name: string) {
         return `pokemon/${name}`;
       },
+      keepUnusedDataFor: 3600,
     }),
   }),
 });

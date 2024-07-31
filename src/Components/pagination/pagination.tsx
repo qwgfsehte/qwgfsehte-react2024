@@ -5,13 +5,12 @@ import { RootState } from '../store';
 import Link from 'next/link';
 import styles from './pagination.module.scss';
 import { setNameSelectedPokemon } from '../body/pokemonsList/pokemonList.slice';
+import { filterPokemons } from '../hooks/useFilterPokemons';
+import { AllPokemonsProps } from 'src/interfaces/interface';
 
 const PAGES_PER_GROUP = 10;
 
-export function Pagination() {
-  const filteredPokemons = useSelector(
-    (state: RootState) => state.updatePokemons.filteredPokemons
-  );
+export function Pagination(pokemonList: AllPokemonsProps) {
   const currentPage = useSelector(
     (state: RootState) => state.paginationSlice.currentPage
   );
@@ -19,8 +18,18 @@ export function Pagination() {
   const currentGroup = useSelector(
     (state: RootState) => state.paginationSlice.currentGroup
   );
+  const inputValue = useSelector(
+    (state: RootState) => state.pokemonListSlice.searchValue
+  );
 
   const dispatch = useDispatch();
+
+  const pagination = filterPokemons(
+    pokemonList.allPokemons.allPokemons,
+    currentPage,
+    inputValue,
+    true
+  );
 
   const handlePageChange = (newPage: number) => {
     dispatch(setCurrentPage(newPage));
@@ -28,10 +37,7 @@ export function Pagination() {
   };
 
   const startPage = currentGroup * PAGES_PER_GROUP;
-  const endPage = Math.min(
-    startPage + PAGES_PER_GROUP,
-    filteredPokemons.length
-  );
+  const endPage = Math.min(startPage + PAGES_PER_GROUP, pagination.length);
 
   return (
     <section className={styles['pagination-container']}>
@@ -42,7 +48,7 @@ export function Pagination() {
         data-testid="button-left"
       ></button>
       <div className={styles['pagination']}>
-        {filteredPokemons.slice(startPage, endPage).map((_, index: number) => {
+        {pagination.slice(startPage, endPage).map((_, index: number) => {
           const pageIndex = startPage + index + 1;
           return (
             <Link
@@ -59,9 +65,7 @@ export function Pagination() {
         })}
       </div>
       <button
-        disabled={
-          currentGroup === filteredPokemons.slice(startPage, endPage).length
-        }
+        disabled={currentGroup === pagination.slice(startPage, endPage).length}
         className={`${styles['pagination__button']} ${styles['button-right']}`}
         onClick={() => dispatch(setCurrentGroup(currentGroup + 1))}
         data-testid="button-right"

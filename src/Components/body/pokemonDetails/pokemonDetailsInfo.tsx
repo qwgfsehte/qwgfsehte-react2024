@@ -64,6 +64,7 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
               }
               width={300}
               height={300}
+              priority
             />
             <div className={styles['pokemon__characteristics-container']}>
               <div className={styles['pokemon__types-container']}>
