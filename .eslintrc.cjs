@@ -50,6 +50,14 @@ module.exports = {
     'prettier/prettier': 'error',
     'linebreak-style': ['error', 'unix'],
   },
+  "overrides": [
+    {
+      "files": ["*.test.tsx", "*.test.ts"],
+      "rules": {
+        "@next/next/no-img-element": "off"
+      }
+    }
+  ],
   settings: {
     react: {
       version: 'detect',

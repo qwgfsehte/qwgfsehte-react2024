@@ -1,0 +1,100 @@
+@import 'src/utils/variables.scss';
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 15px;
+
+  &__button {
+    height: 30px;
+    width: 5%;
+    max-width: 50px;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center;
+    background-color: $primary-color;
+    cursor: pointer;
+    transition: 0.1s;
+    border-radius: 6px;
+    border: 1px solid;
+    @media (max-width: 1400px) {
+      width: 150px;
+    }
+    @media (max-width: 1000px) {
+      width: 200px;
+    }
+    @media (max-width: 700px) {
+      width: 350px;
+    }
+    @media (max-width: 700px) {
+      width: 500px;
+    }
+  }
+
+  &-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 20px 20px;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    position: relative;
+  }
+
+  &__item {
+    padding: 5px;
+    width: 45px;
+    border-radius: 6px;
+    background-color: $primary-color;
+    border: 1px solid;
+    cursor: pointer;
+    transition: 0.1s;
+    color: $tertiary-color;
+    text-decoration: none;
+    text-align: center;
+
+    &:hover {
+      outline: 4px double $tertiary-color;
+      color: $primary-color;
+      background: $tertiary-color;
+    }
+
+    &_active {
+      outline: 1px solid $primary-color;
+      color: $primary-color;
+      background: $tertiary-color;
+    }
+  }
+}
+
+.button-left {
+  background-image: url(/assets/icons/icon-arrow.png);
+  &:hover {
+    background-image: url(/assets/icons/icon-arrow-inver.png);
+    background-color: $tertiary-color;
+    outline: 4px double $tertiary-color;
+  }
+  &:disabled {
+    background-color: $disabled-color;
+    pointer-events: none;
+  }
+}
+
+.button-right {
+  background-image: url(/assets/icons/icon-arrow.png);
+  transform: rotateY(180deg);
+  &:hover {
+    background-image: url(/assets/icons/icon-arrow-inver.png);
+    background-color: $tertiary-color;
+    outline: 4px double $tertiary-color;
+  }
+  &:disabled {
+    background-color: $disabled-color;
+    pointer-events: none;
+  }
+}

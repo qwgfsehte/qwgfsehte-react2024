@@ -1,0 +1,131 @@
+@import 'src/utils/variables.scss';
+
+.dark,
+.dark .header {
+  background-color: $tertiary-color;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.dark .card {
+  color: $primary-color;
+  background-color: $tertiary-color;
+  box-shadow:
+    0 4px 8px rgba(255, 255, 255, 0.1),
+    0 6px 20px rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    box-shadow:
+      0 8px 16px rgba(255, 255, 255, 0.2),
+      0 12px 40px rgba(255, 255, 255, 0.2);
+    outline: 4px double $primary-color;
+  }
+}
+
+.dark .pokeball-top {
+  border-bottom: 6px solid $tertiary-color;
+}
+
+.dark .pokeball-bottom {
+  border-top: 6px solid $tertiary-color;
+}
+
+.dark .pokeball {
+  box-shadow:
+    inset 0 0 10px rgba(255, 255, 255, 0.5),
+    0 10px 20px rgba(255, 255, 255, 0.2);
+}
+
+.dark .search-form__input {
+  &:focus,
+  &:hover {
+    outline: 4px double $primary-color;
+  }
+}
+
+.dark .search-form__button {
+  &:hover {
+    outline: 4px double $primary-color;
+  }
+}
+
+.dark .pokemon-select {
+  box-shadow:
+    0 4px 8px rgba(255, 255, 255, 0.1),
+    0 6px 20px rgba(255, 255, 255, 0.1);
+  border: 1px solid $primary-color;
+
+  &:hover {
+    outline: 4px double $primary-color;
+    box-shadow:
+      0 8px 16px rgba(255, 255, 255, 0.2),
+      0 12px 40px rgba(255, 255, 255, 0.2);
+  }
+
+  &:checked::after {
+    background-image: url(/src/assets/icons/icon-check-light.png);
+  }
+}
+
+.dark .pagination-container {
+  background-color: $tertiary-color;
+}
+
+.dark .modal-window {
+  background-color: $tertiary-color;
+}
+
+.dark .footer-container {
+  background-color: $tertiary-color;
+  box-shadow: inset 0px 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.dark .loading-indicator {
+  color: $primary-color;
+  background-color: $tertiary-color;
+}
+
+.dark .pokemon-details {
+  background-color: $tertiary-color;
+  color: $primary-color;
+  box-shadow:
+    0 0px 16px rgba(255, 255, 255, 0.2),
+    0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.dark .pokemon__button-close {
+  &:hover {
+    outline: 4px double $primary-color;
+  }
+}
+
+.dark .cries-list___item-button {
+  &:hover {
+    outline: 4px double $primary-color;
+  }
+}
+
+.dark .types-list__item {
+  color: $tertiary-color;
+}
+
+.dark .button-theme {
+  background-image: url(/src/assets/icons/icon-sun.png);
+  background-color: transparent;
+  border: 0;
+  background-size: 110%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.dark .button-right,
+.dark .button-left,
+.dark .pagination__item {
+  &:hover {
+    outline: 4px double $primary-color;
+  }
+}
+
+.dark .error-container {
+  background-color: $tertiary-color;
+  color: $primary-color;
+}
