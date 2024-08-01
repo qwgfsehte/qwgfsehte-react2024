@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { clearItems } from '../pokemonsList/pokemonList.slice';
 import { createCSV } from './createCSV';
+import { ThemeProvider } from '../../../Components/context/themeContext';
 
 const mockStore = configureStore([]);
 
@@ -32,7 +33,9 @@ describe('test flyout component', () => {
   test('renders modal with correct number of selected items', () => {
     render(
       <Provider store={store}>
-        <ModalWindow />
+        <ThemeProvider>
+          <ModalWindow />
+        </ThemeProvider>
       </Provider>
     );
 
@@ -42,7 +45,9 @@ describe('test flyout component', () => {
   test('clear selection button dispatches clearItems action', () => {
     render(
       <Provider store={store}>
-        <ModalWindow />
+        <ThemeProvider>
+          <ModalWindow />
+        </ThemeProvider>
       </Provider>
     );
 

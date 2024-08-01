@@ -4,8 +4,11 @@ import { createCSV } from './createCSV';
 import { useEffect, useRef, useState } from 'react';
 import { RootState } from '../../store';
 import { clearItems } from '../pokemonsList/pokemonList.slice';
+import { useToggleTheme } from '../../../Components/context/useContext';
+import stylesTheme from '../../context/theme.module.scss';
 
 export const ModalWindow: React.FC = () => {
+  const { isDark } = useToggleTheme();
   const downloadLinkRef = useRef<HTMLAnchorElement>(null);
   const [csvData, setCsvData] = useState<string | null>(null);
   const [filename, setFilename] = useState<string | null>(null);
@@ -39,9 +42,10 @@ export const ModalWindow: React.FC = () => {
   if (selectedItems.length === 0) {
     return null;
   }
-
   return (
-    <div className={styles['modal-window']}>
+    <div
+      className={`${styles['modal-window']} ${isDark ? stylesTheme['dark-modal-window'] : ''}`}
+    >
       <p>{selectedItems.length} items are selected</p>
       <button
         onClick={clearSelectedPokemons}

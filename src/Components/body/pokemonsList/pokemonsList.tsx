@@ -11,8 +11,11 @@ import { Pokeball } from './pokeball';
 import { useRouter } from 'next/router';
 import { filterPokemons } from '../../hooks/useFilterPokemons';
 import { AllPokemonsProps, PokemonCardInfo } from 'src/interfaces/interface';
+import { useToggleTheme } from '../../../Components/context/useContext';
+import stylesTheme from '../../context/theme.module.scss';
 
 function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
+  const { isDark } = useToggleTheme();
   const dispatch = useDispatch();
   const router = useRouter();
   const currentPage = useSelector(
@@ -55,7 +58,7 @@ function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
       {filterPokemons(pokemonList.allPokemons, currentPage, inputValue).map(
         (pokemon, index) =>
           pokemon ? (
-            <div key={index} className={styles['card-container']}>
+            <div key={index} className={`${styles['card-container']}`}>
               <input
                 data-testid={`checkbox-${(pokemon as PokemonCardInfo).name}-${index}`}
                 id={
@@ -63,7 +66,7 @@ function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
                   ' - ' +
                   (pokemon as PokemonCardInfo).url
                 }
-                className={styles['pokemon-select']}
+                className={`${styles['pokemon-select']} ${isDark ? stylesTheme['dark-pokemon-select'] : ''}`}
                 type="checkbox"
                 checked={selectedItems?.includes(
                   (pokemon as PokemonCardInfo).name +
@@ -73,7 +76,7 @@ function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
                 onChange={handleCheckboxChange}
               ></input>
               <button
-                className={styles['card']}
+                className={`${styles['card']} ${isDark ? stylesTheme['dark-card'] : ''}`}
                 onClick={() =>
                   handlePokemonClick((pokemon as PokemonCardInfo).name)
                 }

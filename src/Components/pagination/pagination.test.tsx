@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { Pagination } from './pagination';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
 import mockRouter from 'next-router-mock';
+import { ThemeProvider } from '../context/themeContext';
 
 const mockStore = configureStore([]);
 
@@ -72,7 +73,9 @@ describe('test pagination component', () => {
   test('renders pagination buttons and items', () => {
     render(
       <Provider store={store}>
-        <Pagination allPokemons={allPokemons.allPokemons} />
+        <ThemeProvider>
+          <Pagination allPokemons={allPokemons.allPokemons} />
+        </ThemeProvider>
       </Provider>
     );
 
@@ -87,7 +90,9 @@ describe('test pagination component', () => {
   test('disables left button on first group', () => {
     render(
       <Provider store={store}>
-        <Pagination allPokemons={allPokemons.allPokemons} />
+        <ThemeProvider>
+          <Pagination allPokemons={allPokemons.allPokemons} />
+        </ThemeProvider>
       </Provider>
     );
 
@@ -100,7 +105,9 @@ describe('test pagination component', () => {
     render(
       <Provider store={store}>
         <RouterContext.Provider value={mockRouter}>
-          <Pagination allPokemons={allPokemons.allPokemons} />
+          <ThemeProvider>
+            <Pagination allPokemons={allPokemons.allPokemons} />
+          </ThemeProvider>
         </RouterContext.Provider>
       </Provider>
     );

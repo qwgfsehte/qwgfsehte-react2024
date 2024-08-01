@@ -7,12 +7,15 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { RootState } from 'src/Components/store';
 import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
+import { useToggleTheme } from '../../../Components/context/useContext';
+import stylesTheme from '../../context/theme.module.scss';
 
 interface PokemonDetailsInfoProps {
   data: InfoPokemon;
 }
 
 export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
+  const { isDark } = useToggleTheme();
   const audioLatestRef = useRef<HTMLAudioElement>(null);
   const audioLegacyRef = useRef<HTMLAudioElement>(null);
   const dispatch = useDispatch();
@@ -53,7 +56,7 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
               </h2>
               <button
                 onClick={handleClose}
-                className={styles['pokemon__button-close']}
+                className={`${styles['pokemon__button-close']} ${isDark ? stylesTheme['dark-pokemon__button-close'] : ''}`}
                 data-testid="close-button"
               ></button>
             </div>
@@ -95,7 +98,7 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
                   <button
                     onClick={playLatestCry}
                     disabled={data.cries.latest === null}
-                    className={styles['cries-list___item-button']}
+                    className={`${styles['cries-list___item-button']} ${isDark ? stylesTheme['dark-cries-list___item-button'] : ''}`}
                   ></button>
                   <audio ref={audioLatestRef} src={data.cries.latest}>
                     <track
@@ -111,7 +114,7 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
                   <button
                     disabled={data.cries.legacy === null}
                     onClick={playLegacyCry}
-                    className={styles['cries-list___item-button']}
+                    className={`${styles['cries-list___item-button']} ${isDark ? stylesTheme['dark-cries-list___item-button'] : ''}`}
                   ></button>
                   <audio ref={audioLegacyRef} src={data.cries.legacy}>
                     <track

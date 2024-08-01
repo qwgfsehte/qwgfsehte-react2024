@@ -7,6 +7,7 @@ import configureStore from 'redux-mock-store';
 import { pokemonApi } from './../../pokemonAPI';
 import mockRouter from 'next-router-mock';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { ThemeProvider } from '../../../Components/context/themeContext';
 
 const mockStore = configureStore([]);
 
@@ -61,7 +62,9 @@ describe('PokemonDetailsInfo', () => {
     render(
       <Provider store={store}>
         <RouterContext.Provider value={mockRouter}>
-          <PokemonDetailsInfo data={mockData} />
+          <ThemeProvider>
+            <PokemonDetailsInfo data={mockData} />
+          </ThemeProvider>
         </RouterContext.Provider>
       </Provider>
     );

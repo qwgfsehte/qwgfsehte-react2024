@@ -4,12 +4,14 @@ import SearchInput from './inputSearch/InputComponent';
 import { useToggleTheme } from '../context/useContext';
 import SearchButton from './buttonSearch/buttonComponent';
 import Image from 'next/image';
+import stylesTheme from '../context/theme.module.scss';
 
 function Header(): React.ReactElement {
   const { toggleTheme } = useToggleTheme();
+  const { isDark } = useToggleTheme();
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isDark ? stylesTheme.dark : ''}`}>
       <div className={styles['logo-container']}>
         <Image
           src="/assets/logo/logo.png"
@@ -25,7 +27,10 @@ function Header(): React.ReactElement {
         <SearchInput />
         <SearchButton />
       </div>
-      <button className={styles['button-theme']} onClick={toggleTheme}></button>
+      <button
+        className={`${styles['button-theme']} ${isDark ? stylesTheme['dark-button-theme'] : ''}`}
+        onClick={toggleTheme}
+      ></button>
     </header>
   );
 }

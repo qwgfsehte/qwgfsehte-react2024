@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useToggleTheme } from '../context/useContext';
 import {
   setNameSelectedPokemon,
   setSearchValue,
@@ -9,7 +8,6 @@ import { Pagination } from '../pagination/pagination';
 import { ModalWindow } from '../body/flyout/flyout';
 import { useEffect } from 'react';
 import styles from './app.module.scss';
-import stylesTheme from '../context/theme.module.scss';
 import { useRouter } from 'next/router';
 import { AllPokemons } from 'src/interfaces/interface';
 import { setNewStateLoading, setPokemons } from '../hooks/useGetPokemons.slice';
@@ -17,7 +15,6 @@ import { setCurrentPage } from '../pagination/pagination.slice';
 import { RootState } from '../store';
 
 export function AppContent(allPokemons: { allPokemons: AllPokemons[] }) {
-  const { isDark } = useToggleTheme();
   const dispatch = useDispatch();
   const router = useRouter();
   const { pageNumber } = router.query;
@@ -49,7 +46,7 @@ export function AppContent(allPokemons: { allPokemons: AllPokemons[] }) {
   }, [dispatch]);
 
   return (
-    <div className={`${styles.main} ${isDark ? stylesTheme.dark : ''}`}>
+    <div>
       <button
         className={styles['shadow-button']}
         onClick={() => {

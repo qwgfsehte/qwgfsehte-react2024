@@ -11,6 +11,7 @@ import pokemonListReducer, {
 import { Pokeball } from './pokeball';
 import { render } from '@testing-library/react';
 import mockRouter from 'next-router-mock';
+import { ThemeProvider } from '../../../Components/context/themeContext';
 
 describe('test pokemon list component', () => {
   afterEach(() => {
@@ -80,7 +81,11 @@ describe('test pokemon list component', () => {
   });
 
   test('render pokeball component', () => {
-    const { container } = render(<Pokeball />);
+    const { container } = render(
+      <ThemeProvider>
+        <Pokeball />
+      </ThemeProvider>
+    );
     expect(container.firstChild).toHaveClass('_pokeball_8ab701');
   });
 });

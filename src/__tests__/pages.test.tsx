@@ -1,14 +1,14 @@
 import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Page404 from './404';
-import PageDetails from './search/details/[pokemonName]';
+import Page404 from '../pages/404';
+import PageDetails from '../pages/search/details/[pokemonName]';
 import { ThemeProvider } from '../Components/context/themeContext';
 import { Provider } from 'react-redux';
 import store from '../Components/store';
 import mockRouter from 'next-router-mock';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
-import PageHome from './search/page/[pageNumber]';
+import PageHome from '../pages/search/page/[pageNumber]';
 
 describe('test pages', () => {
   const mockDataPokemons = {
