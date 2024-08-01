@@ -60,6 +60,7 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
             <Image
               alt={data.name}
               className={styles['pokemon-img']}
+              priority
               src={
                 data.sprites.front_default
                   ? data.sprites.front_default
@@ -67,7 +68,6 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
               }
               width={300}
               height={300}
-              priority
             />
             <div className={styles['pokemon__characteristics-container']}>
               <div className={styles['pokemon__types-container']}>

@@ -27,7 +27,7 @@ const initialState = {
 
 const mockData = {
   name: 'pikachu',
-  sprites: { front_default: 'pikachu.png' },
+  sprites: { front_default: 'https://pikachu.png' },
   types: [{ type: { name: 'electric' } }],
   cries: { latest: 'latest.mp3', legacy: 'legacy.mp3' },
   weight: 60,
@@ -41,13 +41,6 @@ vi.mock('../../pokemonAPI', () => ({
   pokemonApi: {
     useFetchPokemonDetailsQuery: vi.fn(),
   },
-}));
-
-vi.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <img {...props} alt={props.alt || 'mock image'} />
-  ),
 }));
 
 describe('PokemonDetailsInfo', () => {
@@ -76,7 +69,7 @@ describe('PokemonDetailsInfo', () => {
     expect(screen.getByText('Pikachu')).toBeInTheDocument();
     expect(screen.getByAltText('pikachu')).toHaveAttribute(
       'src',
-      'pikachu.png'
+      '/_next/image?url=https%3A%2F%2Fpikachu.png&w=640&q=75'
     );
     expect(screen.getByText('Types:')).toBeInTheDocument();
     expect(screen.getByText('electric')).toBeInTheDocument();

@@ -15,9 +15,6 @@ import { AllPokemonsProps, PokemonCardInfo } from 'src/interfaces/interface';
 function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
   const dispatch = useDispatch();
   const router = useRouter();
-  const nameSelectedPokemon = useSelector(
-    (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
-  );
   const currentPage = useSelector(
     (state: RootState) => state.paginationSlice.currentPage
   );
@@ -54,54 +51,45 @@ function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
   );
 
   return (
-    <div
-      className={
-        nameSelectedPokemon
-          ? `${styles['pokemons-list']} ${styles['half-width']}`
-          : styles['pokemons-list']
-      }
-    >
-      {filterPokemons(
-        pokemonList.allPokemons.allPokemons,
-        currentPage,
-        inputValue
-      ).map((pokemon, index) =>
-        pokemon ? (
-          <div key={index} className={styles['card-container']}>
-            <input
-              data-testid={`checkbox-${(pokemon as PokemonCardInfo).name}-${index}`}
-              id={
-                (pokemon as PokemonCardInfo).name +
-                ' - ' +
-                (pokemon as PokemonCardInfo).url
-              }
-              className={styles['pokemon-select']}
-              type="checkbox"
-              checked={selectedItems?.includes(
-                (pokemon as PokemonCardInfo).name +
+    <div className={styles['pokemons-list']}>
+      {filterPokemons(pokemonList.allPokemons, currentPage, inputValue).map(
+        (pokemon, index) =>
+          pokemon ? (
+            <div key={index} className={styles['card-container']}>
+              <input
+                data-testid={`checkbox-${(pokemon as PokemonCardInfo).name}-${index}`}
+                id={
+                  (pokemon as PokemonCardInfo).name +
                   ' - ' +
                   (pokemon as PokemonCardInfo).url
-              )}
-              onChange={handleCheckboxChange}
-            ></input>
-            <button
-              className={styles['card']}
-              onClick={() =>
-                handlePokemonClick((pokemon as PokemonCardInfo).name)
-              }
-            >
-              <Pokeball />
-              <h3 className={styles['card-name']}>
-                {(pokemon as PokemonCardInfo).name.charAt(0).toUpperCase() +
-                  (pokemon as PokemonCardInfo).name.slice(1)}
-              </h3>
-            </button>
-          </div>
-        ) : (
-          <div key={index} className={styles['placeholder']}>
-            pokemon not found
-          </div>
-        )
+                }
+                className={styles['pokemon-select']}
+                type="checkbox"
+                checked={selectedItems?.includes(
+                  (pokemon as PokemonCardInfo).name +
+                    ' - ' +
+                    (pokemon as PokemonCardInfo).url
+                )}
+                onChange={handleCheckboxChange}
+              ></input>
+              <button
+                className={styles['card']}
+                onClick={() =>
+                  handlePokemonClick((pokemon as PokemonCardInfo).name)
+                }
+              >
+                <Pokeball />
+                <h3 className={styles['card-name']}>
+                  {(pokemon as PokemonCardInfo).name.charAt(0).toUpperCase() +
+                    (pokemon as PokemonCardInfo).name.slice(1)}
+                </h3>
+              </button>
+            </div>
+          ) : (
+            <div key={index} className={styles['placeholder']}>
+              pokemon not found
+            </div>
+          )
       )}
     </div>
   );

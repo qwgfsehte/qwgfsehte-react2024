@@ -72,17 +72,7 @@ export interface InfoPokemon {
   };
 }
 
-export interface PokemonsListProps {
-  onPokemonClick: (pokemon: InfoPokemon) => void;
-}
-
 export interface PokemonDetailsInfoProps {
-  onClose: () => void;
-}
-
-export interface PokemonsListContainerProps {
-  selectedPokemon: InfoPokemon | null;
-  handlePokemonClick: (pokemon: InfoPokemon) => void;
   onClose: () => void;
 }
 
@@ -141,10 +131,6 @@ export interface PokemonCardInfo {
   url: string;
 }
 
-export interface AllPokemonsCard {
-  allPokemons: PokemonCardInfo[];
-}
-
 export interface AllPokemonsProps {
-  allPokemons: AllPokemonsCard;
+  allPokemons: PokemonCardInfo[];
 }

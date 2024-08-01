@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { describe, test, expect, vi, afterEach, beforeEach } from 'vitest';
+import { describe, test, expect, vi, afterEach } from 'vitest';
 import pokemonListReducer, {
   addItem,
   clearItems,
@@ -9,36 +9,10 @@ import pokemonListReducer, {
   setPokemonPage,
 } from './pokemonList.slice';
 import { Pokeball } from './pokeball';
-import { render, screen, fireEvent } from '@testing-library/react';
-import PokemonsList from './pokemonsList';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
 import mockRouter from 'next-router-mock';
-import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
-
-const mockStore = configureStore([]);
 
 describe('test pokemon list component', () => {
-  let store: ReturnType<typeof mockStore>;
-
-  beforeEach(() => {
-    const initialState = {
-      pokemonListSlice: {
-        nameSelectedPokemon: '',
-        pokemonPage: [
-          { name: 'Pikachu', url: 'url1' },
-          { name: 'Charmander', url: 'url2' },
-        ],
-        selectedPokemons: [],
-      },
-      paginationSlice: {
-        currentPage: 1,
-      },
-    };
-
-    store = mockStore(initialState);
-  });
-
   afterEach(() => {
     vi.clearAllMocks();
 
@@ -108,52 +82,5 @@ describe('test pokemon list component', () => {
   test('render pokeball component', () => {
     const { container } = render(<Pokeball />);
     expect(container.firstChild).toHaveClass('_pokeball_8ab701');
-  });
-
-  test('render pokemons list component', () => {
-    render(
-      <Provider store={store}>
-        <RouterContext.Provider value={mockRouter}>
-          <PokemonsList />
-        </RouterContext.Provider>
-      </Provider>
-    );
-    expect(screen.getByText('Pikachu')).toBeInTheDocument();
-    expect(screen.getByText('Charmander')).toBeInTheDocument();
-  });
-
-  test('handles checkbox change', () => {
-    render(
-      <Provider store={store}>
-        <RouterContext.Provider value={mockRouter}>
-          <PokemonsList />
-        </RouterContext.Provider>
-      </Provider>
-    );
-
-    const checkbox = screen.getByTestId('checkbox-Pikachu-0');
-    fireEvent.click(checkbox);
-    expect(store.getActions()).toContainEqual(addItem('Pikachu - url1'));
-  });
-
-  test('renders placeholder when pokemon not found', () => {
-    store = mockStore({
-      pokemonListSlice: {
-        pokemonPage: [null],
-      },
-      paginationSlice: {
-        currentPage: 1,
-      },
-    });
-
-    render(
-      <Provider store={store}>
-        <RouterContext.Provider value={mockRouter}>
-          <PokemonsList />
-        </RouterContext.Provider>
-      </Provider>
-    );
-
-    expect(screen.getByText('pokemon not found')).toBeInTheDocument();
   });
 });

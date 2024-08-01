@@ -1,11 +1,11 @@
 import { GetServerSideProps } from 'next';
-import { PokemonDetailsInfo } from 'src/Components/body/pokemonDetails/pokemonDetailsInfo';
-import { pokemonApi } from 'src/Components/pokemonAPI';
-import { wrapper } from 'src/Components/store';
+import { PokemonDetailsInfo } from '../../../Components/body/pokemonDetails/pokemonDetailsInfo';
+import { pokemonApi } from '../../../Components/pokemonAPI';
+import { wrapper } from '../../../Components/store';
 import styles from '../../../Components/body/pokemonDetails/pokemonDetails.module.scss';
-import Layout from 'src/Components/Layout';
-import { AppContent } from 'src/Components/App/appLayout';
-import { InfoPokemon } from 'src/interfaces/interface';
+import Layout from '../../../Components/Layout';
+import { AppContent } from '../../../Components/App/appLayout';
+import { InfoPokemon } from '../../../interfaces/interface';
 
 interface PokemonNameandUrl {
   name: string;
@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps =
     };
   });
 
-const PageNumber: React.FC<PageProps> = ({
+const PageDetails: React.FC<PageProps> = ({
   resultDetailsData,
   allPokemons,
 }) => {
@@ -57,4 +57,4 @@ const PageNumber: React.FC<PageProps> = ({
   );
 };
 
-export default PageNumber;
+export default PageDetails;

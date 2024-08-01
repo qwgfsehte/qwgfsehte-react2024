@@ -9,11 +9,25 @@ import configureStore from 'redux-mock-store';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { Pagination } from './pagination';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import mockRouter from 'next-router-mock';
 
 const mockStore = configureStore([]);
 
 describe('test pagination component', () => {
   let store: ReturnType<typeof mockStore>;
+  const allPokemons = {
+    allPokemons: [
+      {
+        name: 'bulbasaur',
+        url: 'https://pokeapi.co/api/v2/pokemon/1/',
+      },
+      {
+        name: 'ivysaur',
+        url: 'https://pokeapi.co/api/v2/pokemon/2/',
+      },
+    ],
+  };
 
   beforeEach(() => {
     const initialState = {
@@ -23,6 +37,9 @@ describe('test pagination component', () => {
       paginationSlice: {
         currentPage: 1,
         currentGroup: 0,
+      },
+      pokemonListSlice: {
+        searchValue: '',
       },
     };
 
@@ -55,7 +72,7 @@ describe('test pagination component', () => {
   test('renders pagination buttons and items', () => {
     render(
       <Provider store={store}>
-        <Pagination />
+        <Pagination allPokemons={allPokemons.allPokemons} />
       </Provider>
     );
 
@@ -64,13 +81,13 @@ describe('test pagination component', () => {
 
     expect(leftButton).toBeInTheDocument();
     expect(rightButton).toBeInTheDocument();
-    expect(screen.getAllByRole('link')).toHaveLength(10);
+    expect(screen.getAllByRole('link')).toHaveLength(1);
   });
 
   test('disables left button on first group', () => {
     render(
       <Provider store={store}>
-        <Pagination />
+        <Pagination allPokemons={allPokemons.allPokemons} />
       </Provider>
     );
 
@@ -82,16 +99,17 @@ describe('test pagination component', () => {
   test('changes pages on link click', () => {
     render(
       <Provider store={store}>
-        <Pagination />
+        <RouterContext.Provider value={mockRouter}>
+          <Pagination allPokemons={allPokemons.allPokemons} />
+        </RouterContext.Provider>
       </Provider>
     );
 
-    const pageLink = screen.getByText('2');
-
+    const pageLink = screen.getByText('1');
     fireEvent.click(pageLink);
-
-    expect(store.getActions()).toEqual([
-      { type: 'pagination/setCurrentPage', payload: 2 },
+    const actions = store.getActions();
+    expect(actions).toEqual([
+      { type: 'pagination/setCurrentPage', payload: 1 },
       { type: 'pokemonList/setNameSelectedPokemon', payload: '' },
     ]);
   });

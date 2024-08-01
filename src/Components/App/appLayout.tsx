@@ -61,9 +61,9 @@ export function AppContent(allPokemons: { allPokemons: AllPokemons[] }) {
         }}
       ></button>
       <div className={styles['pokemons-container']}>
-        <PokemonsList allPokemons={allPokemons} />
+        <PokemonsList allPokemons={allPokemons.allPokemons} />
       </div>
-      <Pagination allPokemons={allPokemons} />
+      <Pagination allPokemons={allPokemons.allPokemons} />
       <ModalWindow />
     </div>
   );

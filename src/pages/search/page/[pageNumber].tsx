@@ -1,9 +1,9 @@
 import { AllPokemons } from 'src/interfaces/interface';
 import { GetServerSideProps } from 'next';
-import { RootState, wrapper } from 'src/Components/store';
-import { pokemonApi } from 'src/Components/pokemonAPI';
-import { AppContent } from 'src/Components/App/appLayout';
-import Layout from 'src/Components/Layout';
+import { RootState, wrapper } from '../../../Components/store';
+import { pokemonApi } from '../../../Components/pokemonAPI';
+import { AppContent } from '../../../Components/App/appLayout';
+import Layout from '../../../Components/Layout';
 import { useSelector } from 'react-redux';
 
 interface PageNumberProps {
@@ -29,12 +29,10 @@ export const getServerSideProps: GetServerSideProps =
     };
   });
 
-const PageNumber: React.FC<PageNumberProps> = ({ allPokemons }) => {
+const PageHome: React.FC<PageNumberProps> = ({ allPokemons }) => {
   const nameSelectedPokemon = useSelector(
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
   );
-
-  console.log(nameSelectedPokemon);
 
   return (
     <Layout
@@ -50,4 +48,4 @@ const PageNumber: React.FC<PageNumberProps> = ({ allPokemons }) => {
   );
 };
 
-export default PageNumber;
+export default PageHome;

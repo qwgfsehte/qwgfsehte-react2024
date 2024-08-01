@@ -25,7 +25,7 @@ export function Pagination(pokemonList: AllPokemonsProps) {
   const dispatch = useDispatch();
 
   const pagination = filterPokemons(
-    pokemonList.allPokemons.allPokemons,
+    pokemonList.allPokemons,
     currentPage,
     inputValue,
     true

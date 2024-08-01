@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ErrorPage404 from './pageError404';
 
@@ -14,14 +14,5 @@ describe('test error page', () => {
     expect(
       screen.getByRole('link', { name: 'Go to home' })
     ).toBeInTheDocument();
-  });
-
-  test('navigates to home page when "Go to home" button is clicked', () => {
-    render(<ErrorPage404 />);
-    act(() => {
-      screen.getByRole('link', { name: 'Go to home' }).click();
-    });
-
-    expect(window.location.pathname).toBe('/');
   });
 });

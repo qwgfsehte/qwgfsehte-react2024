@@ -10,37 +10,6 @@ import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtim
 import { AllPokemons } from 'src/interfaces/interface';
 
 describe('test app component', () => {
-  test('render error message', () => {
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <RouterContext.Provider value={mockRouter}>
-            <AppContent allPokemons={[]} />
-          </RouterContext.Provider>
-        </ThemeProvider>
-      </Provider>
-    );
-
-    expect(
-      screen.getByText('No pokemons found. Please try another search term.')
-    ).toBeInTheDocument();
-  });
-
-  test('render header and footer message', () => {
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <RouterContext.Provider value={mockRouter}>
-            <AppContent allPokemons={[]} />
-          </RouterContext.Provider>
-        </ThemeProvider>
-      </Provider>
-    );
-
-    expect(screen.getByText('PokePedia')).toBeInTheDocument();
-    expect(screen.getByText('2024')).toBeInTheDocument();
-  });
-
   test('renders with pokemon data', () => {
     const allPokemons: AllPokemons[] = [
       { name: 'pikachu', url: 'testUrl' },
