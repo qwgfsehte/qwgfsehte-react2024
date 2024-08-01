@@ -36,7 +36,10 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
 
   const handleClose = () => {
     dispatch(setNameSelectedPokemon(''));
-    router.push(`/search/page/${currentPage}`, undefined, { shallow: true });
+    router.push(`/search/page/${currentPage}`, undefined, {
+      shallow: true,
+      scroll: false,
+    });
   };
 
   return (

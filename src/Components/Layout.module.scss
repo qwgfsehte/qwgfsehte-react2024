@@ -1,0 +1,38 @@
+@import 'src/utils/variables.scss';
+
+.container {
+  &-page {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    padding-top: 30px;
+    padding-right: 20px;
+    position: relative;
+  }
+
+  &-allCards {
+    display: flex;
+    width: 70%;
+    flex: 1;
+    padding-bottom: 10px;
+  }
+
+  &-detailsInfo {
+    display: flex;
+    width: 50%;
+    height: fit-content;
+    background-color: $primary-color;
+    border-radius: 6px;
+    flex-direction: column;
+    transition: 0.4s;
+    gap: 10px;
+    top: 20px;
+    z-index: 99;
+    position: sticky;
+    box-shadow:
+      0 8px 16px rgba(0, 0, 0, 0.2),
+      0 12px 40px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+}

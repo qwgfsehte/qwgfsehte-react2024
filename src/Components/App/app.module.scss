@@ -1,7 +1,7 @@
 @import 'src/utils/variables.scss';
 
 .main {
-  height: 100vh;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -21,6 +21,7 @@
   border: none;
   z-index: 1;
   background-color: transparent;
+  top: 0;
 }
 
 .pokemons-container {

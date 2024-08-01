@@ -76,10 +76,6 @@ export interface PokemonsListProps {
   onPokemonClick: (pokemon: InfoPokemon) => void;
 }
 
-export interface PokemonDetailsContainerProps {
-  closePokemonDetails: () => void;
-}
-
 export interface PokemonDetailsInfoProps {
   onClose: () => void;
 }

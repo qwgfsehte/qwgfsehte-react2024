@@ -9,7 +9,7 @@ import { ChangeEvent } from 'react';
 import { RootState } from '../../store';
 import { Pokeball } from './pokeball';
 import { useRouter } from 'next/router';
-import { filterPokemons } from 'src/Components/hooks/useFilterPokemons';
+import { filterPokemons } from '../../hooks/useFilterPokemons';
 import { AllPokemonsProps, PokemonCardInfo } from 'src/interfaces/interface';
 
 function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
@@ -33,10 +33,20 @@ function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
     }
   };
 
-  const handlePokemonClick = (pokemonName: string) => {
-    const href = `/search/page/${currentPage}/?details=${pokemonName}`;
-    router.push(href, undefined, { shallow: true });
-    dispatch(setNameSelectedPokemon(pokemonName));
+  const handlePokemonClick = async (pokemonName: string) => {
+    try {
+      await router.push(`/search/page/${currentPage}`, undefined, {
+        shallow: true,
+        scroll: false,
+      });
+      await router.push(`/search/details/${pokemonName}`, undefined, {
+        shallow: true,
+        scroll: false,
+      });
+      dispatch(setNameSelectedPokemon(pokemonName));
+    } catch (error) {
+      console.error('Error during navigation:', error);
+    }
   };
 
   const inputValue = useSelector(

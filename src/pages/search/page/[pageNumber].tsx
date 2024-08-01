@@ -1,14 +1,15 @@
 import { AllPokemons } from 'src/interfaces/interface';
 import { GetServerSideProps } from 'next';
-import { wrapper } from 'src/Components/store';
+import { RootState, wrapper } from 'src/Components/store';
 import { pokemonApi } from 'src/Components/pokemonAPI';
 import { AppContent } from 'src/Components/App/appLayout';
+import Layout from 'src/Components/Layout';
+import { useSelector } from 'react-redux';
 
 interface PageNumberProps {
   allPokemons: AllPokemons[];
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps(store => async context => {
     const { res } = context;
@@ -29,7 +30,24 @@ export const getServerSideProps: GetServerSideProps =
   });
 
 const PageNumber: React.FC<PageNumberProps> = ({ allPokemons }) => {
-  return <AppContent allPokemons={allPokemons} />;
+  const nameSelectedPokemon = useSelector(
+    (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
+  );
+
+  console.log(nameSelectedPokemon);
+
+  return (
+    <Layout
+      mainChildren={<AppContent allPokemons={allPokemons} />}
+      secondaryChildren={
+        <div>
+          {nameSelectedPokemon
+            ? 'Loading..'
+            : 'Please, select a Pokemon for more information'}
+        </div>
+      }
+    ></Layout>
+  );
 };
 
 export default PageNumber;

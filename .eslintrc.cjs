@@ -23,10 +23,7 @@ module.exports = {
     'prettier',
   ],
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    'react-refresh/only-export-components': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/jsx-uses-react': 'error',
@@ -50,13 +47,13 @@ module.exports = {
     'prettier/prettier': 'error',
     'linebreak-style': ['error', 'unix'],
   },
-  "overrides": [
+  overrides: [
     {
-      "files": ["*.test.tsx", "*.test.ts"],
-      "rules": {
-        "@next/next/no-img-element": "off"
-      }
-    }
+      files: ['*.test.tsx', '*.test.ts'],
+      rules: {
+        '@next/next/no-img-element': 'off',
+      },
+    },
   ],
   settings: {
     react: {

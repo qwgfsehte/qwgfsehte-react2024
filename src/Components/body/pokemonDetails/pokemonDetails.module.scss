@@ -2,22 +2,12 @@
 
 .pokemon {
   &-details {
-    width: 50%;
     display: flex;
     height: fit-content;
     background-color: $primary-color;
-    padding: 20px;
     border-radius: 6px;
     flex-direction: column;
     transition: 0.4s;
-    gap: 10px;
-    position: sticky;
-    top: 20px;
-    box-shadow:
-      0 8px 16px rgba(0, 0, 0, 0.2),
-      0 12px 40px rgba(0, 0, 0, 0.2);
-    z-index: 99;
-    margin: 40px;
   }
 
   &__physical-info {

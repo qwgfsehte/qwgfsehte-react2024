@@ -1,7 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Footer } from '../footer/footer';
 import { useToggleTheme } from '../context/useContext';
-import Header from '../header/header';
 import {
   setNameSelectedPokemon,
   setSearchValue,
@@ -14,19 +12,15 @@ import styles from './app.module.scss';
 import stylesTheme from '../context/theme.module.scss';
 import { useRouter } from 'next/router';
 import { AllPokemons } from 'src/interfaces/interface';
-import PokemonDetailsContainer from '../body/pokemonDetails/pokemonDetailsContainer';
 import { setNewStateLoading, setPokemons } from '../hooks/useGetPokemons.slice';
 import { setCurrentPage } from '../pagination/pagination.slice';
-import useDetailsPokemon from '../hooks/useDetailsPokemon';
 import { RootState } from '../store';
-
-const FIRST_PAGE = 1;
 
 export function AppContent(allPokemons: { allPokemons: AllPokemons[] }) {
   const { isDark } = useToggleTheme();
   const dispatch = useDispatch();
   const router = useRouter();
-  const { pageNumber, details } = router.query;
+  const { pageNumber } = router.query;
   const currentPage = useSelector(
     (state: RootState) => state.paginationSlice.currentPage
   );
@@ -37,41 +31,40 @@ export function AppContent(allPokemons: { allPokemons: AllPokemons[] }) {
   }, [allPokemons, dispatch]);
 
   useEffect(() => {
-    if (typeof details === 'string') {
-      dispatch(setNameSelectedPokemon(details));
-    } else {
-      dispatch(setNameSelectedPokemon(''));
-    }
-  }, [dispatch, details]);
-
-  useEffect(() => {
-    const pageParam = Number(pageNumber) ? Number(pageNumber) : FIRST_PAGE;
+    const pageParam = Number(pageNumber) ? Number(pageNumber) : currentPage;
     dispatch(setCurrentPage(pageParam));
     dispatch(setSearchValue(localStorage.getItem('searchValueInput') || ''));
-  }, [dispatch, pageNumber]);
+  }, [currentPage, dispatch, pageNumber]);
 
-  const infoPokemon = useDetailsPokemon(details as string);
+  useEffect(() => {
+    const handlePopState = () => {
+      dispatch(setNameSelectedPokemon(''));
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [dispatch]);
 
   return (
     <div className={`${styles.main} ${isDark ? stylesTheme.dark : ''}`}>
-      <Header />
       <button
         className={styles['shadow-button']}
         onClick={() => {
           dispatch(setNameSelectedPokemon(''));
           router.push(`/search/page/${currentPage}`, undefined, {
             shallow: true,
+            scroll: false,
           });
         }}
       ></button>
       <div className={styles['pokemons-container']}>
         <PokemonsList allPokemons={allPokemons} />
-        <PokemonDetailsContainer infoPokemon={infoPokemon} />
       </div>
-      <div>{infoPokemon.infoPokemon?.name}</div>
       <Pagination allPokemons={allPokemons} />
       <ModalWindow />
-      <Footer />
     </div>
   );
 }

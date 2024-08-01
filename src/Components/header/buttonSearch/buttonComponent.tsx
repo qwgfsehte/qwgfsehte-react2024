@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
 import { setCurrentPage } from '../../pagination/pagination.slice';
 import styles from '../header.module.scss';
-import { setSearchValue } from 'src/Components/body/pokemonsList/pokemonList.slice';
+import { setSearchValue } from '../../../Components/body/pokemonsList/pokemonList.slice';
 
 const FIRST_PAGE = 1;
 
