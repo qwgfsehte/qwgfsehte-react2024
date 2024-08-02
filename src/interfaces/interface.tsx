@@ -1,20 +1,5 @@
 import { ReactNode } from 'react';
 
-export interface ApiResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: AllPokemons[];
-}
-
-export interface Pokemon {
-  allPokemons: AllPokemons[];
-  filteredPokemons: AllPokemons[][];
-  detailsForPokemons: InfoPokemon[];
-  loading: boolean;
-  errorMessage: string;
-}
-
 export interface ErrorMessageProps {
   errorMessage: string;
 }
@@ -26,11 +11,6 @@ export interface SearchInputProps {
 
 export interface SearchButtonProps {
   onClick: () => void;
-}
-
-export interface AllPokemons {
-  name: string;
-  url: string;
 }
 
 export interface HeaderProps {
@@ -70,10 +50,6 @@ export interface InfoPokemon {
     latest: string;
     legacy: string;
   };
-}
-
-export interface PokemonDetailsInfoProps {
-  onClose: () => void;
 }
 
 export enum StatName {
@@ -131,6 +107,7 @@ export interface PokemonCardInfo {
   url: string;
 }
 
-export interface AllPokemonsProps {
+export interface MainProps {
   allPokemons: PokemonCardInfo[];
+  currentPage: number;
 }

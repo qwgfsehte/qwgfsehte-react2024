@@ -1,12 +1,8 @@
 'use client';
 import { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setNameSelectedPokemon } from '../pokemonsList/pokemonList.slice';
 import { InfoPokemon, StatName, TypeName } from 'src/interfaces/interface';
 import styles from './pokemonDetails.module.scss';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { RootState } from 'src/Components/store';
 import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
 import { useToggleTheme } from '../../../Components/context/useContext';
 import stylesTheme from '../../context/theme.module.scss';
@@ -14,18 +10,16 @@ import Link from 'next/link';
 
 interface PokemonDetailsInfoProps {
   data: InfoPokemon;
+  currentPage: number;
 }
 
-export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
+export function PokemonDetailsInfo({
+  data,
+  currentPage,
+}: PokemonDetailsInfoProps) {
   const { isDark } = useToggleTheme();
   const audioLatestRef = useRef<HTMLAudioElement>(null);
   const audioLegacyRef = useRef<HTMLAudioElement>(null);
-  // const dispatch = useDispatch();
-  // const router = useRouter();
-
-  // const currentPage = useSelector(
-  //   (state: RootState) => state.paginationSlice.currentPage
-  // );
 
   const playLatestCry = () => {
     if (audioLatestRef.current) {
@@ -39,14 +33,6 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
     }
   };
 
-  // const handleClose = () => {
-  //   dispatch(setNameSelectedPokemon(''));
-  //   router.push(``, undefined, {
-  //     shallow: true,
-  //     scroll: false,
-  //   });
-  // };
-
   return (
     <>
       {data !== undefined && (
@@ -59,7 +45,7 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
               <Link
                 className={`${styles['pokemon__button-close']} ${isDark ? stylesTheme['dark-pokemon__button-close'] : ''}`}
                 data-testid="close-button"
-                href={'/search/page/1'}
+                href={`/search/page/${currentPage}`}
               ></Link>
             </div>
             <Image
