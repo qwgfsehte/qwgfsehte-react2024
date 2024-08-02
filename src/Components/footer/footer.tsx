@@ -1,3 +1,4 @@
+'use client';
 import { useToggleTheme } from '../context/useContext';
 import styles from './footer.module.scss';
 import stylesTheme from '../context/theme.module.scss';

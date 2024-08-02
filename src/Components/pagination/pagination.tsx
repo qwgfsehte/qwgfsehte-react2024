@@ -1,3 +1,4 @@
+'use client';
 import { useDispatch, useSelector } from 'react-redux';
 import './pagination.module.scss';
 import { setCurrentGroup, setCurrentPage } from './pagination.slice';
@@ -13,41 +14,29 @@ import { useToggleTheme } from '../context/useContext';
 const PAGES_PER_GROUP = 10;
 
 export function Pagination(pokemonList: AllPokemonsProps) {
-  const { isDark } = useToggleTheme();
-  const currentPage = useSelector(
-    (state: RootState) => state.paginationSlice.currentPage
-  );
+  // const { isDark } = useToggleTheme();
+  // const currentPage = useSelector(
+  //   (state: RootState) => state.paginationSlice.currentPage
+  // );
 
-  const currentGroup = useSelector(
-    (state: RootState) => state.paginationSlice.currentGroup
-  );
-  const inputValue = useSelector(
-    (state: RootState) => state.pokemonListSlice.searchValue
-  );
+  // const currentGroup = useSelector(
+  //   (state: RootState) => state.paginationSlice.currentGroup
+  // );
+  // const inputValue = useSelector(
+  //   (state: RootState) => state.pokemonListSlice.searchValue
+  // );
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const pagination = filterPokemons(
-    pokemonList.allPokemons,
-    currentPage,
-    inputValue,
-    true
-  );
+  const pagination = filterPokemons(pokemonList.allPokemons, 1, '', true);
 
-  const handlePageChange = (newPage: number) => {
-    dispatch(setCurrentPage(newPage));
-    dispatch(setNameSelectedPokemon(''));
-  };
-
-  const startPage = currentGroup * PAGES_PER_GROUP;
+  const startPage = 1 * PAGES_PER_GROUP;
   const endPage = Math.min(startPage + PAGES_PER_GROUP, pagination.length);
 
   return (
     <section className={styles['pagination-container']}>
       <button
-        disabled={currentGroup === 0}
-        className={`${styles['pagination__button']} ${styles['button-left']} ${isDark ? stylesTheme['dark-button-left'] : ''}`}
-        onClick={() => dispatch(setCurrentGroup(currentGroup - 1))}
+        className={`${styles['pagination__button']} ${styles['button-left']}`}
         data-testid="button-left"
       ></button>
       <div className={styles['pagination']}>
@@ -55,11 +44,8 @@ export function Pagination(pokemonList: AllPokemonsProps) {
           const pageIndex = startPage + index + 1;
           return (
             <Link
-              onClick={() => {
-                handlePageChange(pageIndex);
-              }}
               key={pageIndex}
-              className={`${styles['pagination__item']} ${pageIndex === currentPage ? styles['pagination__item_active'] : ''} ${isDark ? stylesTheme['dark-pagination__item'] : ''}`}
+              className={`${styles['pagination__item']} ${pageIndex === 1 ? styles['pagination__item_active'] : ''}`}
               href={`/search/page/${pageIndex}`}
             >
               {pageIndex}
@@ -68,9 +54,7 @@ export function Pagination(pokemonList: AllPokemonsProps) {
         })}
       </div>
       <button
-        disabled={currentGroup === pagination.slice(startPage, endPage).length}
-        className={`${styles['pagination__button']} ${styles['button-right']} ${isDark ? stylesTheme['dark-button-right'] : ''}`}
-        onClick={() => dispatch(setCurrentGroup(currentGroup + 1))}
+        className={`${styles['pagination__button']} ${styles['button-right']}`}
         data-testid="button-right"
       ></button>
     </section>

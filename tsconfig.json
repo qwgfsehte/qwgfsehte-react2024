@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "paths": {
       "Components/*": ["Components/*"],
-      "pages/*": ["pages/*"],
+      "app/*": ["src/app/*"],
       "styles/*": ["styles/*"]
     },
     "forceConsistentCasingInFileNames": true,
@@ -33,7 +33,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "pages/search/page/[pageNumber]tsx"
+    "pages/search/page/[pageNumber]tsx",
+    "./dist/types/**/*.ts"
   ],
   "exclude": ["node_modules"],
   "types": ["vitest/globals"]

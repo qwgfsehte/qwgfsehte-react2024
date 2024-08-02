@@ -1,3 +1,4 @@
+'use client';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNameSelectedPokemon } from '../pokemonsList/pokemonList.slice';
@@ -9,6 +10,7 @@ import { RootState } from 'src/Components/store';
 import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
 import { useToggleTheme } from '../../../Components/context/useContext';
 import stylesTheme from '../../context/theme.module.scss';
+import Link from 'next/link';
 
 interface PokemonDetailsInfoProps {
   data: InfoPokemon;
@@ -18,12 +20,12 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
   const { isDark } = useToggleTheme();
   const audioLatestRef = useRef<HTMLAudioElement>(null);
   const audioLegacyRef = useRef<HTMLAudioElement>(null);
-  const dispatch = useDispatch();
-  const router = useRouter();
+  // const dispatch = useDispatch();
+  // const router = useRouter();
 
-  const currentPage = useSelector(
-    (state: RootState) => state.paginationSlice.currentPage
-  );
+  // const currentPage = useSelector(
+  //   (state: RootState) => state.paginationSlice.currentPage
+  // );
 
   const playLatestCry = () => {
     if (audioLatestRef.current) {
@@ -37,13 +39,13 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
     }
   };
 
-  const handleClose = () => {
-    dispatch(setNameSelectedPokemon(''));
-    router.push(`/search/page/${currentPage}`, undefined, {
-      shallow: true,
-      scroll: false,
-    });
-  };
+  // const handleClose = () => {
+  //   dispatch(setNameSelectedPokemon(''));
+  //   router.push(``, undefined, {
+  //     shallow: true,
+  //     scroll: false,
+  //   });
+  // };
 
   return (
     <>
@@ -54,11 +56,11 @@ export function PokemonDetailsInfo({ data }: PokemonDetailsInfoProps) {
               <h2 className={styles['pokemon-name']}>
                 {data.name.charAt(0).toUpperCase() + data.name.slice(1)}
               </h2>
-              <button
-                onClick={handleClose}
+              <Link
                 className={`${styles['pokemon__button-close']} ${isDark ? stylesTheme['dark-pokemon__button-close'] : ''}`}
                 data-testid="close-button"
-              ></button>
+                href={'/search/page/1'}
+              ></Link>
             </div>
             <Image
               alt={data.name}
