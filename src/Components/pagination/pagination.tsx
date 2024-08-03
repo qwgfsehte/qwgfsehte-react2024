@@ -7,10 +7,20 @@ import { MainProps } from 'src/interfaces/interface';
 import { useState } from 'react';
 const PAGES_PER_GROUP = 10;
 
-export function Pagination({ allPokemons, currentPage }: MainProps) {
+export function Pagination({
+  allPokemons,
+  currentPage,
+  storedValue,
+}: MainProps) {
   const [currentGroup, setCurrentGroup] = useState(0);
 
-  const pagination = filterPokemons(allPokemons, currentPage, '', true);
+  const pagination = filterPokemons(
+    allPokemons,
+    currentPage,
+    storedValue,
+    true
+  );
+
   const startPage = currentGroup * PAGES_PER_GROUP;
   const endPage = Math.min(startPage + PAGES_PER_GROUP, pagination.length);
 
@@ -37,7 +47,7 @@ export function Pagination({ allPokemons, currentPage }: MainProps) {
         })}
       </div>
       <button
-        disabled={currentGroup === pagination.slice(startPage, endPage).length}
+        disabled={currentGroup === pagination.length - 1}
         className={`${styles['pagination__button']} ${styles['button-right']}`}
         data-testid="button-right"
         onClick={() => {

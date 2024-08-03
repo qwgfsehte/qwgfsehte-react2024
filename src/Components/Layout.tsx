@@ -1,10 +1,12 @@
+'use client';
 import styles from 'src/Components/Layout.module.scss';
 import stylesMain from '../Components/App/app.module.scss';
 import Header from 'src/Components/header/header';
 import { Footer } from 'src/Components/footer/footer';
+import React from 'react';
 
 interface LayoutProps {
-  mainChildren: React.ReactNode;
+  mainChildren: React.ReactElement;
   secondaryChildren: React.ReactNode;
 }
 

@@ -1,9 +1,10 @@
-import { AllPokemons } from 'src/interfaces/interface';
+'use client';
+import { PokemonCardInfo } from 'src/interfaces/interface';
 
 const ITEM_PAGE = 20;
 
 export function filterPokemons(
-  pokemons: AllPokemons[],
+  pokemons: PokemonCardInfo[],
   page: number,
   searchValue: string,
   pagination = false

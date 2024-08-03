@@ -1,10 +1,5 @@
 import { describe, test, expect, beforeEach } from 'vitest';
 import '@testing-library/jest-dom';
-import paginationReducer, {
-  initialState,
-  setCurrentGroup,
-  setCurrentPage,
-} from './pagination.slice';
 import configureStore from 'redux-mock-store';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -45,29 +40,6 @@ describe('test pagination component', () => {
     };
 
     store = mockStore(initialState);
-  });
-
-  test('initial state', () => {
-    const state = paginationReducer(undefined, { type: 'unknow' });
-    expect(state).toEqual(initialState);
-  });
-
-  test('test setCurrentPage reducer', () => {
-    const setCurrentPageState = paginationReducer(
-      initialState,
-      setCurrentPage(3)
-    );
-    expect(initialState.currentPage).toBe(1);
-    expect(setCurrentPageState.currentPage).toBe(3);
-  });
-
-  test('test setCurrentGroup reducer', () => {
-    const setCurrentPageState = paginationReducer(
-      initialState,
-      setCurrentGroup(2)
-    );
-    expect(initialState.currentGroup).toBe(0);
-    expect(setCurrentPageState.currentGroup).toBe(2);
   });
 
   test('renders pagination buttons and items', () => {

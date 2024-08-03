@@ -1,10 +1,9 @@
 import '@testing-library/jest-dom';
-import { describe, test, expect, vi, beforeEach, Mock } from 'vitest';
+import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 import { PokemonDetailsInfo } from './pokemonDetailsInfo';
 import configureStore from 'redux-mock-store';
-import { pokemonApi } from './../../pokemonAPI';
 import mockRouter from 'next-router-mock';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
 import { ThemeProvider } from '../../../Components/context/themeContext';
@@ -49,16 +48,9 @@ describe('PokemonDetailsInfo', () => {
 
   beforeEach(() => {
     store = mockStore(initialState);
-
-    (pokemonApi.useFetchPokemonDetailsQuery as Mock).mockReset();
-    mockRouter.setCurrentUrl('/search/page/1');
   });
 
   test('render pokemon details', () => {
-    (pokemonApi.useFetchPokemonDetailsQuery as Mock).mockReturnValue({
-      data: mockData,
-    });
-
     render(
       <Provider store={store}>
         <RouterContext.Provider value={mockRouter}>
