@@ -5,14 +5,12 @@ import styles from './pagination.module.scss';
 import { filterPokemons } from '../hooks/useFilterPokemons';
 import { MainProps } from 'src/interfaces/interface';
 import { useState } from 'react';
+import { useCookie } from '../hooks/useCookie';
 const PAGES_PER_GROUP = 10;
 
-export function Pagination({
-  allPokemons,
-  currentPage,
-  storedValue,
-}: MainProps) {
+export function Pagination({ allPokemons, currentPage }: MainProps) {
   const [currentGroup, setCurrentGroup] = useState(0);
+  const [storedValue] = useCookie('searchValueInput');
 
   const pagination = filterPokemons(
     allPokemons,

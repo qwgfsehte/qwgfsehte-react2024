@@ -4,12 +4,48 @@ import { Pokeball } from './pokeball';
 import { filterPokemons } from '../../hooks/useFilterPokemons';
 import { MainProps, PokemonCardInfo } from 'src/interfaces/interface';
 import Link from 'next/link';
+import { useCookie } from 'src/Components/hooks/useCookie';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { ModalWindow } from '../flyout/flyout';
+import Cookies from 'js-cookie';
 
 function PokemonsList({
   allPokemons,
   currentPage,
-  storedValue,
 }: MainProps): React.ReactElement {
+  const [storedValue] = useCookie('searchValueInput');
+  const [items, setItems] = useState<string[]>([]);
+
+  useEffect(() => {
+    const savedItems = Cookies.get('selectedPokemons');
+    if (savedItems) {
+      setItems(JSON.parse(savedItems));
+    }
+  }, []);
+
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { id, checked } = event.target;
+
+    setItems(prevItems => {
+      const updatedItems = checked
+        ? [...prevItems, id]
+        : prevItems.filter(item => item !== id);
+
+      Cookies.set('selectedPokemons', JSON.stringify(updatedItems), {
+        expires: 7,
+      });
+
+      return updatedItems;
+    });
+  };
+
+  const clearItems = () => {
+    setItems([]);
+    Cookies.set('selectedPokemons', JSON.stringify([]), {
+      expires: 7,
+    });
+  };
+
   return (
     <div className={styles['pokemons-list']}>
       {filterPokemons(allPokemons, currentPage, storedValue).map(
@@ -25,6 +61,12 @@ function PokemonsList({
                 }
                 className={`${styles['pokemon-select']}`}
                 type="checkbox"
+                onChange={handleCheckboxChange}
+                checked={items?.includes(
+                  (pokemon as PokemonCardInfo).name +
+                    ' - ' +
+                    (pokemon as PokemonCardInfo).url
+                )}
               ></input>
               <Link
                 className={`${styles['card']}`}
@@ -43,6 +85,7 @@ function PokemonsList({
             </div>
           )
       )}
+      <ModalWindow selectedItems={items} clearItems={clearItems} />
     </div>
   );
 }

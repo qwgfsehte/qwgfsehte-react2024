@@ -110,5 +110,4 @@ export interface PokemonCardInfo {
 export interface MainProps {
   allPokemons: PokemonCardInfo[];
   currentPage: number;
-  storedValue: string;
 }

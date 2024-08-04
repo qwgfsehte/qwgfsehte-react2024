@@ -1,22 +1,23 @@
-import { useDispatch, useSelector } from 'react-redux';
+'use client';
 import styles from './flyout.module.scss';
 import { createCSV } from './createCSV';
 import { useEffect, useRef, useState } from 'react';
-import { RootState } from '../../store';
-import { clearItems } from '../pokemonsList/pokemonList.slice';
 import { useToggleTheme } from '../../../Components/context/useContext';
 import stylesTheme from '../../context/theme.module.scss';
 
-export const ModalWindow: React.FC = () => {
+interface ModalProps {
+  selectedItems: string[];
+  clearItems: () => void;
+}
+
+export const ModalWindow: React.FC<ModalProps> = ({
+  selectedItems,
+  clearItems,
+}) => {
   const { isDark } = useToggleTheme();
   const downloadLinkRef = useRef<HTMLAnchorElement>(null);
   const [csvData, setCsvData] = useState<string | null>(null);
   const [filename, setFilename] = useState<string | null>(null);
-
-  const selectedItems = useSelector(
-    (state: RootState) => state.pokemonListSlice.selectedPokemons
-  );
-  const dispatch = useDispatch();
 
   const handleDownload = () => {
     if (selectedItems.length > 0) {
@@ -35,10 +36,6 @@ export const ModalWindow: React.FC = () => {
     }
   }, [csvData, filename]);
 
-  const clearSelectedPokemons = () => {
-    dispatch(clearItems([]));
-  };
-
   if (selectedItems.length === 0) {
     return null;
   }
@@ -47,10 +44,7 @@ export const ModalWindow: React.FC = () => {
       className={`${styles['modal-window']} ${isDark ? stylesTheme['dark-modal-window'] : ''}`}
     >
       <p>{selectedItems.length} items are selected</p>
-      <button
-        onClick={clearSelectedPokemons}
-        className={styles['button-unselect']}
-      >
+      <button className={styles['button-unselect']} onClick={clearItems}>
         Unselect all
       </button>
       <button onClick={handleDownload} className={styles['button-download']}>
