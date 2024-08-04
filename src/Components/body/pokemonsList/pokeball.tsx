@@ -1,8 +1,14 @@
 import styles from './pokemonList.module.scss';
+import stylesTheme from '../../context/theme.module.scss';
+import { useToggleTheme } from 'src/Components/context/useContext';
 
 export function Pokeball() {
+  const { isDark } = useToggleTheme();
+
   return (
-    <div className={`${styles['pokeball']}`}>
+    <div
+      className={`${styles['pokeball']} ${isDark ? stylesTheme['dark-pokeball'] : ''}`}
+    >
       <div className={styles['pokeball-top']}></div>
       <div className={styles['pokeball-bottom']}></div>
       <div className={styles['pokeball-center']}>

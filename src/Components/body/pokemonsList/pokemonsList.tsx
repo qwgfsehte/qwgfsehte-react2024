@@ -8,11 +8,14 @@ import { useCookie } from 'src/Components/hooks/useCookie';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { ModalWindow } from '../flyout/flyout';
 import Cookies from 'js-cookie';
+import { useToggleTheme } from 'src/Components/context/useContext';
+import stylesTheme from '../../context/theme.module.scss';
 
 function PokemonsList({
   allPokemons,
   currentPage,
 }: MainProps): React.ReactElement {
+  const { isDark } = useToggleTheme();
   const [storedValue] = useCookie('searchValueInput');
   const [items, setItems] = useState<string[]>([]);
 
@@ -59,7 +62,7 @@ function PokemonsList({
                   ' - ' +
                   (pokemon as PokemonCardInfo).url
                 }
-                className={`${styles['pokemon-select']}`}
+                className={`${styles['pokemon-select']} ${isDark ? stylesTheme['dark-pokemon-select'] : ''}`}
                 type="checkbox"
                 onChange={handleCheckboxChange}
                 checked={items?.includes(
@@ -69,7 +72,7 @@ function PokemonsList({
                 )}
               ></input>
               <Link
-                className={`${styles['card']}`}
+                className={`${styles['card']} ${isDark ? stylesTheme['dark-card'] : ''}`}
                 href={`/search/page/${currentPage}/details/${(pokemon as PokemonCardInfo).name}`}
               >
                 <Pokeball />

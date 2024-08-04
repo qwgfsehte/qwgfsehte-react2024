@@ -6,9 +6,12 @@ import { filterPokemons } from '../hooks/useFilterPokemons';
 import { MainProps } from 'src/interfaces/interface';
 import { useState } from 'react';
 import { useCookie } from '../hooks/useCookie';
+import { useToggleTheme } from '../context/useContext';
+import stylesTheme from '../context/theme.module.scss';
 const PAGES_PER_GROUP = 10;
 
 export function Pagination({ allPokemons, currentPage }: MainProps) {
+  const { isDark } = useToggleTheme();
   const [currentGroup, setCurrentGroup] = useState(0);
   const [storedValue] = useCookie('searchValueInput');
 
@@ -26,7 +29,7 @@ export function Pagination({ allPokemons, currentPage }: MainProps) {
     <section className={styles['pagination-container']}>
       <button
         disabled={currentGroup === 0}
-        className={`${styles['pagination__button']} ${styles['button-left']}`}
+        className={`${styles['pagination__button']} ${styles['button-left']} ${isDark ? stylesTheme['dark-button-left'] : ''}`}
         data-testid="button-left"
         onClick={() => setCurrentGroup(currentGroup - 1)}
       ></button>
@@ -36,7 +39,7 @@ export function Pagination({ allPokemons, currentPage }: MainProps) {
           return (
             <Link
               key={pageIndex}
-              className={`${styles['pagination__item']} ${pageIndex === Number(currentPage) ? styles['pagination__item_active'] : ''}`}
+              className={`${styles['pagination__item']} ${pageIndex === Number(currentPage) ? styles['pagination__item_active'] : ''} ${isDark ? stylesTheme['dark-pagination__item'] : ''}`}
               href={`/search/page/${pageIndex}`}
             >
               {pageIndex}
@@ -46,7 +49,7 @@ export function Pagination({ allPokemons, currentPage }: MainProps) {
       </div>
       <button
         disabled={currentGroup === pagination.length - 1}
-        className={`${styles['pagination__button']} ${styles['button-right']}`}
+        className={`${styles['pagination__button']} ${styles['button-right']} ${isDark ? stylesTheme['dark-button-right'] : ''}`}
         data-testid="button-right"
         onClick={() => {
           setCurrentGroup(currentGroup + 1);
