@@ -1,60 +1,49 @@
-import configureStore from 'redux-mock-store';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { ModalWindow } from './flyout';
-import { Provider } from 'react-redux';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { clearItems } from '../pokemonsList/pokemonList.slice';
 import { createCSV } from './createCSV';
 import { ThemeProvider } from '../../../Components/context/themeContext';
-
-const mockStore = configureStore([]);
+import '@testing-library/jest-dom';
 
 describe('test flyout component', () => {
-  let store: ReturnType<typeof mockStore>;
+  const clearItemsMock = vi.fn();
 
-  beforeEach(() => {
-    const initialState = {
-      pokemonListSlice: {
-        nameSelectedPokemon: 'pikachu',
-        pokemonPage: [],
-        selectedPokemons: ['bulbasaur', 'charmander'],
-      },
-      paginationSlice: {
-        currentPage: 1,
-        currentGroup: 0,
-      },
-      pokemonDetailsSlice: {
-        error: 'Error message',
-      },
-    };
-    store = mockStore(initialState);
-  });
-
-  test('renders modal with correct number of selected items', () => {
+  test('render modal with correct number of selected items', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <ModalWindow />
-        </ThemeProvider>
-      </Provider>
+      <ThemeProvider>
+        <ModalWindow
+          selectedItems={['1. test', '2. test']}
+          clearItems={clearItemsMock}
+        />
+      </ThemeProvider>
     );
 
     expect(screen.getByText('2 items are selected')).to.exist;
+    expect(screen.getByText('Unselect all')).toBeInTheDocument();
+    expect(screen.getByText('Download')).toBeInTheDocument();
   });
 
-  test('clear selection button dispatches clearItems action', () => {
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <ModalWindow />
-        </ThemeProvider>
-      </Provider>
+  test('does not render when there are no selected items', () => {
+    const { container } = render(
+      <ThemeProvider>
+        <ModalWindow selectedItems={[]} clearItems={clearItemsMock} />
+      </ThemeProvider>
     );
 
-    fireEvent.click(screen.getByText('Unselect all'));
+    expect(container.firstChild).toBeNull();
+  });
 
-    const actions = store.getActions();
-    expect(actions).to.deep.include(clearItems([]));
+  test('handles clear items button click', () => {
+    render(
+      <ThemeProvider>
+        <ModalWindow
+          selectedItems={['1. test', '2. test']}
+          clearItems={clearItemsMock}
+        />
+      </ThemeProvider>
+    );
+    fireEvent.click(screen.getByText('Unselect all'));
+    expect(clearItemsMock).toHaveBeenCalledTimes(1);
   });
 
   test('create CSV string from array of selected items', () => {

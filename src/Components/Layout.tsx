@@ -1,8 +1,8 @@
 'use client';
-import styles from 'src/Components/Layout.module.scss';
+import styles from '../Components/Layout.module.scss';
 import stylesMain from '../Components/App/app.module.scss';
-import Header from 'src/Components/header/header';
-import { Footer } from 'src/Components/footer/footer';
+import Header from '../Components/header/header';
+import { Footer } from '../Components/footer/footer';
 import React from 'react';
 import { useToggleTheme } from './context/useContext';
 import stylesTheme from '../Components/context/theme.module.scss';

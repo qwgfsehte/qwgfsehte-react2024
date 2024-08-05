@@ -1,4 +1,4 @@
-import { ThemeProvider } from 'src/Components/context/themeContext';
+import { ThemeProvider } from '../../Components/context/themeContext';
 import '../../styles/global.scss';
 
 export const metadata = {

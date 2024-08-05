@@ -1,29 +1,8 @@
 import '@testing-library/jest-dom';
-import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { Provider } from 'react-redux';
+import { describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { PokemonDetailsInfo } from './pokemonDetailsInfo';
-import configureStore from 'redux-mock-store';
-import mockRouter from 'next-router-mock';
-import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
 import { ThemeProvider } from '../../../Components/context/themeContext';
-
-const mockStore = configureStore([]);
-
-const initialState = {
-  pokemonListSlice: {
-    nameSelectedPokemon: 'pikachu',
-    pokemonPage: [],
-    selectedPokemons: [],
-  },
-  paginationSlice: {
-    currentPage: 1,
-    currentGroup: 0,
-  },
-  pokemonDetailsSlice: {
-    error: 'Error message',
-  },
-};
 
 const mockData = {
   name: 'pikachu',
@@ -37,28 +16,12 @@ const mockData = {
   id: '1',
 };
 
-vi.mock('../../pokemonAPI', () => ({
-  pokemonApi: {
-    useFetchPokemonDetailsQuery: vi.fn(),
-  },
-}));
-
 describe('PokemonDetailsInfo', () => {
-  let store: ReturnType<typeof mockStore>;
-
-  beforeEach(() => {
-    store = mockStore(initialState);
-  });
-
   test('render pokemon details', () => {
     render(
-      <Provider store={store}>
-        <RouterContext.Provider value={mockRouter}>
-          <ThemeProvider>
-            <PokemonDetailsInfo data={mockData} />
-          </ThemeProvider>
-        </RouterContext.Provider>
-      </Provider>
+      <ThemeProvider>
+        <PokemonDetailsInfo data={mockData} currentPage={1} />
+      </ThemeProvider>
     );
 
     expect(screen.getByText('Pikachu')).toBeInTheDocument();

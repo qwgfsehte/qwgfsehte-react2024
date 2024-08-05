@@ -1,6 +1,6 @@
 import styles from './pokemonList.module.scss';
 import stylesTheme from '../../context/theme.module.scss';
-import { useToggleTheme } from 'src/Components/context/useContext';
+import { useToggleTheme } from '../../context/useContext';
 
 export function Pokeball() {
   const { isDark } = useToggleTheme();

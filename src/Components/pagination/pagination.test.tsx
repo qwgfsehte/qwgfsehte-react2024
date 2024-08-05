@@ -1,17 +1,10 @@
-import { describe, test, expect, beforeEach } from 'vitest';
+import { describe, test, expect } from 'vitest';
 import '@testing-library/jest-dom';
-import configureStore from 'redux-mock-store';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Provider } from 'react-redux';
+import { render, screen } from '@testing-library/react';
 import { Pagination } from './pagination';
-import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
-import mockRouter from 'next-router-mock';
 import { ThemeProvider } from '../context/themeContext';
 
-const mockStore = configureStore([]);
-
 describe('test pagination component', () => {
-  let store: ReturnType<typeof mockStore>;
   const allPokemons = {
     allPokemons: [
       {
@@ -25,30 +18,11 @@ describe('test pagination component', () => {
     ],
   };
 
-  beforeEach(() => {
-    const initialState = {
-      updatePokemons: {
-        filteredPokemons: Array(50).fill({}),
-      },
-      paginationSlice: {
-        currentPage: 1,
-        currentGroup: 0,
-      },
-      pokemonListSlice: {
-        searchValue: '',
-      },
-    };
-
-    store = mockStore(initialState);
-  });
-
   test('renders pagination buttons and items', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <Pagination allPokemons={allPokemons.allPokemons} />
-        </ThemeProvider>
-      </Provider>
+      <ThemeProvider>
+        <Pagination allPokemons={allPokemons.allPokemons} currentPage={1} />
+      </ThemeProvider>
     );
 
     const leftButton = screen.getByTestId('button-left');
@@ -61,35 +35,13 @@ describe('test pagination component', () => {
 
   test('disables left button on first group', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <Pagination allPokemons={allPokemons.allPokemons} />
-        </ThemeProvider>
-      </Provider>
+      <ThemeProvider>
+        <Pagination allPokemons={allPokemons.allPokemons} currentPage={1} />
+      </ThemeProvider>
     );
 
     const leftButton = screen.getByTestId('button-left');
 
     expect(leftButton).toBeDisabled();
-  });
-
-  test('changes pages on link click', () => {
-    render(
-      <Provider store={store}>
-        <RouterContext.Provider value={mockRouter}>
-          <ThemeProvider>
-            <Pagination allPokemons={allPokemons.allPokemons} />
-          </ThemeProvider>
-        </RouterContext.Provider>
-      </Provider>
-    );
-
-    const pageLink = screen.getByText('1');
-    fireEvent.click(pageLink);
-    const actions = store.getActions();
-    expect(actions).toEqual([
-      { type: 'pagination/setCurrentPage', payload: 1 },
-      { type: 'pokemonList/setNameSelectedPokemon', payload: '' },
-    ]);
   });
 });

@@ -4,12 +4,12 @@ import { Pokeball } from './pokeball';
 import { filterPokemons } from '../../hooks/useFilterPokemons';
 import { MainProps, PokemonCardInfo } from 'src/interfaces/interface';
 import Link from 'next/link';
-import { useCookie } from 'src/Components/hooks/useCookie';
+import { useCookie } from '../../../Components/hooks/useCookie';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { ModalWindow } from '../flyout/flyout';
 import Cookies from 'js-cookie';
-import { useToggleTheme } from 'src/Components/context/useContext';
 import stylesTheme from '../../context/theme.module.scss';
+import { useToggleTheme } from '../../context/useContext';
 
 function PokemonsList({
   allPokemons,

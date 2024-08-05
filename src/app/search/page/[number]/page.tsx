@@ -1,14 +1,6 @@
-import Layout from 'src/Components/Layout';
-import { use } from 'react';
-import { AppContent } from 'src/Components/App/appLayout';
-
-async function fetchSearchResults() {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=2000`);
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return res.json();
-}
+import Layout from '../../../../Components/Layout';
+import { AppContent } from '../../../../Components/App/appLayout';
+import { fetchSearchResults } from '../../../api/fetchAllPokemons';
 
 interface Params {
   params: {
@@ -16,9 +8,9 @@ interface Params {
   };
 }
 
-export default function PageHome({ params }: Params) {
+export default async function PageHome({ params }: Params) {
   const { number } = params;
-  const allPokemons = use(fetchSearchResults());
+  const allPokemons = await fetchSearchResults();
 
   return (
     <Layout

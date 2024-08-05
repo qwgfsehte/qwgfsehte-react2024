@@ -1,24 +1,10 @@
-import Layout from 'src/Components/Layout';
+import Layout from '../../../../../../Components/Layout';
 import styles from '../../../../../../Components/body/pokemonDetails/pokemonDetails.module.scss';
-import { AppContent } from 'src/Components/App/appLayout';
+import { AppContent } from '../../../../../../Components/App/appLayout';
 import { use } from 'react';
-import { PokemonDetailsInfo } from 'src/Components/body/pokemonDetails/pokemonDetailsInfo';
-
-async function fetchSearchResults() {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=2000`);
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return res.json();
-}
-
-async function fetchDetailsResults(namePokemon: string) {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${namePokemon}`);
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return res.json();
-}
+import { PokemonDetailsInfo } from '../../../../../../Components/body/pokemonDetails/pokemonDetailsInfo';
+import { fetchDetailsResults } from '../../../../../api/fetchDetailsPokemon';
+import { fetchSearchResults } from '../../../../../api/fetchAllPokemons';
 
 interface Params {
   params: {
