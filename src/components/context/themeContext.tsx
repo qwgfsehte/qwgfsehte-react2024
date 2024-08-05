@@ -10,10 +10,7 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
 );
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    const savedTheme = localStorage.getItem('isDark');
-    return savedTheme ? JSON.parse(savedTheme) : false;
-  });
+  const [isDark, setIsDark] = useState<boolean>(() => false);
 
   const toggleTheme = () => {
     setIsDark(prev => !prev);

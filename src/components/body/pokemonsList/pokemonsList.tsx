@@ -10,7 +10,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ChangeEvent, useEffect } from 'react';
 import { Pokeball } from './pokeball';
 
-function PokemonsList(): React.ReactElement {
+function PokemonsList({ allPokemons, currentPage }): React.ReactElement {
   const dispatch = useDispatch();
 
   const nameSelectedPokemon = useSelector(
@@ -32,7 +32,7 @@ function PokemonsList(): React.ReactElement {
     }
   };
 
-  localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+  // localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
 
   const { name } = useParams();
 
@@ -48,7 +48,7 @@ function PokemonsList(): React.ReactElement {
         nameSelectedPokemon ? 'pokemons-list half-width' : 'pokemons-list'
       }
     >
-      {pokemonPage.map((pokemon, index) =>
+      {allPokemons.results.map((pokemon, index) =>
         pokemon ? (
           <div key={index} className="card-container">
             <input
@@ -65,7 +65,7 @@ function PokemonsList(): React.ReactElement {
               key={index}
               className="card"
               onClick={() => dispatch(setNameSelectedPokemon(pokemon.name))}
-              to={`details/${pokemon.name}`}
+              to={`/search/page/${currentPage}/details/${pokemon.name}`}
             >
               <Pokeball />
               <h3 className="pokemon-name">{pokemon.name}</h3>
