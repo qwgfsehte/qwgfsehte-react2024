@@ -4,7 +4,6 @@ import Header from '../header/header';
 import { Pagination } from '../pagination/pagination';
 import './app.scss';
 import './../context/theme.scss';
-import { ModalWindow } from '../body/flyout/flyout';
 import { Footer } from '../footer/footer';
 import { AppProps } from '../../interfaces/interface';
 import { Outlet } from '@remix-run/react';
@@ -24,7 +23,6 @@ export function AppContent({ allPokemons, currentPage }: AppProps) {
             <Outlet />
           </section>
           <Pagination allPokemons={allPokemons} currentPage={currentPage} />
-          {/* <ModalWindow /> */}
         </>
       </main>
       <Footer />
