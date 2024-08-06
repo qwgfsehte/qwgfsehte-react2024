@@ -3,13 +3,20 @@ import './pagination.scss';
 import { filterPokemons } from '../hooks/useFilterPokemons';
 import { Link } from '@remix-run/react';
 import { AppProps } from '../../interfaces/interface';
+import { useCookie } from '../hooks/useCookies';
 
 const PAGES_PER_GROUP = 10;
 
 export function Pagination({ allPokemons, currentPage }: AppProps) {
   const [currentGroup, setCurrentGroup] = useState(0);
+  const [storedValue] = useCookie('searchValueInput');
 
-  const pagination = filterPokemons(allPokemons, currentPage, '', true);
+  const pagination = filterPokemons(
+    allPokemons,
+    currentPage,
+    storedValue,
+    true
+  );
 
   const startPage = currentGroup * PAGES_PER_GROUP;
   const endPage = Math.min(startPage + PAGES_PER_GROUP, pagination.length);

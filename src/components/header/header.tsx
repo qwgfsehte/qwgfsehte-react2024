@@ -1,11 +1,22 @@
 import './header.scss';
-import React from 'react';
-import SearchButton from './buttonSearch/buttonComponent';
-import SearchInput from './inputSearch/InputComponent';
+import React, { useState } from 'react';
 import { useToggleTheme } from '../context/useContext';
+import Cookies from 'js-cookie';
+import { Link } from '@remix-run/react';
 
 function Header(): React.ReactElement {
   const { toggleTheme } = useToggleTheme();
+  const [inputValue, setInputValue] = useState(
+    Cookies.get('searchValueInput') || ''
+  );
+
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setInputValue(event.target.value);
+  }
+
+  function handleButtonClick() {
+    Cookies.set('searchValueInput', inputValue, { expires: 7 });
+  }
 
   return (
     <header className="header">
@@ -18,8 +29,19 @@ function Header(): React.ReactElement {
         <p className="logo-title">PokePedia</p>
       </div>
       <div className="search-form">
-        <SearchInput />
-        <SearchButton />
+        <input
+          value={inputValue}
+          placeholder="Search"
+          type="text"
+          className="search-form__input"
+          onChange={handleInputChange}
+        ></input>
+        <Link
+          data-testid="search-button"
+          className="search-form__button"
+          onClick={handleButtonClick}
+          to={'/search/page/1'}
+        ></Link>
       </div>
       <button className="button-theme" onClick={toggleTheme}></button>
     </header>
