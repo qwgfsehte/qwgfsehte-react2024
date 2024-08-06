@@ -46,9 +46,9 @@
 
   &__details-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
+    width: 50%;
   }
 
   &__info-container {

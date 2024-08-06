@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { setNameSelectedPokemon } from '../body/pokemonsList/pokemonList.slice';
 import PokemonsList from '../body/pokemonsList/pokemonsList';
 import Header from '../header/header';
 import { Pagination } from '../pagination/pagination';
@@ -7,8 +6,10 @@ import './app.scss';
 import './../context/theme.scss';
 import { ModalWindow } from '../body/flyout/flyout';
 import { Footer } from '../footer/footer';
+import { AppProps } from '../../interfaces/interface';
+import { Outlet } from '@remix-run/react';
 
-export function AppContent({ allPokemons, currentPage }) {
+export function AppContent({ allPokemons, currentPage }: AppProps) {
   return (
     <>
       <Header />
@@ -20,9 +21,10 @@ export function AppContent({ allPokemons, currentPage }) {
           ></Link>
           <section className="container-cards">
             <PokemonsList allPokemons={allPokemons} currentPage={currentPage} />
+            <Outlet />
           </section>
-          <Pagination />
-          <ModalWindow />
+          <Pagination allPokemons={allPokemons} currentPage={currentPage} />
+          {/* <ModalWindow /> */}
         </>
       </main>
       <Footer />

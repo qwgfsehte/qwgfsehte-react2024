@@ -1,10 +1,25 @@
-import { useParams } from '@remix-run/react';
+import { json, useLoaderData, useParams } from '@remix-run/react';
+import { PokemonDetailsInfo } from '../../src/components/body/pokemonDetails/pokemonDetailsInfo';
+import { fetchDetailsResults } from '../api/fetchDetailsPokemon';
+import { InfoPokemon } from '../../src/interfaces/interface';
 
-export default function Search() {
-  const { page, pokemon } = useParams();
+interface Params {
+  params: {
+    pokemon: string;
+  };
+}
+
+export const loader = async ({ params }: Params) => {
+  const { pokemon } = params;
+  const response = await fetchDetailsResults(pokemon);
+  return json(response);
+};
+
+export default function PageDetails() {
+  const { page } = useParams();
+  const data = useLoaderData<InfoPokemon>();
+
   return (
-    <div>
-      <h1>{pokemon}</h1>
-    </div>
+    <PokemonDetailsInfo data={data} currentPage={page as unknown as number} />
   );
 }

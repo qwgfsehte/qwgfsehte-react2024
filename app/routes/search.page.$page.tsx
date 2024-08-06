@@ -1,21 +1,27 @@
-import { json, Link, Outlet, useLoaderData, useParams } from '@remix-run/react';
+import { json, useLoaderData, useParams } from '@remix-run/react';
 import { fetchSearchResults } from '../api/fetchAllPokemons';
-import Header from '../../src/components/header/header';
 import { AppContent } from '../../src/components/App/appLayout';
+import { PokemonCardInfo } from '../../src/interfaces/interface';
 
-export const loader: LoaderFunction = async () => {
+interface PokemonsData {
+  results: PokemonCardInfo[];
+}
+
+export const loader = async () => {
   const response = await fetchSearchResults();
   return json(response);
 };
 
-export default function Search() {
+export default function PageSearch() {
   const { page } = useParams();
-  const allPokemons = useLoaderData();
+  const allPokemons = useLoaderData<PokemonsData>();
 
   return (
     <div>
-      <AppContent allPokemons={allPokemons} currentPage={page} />
-      <Outlet />
+      <AppContent
+        allPokemons={allPokemons.results}
+        currentPage={page as unknown as number}
+      />
     </div>
   );
 }
