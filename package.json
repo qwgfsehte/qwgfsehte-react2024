@@ -17,7 +17,8 @@
     "coverage": "vitest run --coverage",
     "pre-push": "npm run test",
     "serve": "remix-serve build",
-    "postinstall": "remix setup node"
+    "postinstall": "remix setup node",
+    "sass": "sass --watch app/:app/"
   },
   "dependencies": {
     "@babel/plugin-transform-private-methods": "^7.24.7",

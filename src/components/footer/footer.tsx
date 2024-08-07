@@ -1,8 +1,15 @@
+import { useToggleTheme } from '../context/useContext';
 import './footer.scss';
 
 export function Footer() {
+  const { isDark } = useToggleTheme();
+
   return (
-    <div className="footer-container">
+    <footer
+      className={
+        isDark ? 'dark-footer-container footer-container' : 'footer-container'
+      }
+    >
       <a
         target="_blank"
         href="https://pokeapi.co/"
@@ -12,6 +19,6 @@ export function Footer() {
         {''}
       </a>
       <div>2024</div>
-    </div>
+    </footer>
   );
 }

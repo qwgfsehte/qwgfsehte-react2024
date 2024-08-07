@@ -6,6 +6,7 @@ import { Link } from '@remix-run/react';
 
 function Header(): React.ReactElement {
   const { toggleTheme } = useToggleTheme();
+  const { isDark } = useToggleTheme();
   const [inputValue, setInputValue] = useState(
     Cookies.get('searchValueInput') || ''
   );
@@ -19,7 +20,7 @@ function Header(): React.ReactElement {
   }
 
   return (
-    <header className="header">
+    <header className={isDark ? 'dark header' : 'light header'}>
       <div className="logo-container">
         <img
           src="/src/assets/logo/logo.png"

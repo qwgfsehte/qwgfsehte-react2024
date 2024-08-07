@@ -1,9 +1,7 @@
 import configureStore from 'redux-mock-store';
 import { beforeEach, describe, expect, test } from 'vitest';
 import { ModalWindow } from './flyout';
-import { Provider } from 'react-redux';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { clearItems } from '../pokemonsList/pokemonList.slice';
 import { createCSV } from './createCSV';
 
 const mockStore = configureStore([]);
@@ -30,21 +28,13 @@ describe('test flyout component', () => {
   });
 
   test('renders modal with correct number of selected items', () => {
-    render(
-      <Provider store={store}>
-        <ModalWindow />
-      </Provider>
-    );
+    render(<ModalWindow />);
 
     expect(screen.getByText('2 items are selected')).to.exist;
   });
 
   test('clear selection button dispatches clearItems action', () => {
-    render(
-      <Provider store={store}>
-        <ModalWindow />
-      </Provider>
-    );
+    render(<ModalWindow />);
 
     fireEvent.click(screen.getByText('Unselect all'));
 

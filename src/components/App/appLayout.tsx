@@ -1,18 +1,21 @@
 import { Link } from 'react-router-dom';
 import PokemonsList from '../body/pokemonsList/pokemonsList';
-import Header from '../header/header';
 import { Pagination } from '../pagination/pagination';
-import './app.scss';
+import '../App/app.scss';
 import './../context/theme.scss';
-import { Footer } from '../footer/footer';
 import { AppProps } from '../../interfaces/interface';
 import { Outlet } from '@remix-run/react';
+import { useToggleTheme } from '../context/useContext';
 
-export function AppContent({ allPokemons, currentPage }: AppProps) {
+export function MainContent({ allPokemons, currentPage }: AppProps) {
+  const { isDark } = useToggleTheme();
+
   return (
     <>
-      <Header />
-      <main style={{ position: 'relative' }}>
+      <main
+        className={isDark ? 'dark' : 'light'}
+        style={{ position: 'relative' }}
+      >
         <>
           <Link
             className="shadow-button"
@@ -25,7 +28,6 @@ export function AppContent({ allPokemons, currentPage }: AppProps) {
           <Pagination allPokemons={allPokemons} currentPage={currentPage} />
         </>
       </main>
-      <Footer />
     </>
   );
 }

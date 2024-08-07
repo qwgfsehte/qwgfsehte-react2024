@@ -20,6 +20,15 @@ export default function PageDetails() {
   const data = useLoaderData<InfoPokemon>();
 
   return (
-    <PokemonDetailsInfo data={data} currentPage={page as unknown as number} />
+    <>
+      {!data ? (
+        <div>Loading...</div>
+      ) : (
+        <PokemonDetailsInfo
+          data={data}
+          currentPage={page as unknown as number}
+        />
+      )}
+    </>
   );
 }
