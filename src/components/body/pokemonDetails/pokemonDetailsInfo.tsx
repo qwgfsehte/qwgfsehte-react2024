@@ -5,7 +5,7 @@ import './pokemonDetails.scss';
 import { Link } from 'react-router-dom';
 
 interface PokemonDetailsInfoProps {
-  data: InfoPokemon;
+  data: InfoPokemon | undefined;
   currentPage: number;
 }
 
@@ -30,7 +30,7 @@ export function PokemonDetailsInfo({
 
   return (
     <>
-      {data !== undefined && (
+      {data !== undefined ? (
         <div className="pokemon-details">
           <div className="pokemon__info-container">
             <div className="pokemon__name-container">
@@ -139,6 +139,8 @@ export function PokemonDetailsInfo({
             </div>
           </div>
         </div>
+      ) : (
+        <div>Error: Pokemon data not found</div>
       )}
     </>
   );

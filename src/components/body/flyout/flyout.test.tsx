@@ -1,45 +1,32 @@
-import configureStore from 'redux-mock-store';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { ModalWindow } from './flyout';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { createCSV } from './createCSV';
 
-const mockStore = configureStore([]);
-
 describe('test flyout component', () => {
-  let store: ReturnType<typeof mockStore>;
-
-  beforeEach(() => {
-    const initialState = {
-      pokemonListSlice: {
-        nameSelectedPokemon: 'pikachu',
-        pokemonPage: [],
-        selectedPokemons: ['bulbasaur', 'charmander'],
-      },
-      paginationSlice: {
-        currentPage: 1,
-        currentGroup: 0,
-      },
-      pokemonDetailsSlice: {
-        error: 'Error message',
-      },
-    };
-    store = mockStore(initialState);
-  });
+  const clearItemsMock = vi.fn();
 
   test('renders modal with correct number of selected items', () => {
-    render(<ModalWindow />);
+    render(
+      <ModalWindow
+        selectedItems={['1. test', '2. test']}
+        clearItems={clearItemsMock}
+      />
+    );
 
     expect(screen.getByText('2 items are selected')).to.exist;
   });
 
   test('clear selection button dispatches clearItems action', () => {
-    render(<ModalWindow />);
+    render(
+      <ModalWindow
+        selectedItems={['1. test', '2. test']}
+        clearItems={clearItemsMock}
+      />
+    );
 
     fireEvent.click(screen.getByText('Unselect all'));
-
-    const actions = store.getActions();
-    expect(actions).to.deep.include(clearItems([]));
+    expect(clearItemsMock).toHaveBeenCalledTimes(1);
   });
 
   test('create CSV string from array of selected items', () => {

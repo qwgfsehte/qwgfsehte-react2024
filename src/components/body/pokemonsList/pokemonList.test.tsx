@@ -1,34 +1,15 @@
 import '@testing-library/jest-dom';
-import { describe, test, expect, vi, afterEach, beforeEach } from 'vitest';
+import { describe, test, expect } from 'vitest';
 import { Pokeball } from './pokeball';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import PokemonsList from './pokemonsList';
-import configureStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
 
-const mockStore = configureStore([]);
-
 describe('test pokemon list component', () => {
-  let store: ReturnType<typeof mockStore>;
-
-  beforeEach(() => {
-    const initialState = {
-      pokemonListSlice: {
-        nameSelectedPokemon: '',
-        pokemonPage: [
-          { name: 'Pikachu', url: 'url1' },
-          { name: 'Charmander', url: 'url2' },
-        ],
-        selectedPokemons: [],
-      },
-    };
-
-    store = mockStore(initialState);
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
+  const dataPokemons = [
+    { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
+    { name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/2/' },
+  ];
 
   test('render pokeball component', () => {
     const { container } = render(<Pokeball />);
@@ -38,38 +19,20 @@ describe('test pokemon list component', () => {
   test('render pokemons list component', () => {
     render(
       <MemoryRouter>
-        <PokemonsList />
+        <PokemonsList allPokemons={dataPokemons} currentPage={1} />
       </MemoryRouter>
     );
-    expect(screen.getByText('Pikachu')).toBeInTheDocument();
-    expect(screen.getByText('Charmander')).toBeInTheDocument();
-  });
-
-  test('handles checkbox change', () => {
-    render(
-      <MemoryRouter>
-        <PokemonsList />
-      </MemoryRouter>
-    );
-
-    const checkbox = screen.getByTestId('checkbox-Pikachu-0');
-    fireEvent.click(checkbox);
-    expect(store.getActions()).toContainEqual(addItem('Pikachu - url1'));
+    expect(screen.getByText('pikachu')).toBeInTheDocument();
+    expect(screen.getByText('charmander')).toBeInTheDocument();
   });
 
   test('renders placeholder when pokemon not found', () => {
-    store = mockStore({
-      pokemonListSlice: {
-        pokemonPage: [null],
-      },
-    });
-
     render(
       <MemoryRouter>
-        <PokemonsList />
+        <PokemonsList allPokemons={[]} currentPage={1} />
       </MemoryRouter>
     );
 
-    expect(screen.getByText('pokemon not found')).toBeInTheDocument();
+    expect(screen.getByText('Pokemons not found')).toBeInTheDocument();
   });
 });

@@ -2,6 +2,7 @@ import { json, useLoaderData, useParams } from '@remix-run/react';
 import { PokemonDetailsInfo } from '../../src/components/body/pokemonDetails/pokemonDetailsInfo';
 import { fetchDetailsResults } from '../api/fetchDetailsPokemon';
 import { InfoPokemon } from '../../src/interfaces/interface';
+import { Suspense } from 'react';
 
 interface Params {
   params: {
@@ -20,15 +21,8 @@ export default function PageDetails() {
   const data = useLoaderData<InfoPokemon>();
 
   return (
-    <>
-      {!data ? (
-        <div>Loading...</div>
-      ) : (
-        <PokemonDetailsInfo
-          data={data}
-          currentPage={page as unknown as number}
-        />
-      )}
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <PokemonDetailsInfo data={data} currentPage={page as unknown as number} />
+    </Suspense>
   );
 }

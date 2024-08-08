@@ -45,10 +45,16 @@ function PokemonsList({
     });
   };
 
+  const filteredPokemons = filterPokemons(
+    allPokemons,
+    currentPage,
+    storedValue
+  );
+
   return (
     <div className={'pokemons-list'}>
-      {filterPokemons(allPokemons, currentPage, storedValue).map(
-        (pokemon, index) =>
+      {filteredPokemons.length > 0 ? (
+        filteredPokemons.map((pokemon, index) =>
           pokemon ? (
             <div key={index} className="card-container">
               <input
@@ -80,9 +86,12 @@ function PokemonsList({
             </div>
           ) : (
             <div key={index} className="placeholder">
-              pokemon not found
+              Pokemon not found
             </div>
           )
+        )
+      ) : (
+        <div>Pokemons not found</div>
       )}
       <ModalWindow selectedItems={items} clearItems={clearItems} />
     </div>

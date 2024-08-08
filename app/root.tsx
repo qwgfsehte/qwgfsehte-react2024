@@ -9,6 +9,7 @@ import {
 import { ThemeProvider } from '../src/components/context/themeContext';
 import '../app/styles/global.scss';
 import { LoaderFunction } from 'react-router-dom';
+import ErrorBoundary from '../src/components/errorBoundary/errorBoundary';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -20,20 +21,22 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Root() {
   return (
-    <ThemeProvider>
-      <html lang="en">
-        <head>
-          <Links />
-          <Meta />
-          <title>PokePedia</title>
-          <link rel="icon" href="/favicon.png" />
-        </head>
-        <body>
-          <Outlet />
-          <ScrollRestoration />
-          <Scripts />
-        </body>
-      </html>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <html lang="en">
+          <head>
+            <Links />
+            <Meta />
+            <title>PokePedia</title>
+            <link rel="icon" href="/favicon.png" />
+          </head>
+          <body>
+            <Outlet />
+            <ScrollRestoration />
+            <Scripts />
+          </body>
+        </html>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }

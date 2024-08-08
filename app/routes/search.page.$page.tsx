@@ -4,7 +4,6 @@ import { MainContent } from '../../src/components/App/appLayout';
 import { PokemonCardInfo } from '../../src/interfaces/interface';
 import Header from '../../src/components/header/header';
 import { Footer } from '../../src/components/footer/footer';
-import Loading from '../../src/components/loading/loading';
 
 interface PokemonsData {
   results: PokemonCardInfo[];
@@ -22,14 +21,10 @@ export default function PageSearch() {
   return (
     <div>
       <Header />
-      {!allPokemons.results ? (
-        <Loading />
-      ) : (
-        <MainContent
-          allPokemons={allPokemons.results}
-          currentPage={page as unknown as number}
-        />
-      )}
+      <MainContent
+        allPokemons={allPokemons.results}
+        currentPage={page as unknown as number}
+      />
       <Footer />
     </div>
   );

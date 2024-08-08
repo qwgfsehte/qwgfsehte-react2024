@@ -6,6 +6,8 @@ import './../context/theme.scss';
 import { AppProps } from '../../interfaces/interface';
 import { Outlet } from '@remix-run/react';
 import { useToggleTheme } from '../context/useContext';
+import { Suspense } from 'react';
+import Loading from '../loading/loading';
 
 export function MainContent({ allPokemons, currentPage }: AppProps) {
   const { isDark } = useToggleTheme();
@@ -22,7 +24,12 @@ export function MainContent({ allPokemons, currentPage }: AppProps) {
             to={`/search/page/${currentPage}`}
           ></Link>
           <section className="container-cards">
-            <PokemonsList allPokemons={allPokemons} currentPage={currentPage} />
+            <Suspense fallback={<Loading />}>
+              <PokemonsList
+                allPokemons={allPokemons}
+                currentPage={currentPage}
+              />
+            </Suspense>
             <Outlet />
           </section>
           <Pagination allPokemons={allPokemons} currentPage={currentPage} />
