@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 0 20px;
+  padding: 10px 20px;
   gap: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -37,7 +37,7 @@
 
   &__input {
     width: 50%;
-    height: 45%;
+    height: 50px;
     padding: 10px;
     border-radius: 6px;
     border: 1px solid $tertiary-color;
@@ -50,7 +50,7 @@
 
   &__button {
     width: 50px;
-    height: 45%;
+    height: 50px;
     padding: 10px;
     border-radius: 6px;
     background-image: url(/src/assets/icons/lens-icon.png);
@@ -83,7 +83,7 @@
   background-image: url(/src/assets/icons/icon-moon.png);
   transform: rotateY(180deg);
   width: 50px;
-  height: 45%;
+  height: 50px;
   background-size: 110%;
   background-position: center;
   background-repeat: no-repeat;

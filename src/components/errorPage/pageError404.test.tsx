@@ -15,7 +15,7 @@ describe('test error page', () => {
     expect(screen.getByText('404')).toBeInTheDocument();
     expect(screen.getByText('Not Found')).toBeInTheDocument();
     expect(screen.getByAltText('pokemon-error')).toBeInTheDocument();
-    expect(screen.getByText('This page doesn’t exist.')).toBeInTheDocument();
+    expect(screen.getByText(`This page doesn't exist.`)).toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: 'Go to home' })
     ).toBeInTheDocument();

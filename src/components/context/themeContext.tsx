@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
 export interface ThemeContextType {
   isDark: boolean;
@@ -10,18 +11,24 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
 );
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    const savedTheme = localStorage.getItem('isDark');
-    return savedTheme ? JSON.parse(savedTheme) : false;
-  });
+  const [isDark, setIsDark] = useState<boolean>(false);
+
+  useEffect(() => {
+    const themeCookie = Cookies.get('isTheme');
+    if (themeCookie) {
+      setIsDark(JSON.parse(themeCookie));
+    }
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      Cookies.set('isTheme', JSON.stringify(isDark), { expires: 7 });
+    });
+  }, [isDark]);
 
   const toggleTheme = () => {
     setIsDark(prev => !prev);
   };
-
-  useEffect(() => {
-    localStorage.setItem('isDark', JSON.stringify(isDark));
-  }, [isDark]);
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>

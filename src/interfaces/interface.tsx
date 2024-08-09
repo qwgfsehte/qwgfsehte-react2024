@@ -139,3 +139,13 @@ export interface ErrorBoundaryState {
 export interface WrapperProps {
   children: React.ReactNode;
 }
+
+export interface PokemonCardInfo {
+  name: string;
+  url: string;
+}
+
+export interface AppProps {
+  allPokemons: PokemonCardInfo[];
+  currentPage: number;
+}

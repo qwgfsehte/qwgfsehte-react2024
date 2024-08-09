@@ -2,24 +2,21 @@ import { describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
-import { AppContent } from './appLayout';
-import { Provider } from 'react-redux';
-import store from '../store';
 import { ThemeProvider } from '../context/themeContext';
+import { MainContent } from './appLayout';
 
 describe('test app component', () => {
-  test('render header and loading indicator components', () => {
+  test('render main content with empty data pokemons', () => {
     render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <ThemeProvider>
-            <AppContent />
-          </ThemeProvider>
-        </MemoryRouter>
-      </Provider>
+      <MemoryRouter>
+        <ThemeProvider>
+          <MainContent allPokemons={[]} currentPage={0} />
+        </ThemeProvider>
+      </MemoryRouter>
     );
 
-    expect(screen.getByText('PokePedia')).toBeInTheDocument();
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(
+      screen.getByText('No pokemons found. Please try another search term.')
+    ).toBeInTheDocument();
   });
 });

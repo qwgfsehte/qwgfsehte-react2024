@@ -1,30 +1,20 @@
 import { useRef } from 'react';
-import { StatName, TypeName } from '../../../interfaces/interface';
+import { InfoPokemon, StatName, TypeName } from '../../../interfaces/interface';
 import { COLOR_TYPES, STAT_ICONS } from '../../../utils/globalConsts';
 import './pokemonDetails.scss';
-import { pokemonApi } from '../../pokemonAPI';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import { Link } from 'react-router-dom';
-import { setNameSelectedPokemon } from '../pokemonsList/pokemonList.slice';
 
-export function PokemonDetailsInfo() {
+interface PokemonDetailsInfoProps {
+  data: InfoPokemon | undefined;
+  currentPage: number;
+}
+
+export function PokemonDetailsInfo({
+  data,
+  currentPage,
+}: PokemonDetailsInfoProps) {
   const audioLatestRef = useRef<HTMLAudioElement>(null);
   const audioLegacyRef = useRef<HTMLAudioElement>(null);
-  const dispatch = useDispatch();
-
-  const nameSelectedPokemon = useSelector(
-    (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
-  );
-  const currentPage = useSelector(
-    (state: RootState) => state.paginationSlice.currentPage
-  );
-  const errorMessage = useSelector(
-    (state: RootState) => state.pokemonDetailsSlice.error
-  );
-
-  const { data, isLoading, error } =
-    pokemonApi.useFetchPokemonDetailsQuery(nameSelectedPokemon);
 
   const playLatestCry = () => {
     if (audioLatestRef.current) {
@@ -40,10 +30,8 @@ export function PokemonDetailsInfo() {
 
   return (
     <>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>{errorMessage}</p>}
-      {data !== undefined && (
-        <div className="pokemon__details-container">
+      {data !== undefined ? (
+        <div className="pokemon-details">
           <div className="pokemon__info-container">
             <div className="pokemon__name-container">
               <h2 className="pokemon-name">{data.name}</h2>
@@ -51,7 +39,6 @@ export function PokemonDetailsInfo() {
                 to={`/search/page/${currentPage}`}
                 className="pokemon__button-close"
                 data-testid="close-button"
-                onClick={() => dispatch(setNameSelectedPokemon(''))}
               ></Link>
             </div>
             <img
@@ -152,6 +139,8 @@ export function PokemonDetailsInfo() {
             </div>
           </div>
         </div>
+      ) : (
+        <div>Error: Pokemon data not found</div>
       )}
     </>
   );

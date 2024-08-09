@@ -5,7 +5,7 @@ import {
 } from '../../interfaces/interface';
 import './errorBoundary.scss';
 
-class ErrorBoundary extends React.Component<
+class AppErrorBoundary extends React.Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
@@ -49,4 +49,4 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-export default ErrorBoundary;
+export default AppErrorBoundary;
