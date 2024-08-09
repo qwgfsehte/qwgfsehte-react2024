@@ -9,19 +9,20 @@ describe('test pagination component', () => {
     { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
     { name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/2/' },
   ];
-  test('renders pagination buttons and items', () => {
+  test('render pagination buttons and items', () => {
     render(
       <MemoryRouter>
-        <Pagination allPokemons={dataPokemons} currentPage={0} />
+        <Pagination allPokemons={dataPokemons} currentPage={1} />
       </MemoryRouter>
     );
 
+    console.log(screen.debug());
     const leftButton = screen.getByTestId('button-left');
     const rightButton = screen.getByTestId('button-right');
 
     expect(leftButton).toBeInTheDocument();
     expect(rightButton).toBeInTheDocument();
-    expect(screen.getAllByRole('link')).toHaveLength(1);
+    expect(screen.getAllByRole('link')).toHaveLength(2);
   });
 
   test('disables left button on first group', () => {

@@ -7,6 +7,8 @@ import { useCookie } from '../../hooks/useCookies';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { ModalWindow } from '../flyout/flyout';
+import ErrorMessage from '../../errorMessage/errorMessage';
+import Loading from '../../loading/loading';
 
 function PokemonsList({
   allPokemons,
@@ -14,6 +16,10 @@ function PokemonsList({
 }: AppProps): React.ReactElement {
   const [storedValue] = useCookie('searchValueInput');
   const [items, setItems] = useState<string[]>([]);
+  const [filteredPokemons, setFilteredPokemons] = useState<
+    PokemonCardInfo[] | { name: string; url: string }[][]
+  >([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const savedItems = Cookies.get('selectedPokemons');
@@ -45,53 +51,61 @@ function PokemonsList({
     });
   };
 
-  const filteredPokemons = filterPokemons(
-    allPokemons,
-    currentPage,
-    storedValue
-  );
+  useEffect(() => {
+    async function loadPokemons() {
+      setLoading(true);
+      const result = filterPokemons(allPokemons, currentPage, storedValue);
+      setFilteredPokemons(result);
+      setLoading(false);
+    }
+    loadPokemons();
+  }, [allPokemons, currentPage, storedValue]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (filteredPokemons.length === 0) {
+    return <ErrorMessage />;
+  }
 
   return (
     <div className={'pokemons-list'}>
-      {filteredPokemons.length > 0 ? (
-        filteredPokemons.map((pokemon, index) =>
-          pokemon ? (
-            <div key={index} className="card-container">
-              <input
-                data-testid={`checkbox-${(pokemon as PokemonCardInfo).name}-${index}`}
-                id={
-                  (pokemon as PokemonCardInfo).name +
+      {filteredPokemons.map((pokemon, index) =>
+        pokemon ? (
+          <div key={index} className="card-container">
+            <input
+              data-testid={`checkbox-${(pokemon as PokemonCardInfo).name}-${index}`}
+              id={
+                (pokemon as PokemonCardInfo).name +
+                ' - ' +
+                (pokemon as PokemonCardInfo).url
+              }
+              className="pokemon-select"
+              type="checkbox"
+              onChange={handleCheckboxChange}
+              checked={items?.includes(
+                (pokemon as PokemonCardInfo).name +
                   ' - ' +
                   (pokemon as PokemonCardInfo).url
-                }
-                className="pokemon-select"
-                type="checkbox"
-                onChange={handleCheckboxChange}
-                checked={items?.includes(
-                  (pokemon as PokemonCardInfo).name +
-                    ' - ' +
-                    (pokemon as PokemonCardInfo).url
-                )}
-              ></input>
-              <Link
-                key={index}
-                className="card"
-                to={`/search/page/${currentPage}/details/${(pokemon as PokemonCardInfo).name}`}
-              >
-                <Pokeball />
-                <h3 className="pokemon-name">
-                  {(pokemon as PokemonCardInfo).name}
-                </h3>
-              </Link>
-            </div>
-          ) : (
-            <div key={index} className="placeholder">
-              Pokemon not found
-            </div>
-          )
+              )}
+            ></input>
+            <Link
+              key={index}
+              className="card"
+              to={`/search/page/${currentPage}/details/${(pokemon as PokemonCardInfo).name}`}
+            >
+              <Pokeball />
+              <h3 className="pokemon-name">
+                {(pokemon as PokemonCardInfo).name}
+              </h3>
+            </Link>
+          </div>
+        ) : (
+          <div key={index} className="placeholder">
+            Pokemon not found
+          </div>
         )
-      ) : (
-        <div>Pokemons not found</div>
       )}
       <ModalWindow selectedItems={items} clearItems={clearItems} />
     </div>

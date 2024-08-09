@@ -33,6 +33,8 @@ describe('test pokemon list component', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Pokemons not found')).toBeInTheDocument();
+    expect(
+      screen.getByText('No pokemons found. Please try another search term.')
+    ).toBeInTheDocument();
   });
 });

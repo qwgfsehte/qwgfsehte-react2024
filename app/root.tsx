@@ -9,7 +9,8 @@ import {
 import { ThemeProvider } from '../src/components/context/themeContext';
 import '../app/styles/global.scss';
 import { LoaderFunction } from 'react-router-dom';
-import ErrorBoundary from '../src/components/errorBoundary/errorBoundary';
+import AppErrorBoundary from '../src/components/errorBoundary/errorBoundary';
+import ErrorPage404 from '../src/components/errorPage/pageError404';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -21,7 +22,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Root() {
   return (
-    <ErrorBoundary>
+    <AppErrorBoundary>
       <ThemeProvider>
         <html lang="en">
           <head>
@@ -37,6 +38,10 @@ export default function Root() {
           </body>
         </html>
       </ThemeProvider>
-    </ErrorBoundary>
+    </AppErrorBoundary>
   );
+}
+
+export function ErrorBoundary() {
+  return <ErrorPage404 />;
 }

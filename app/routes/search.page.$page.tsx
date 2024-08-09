@@ -4,6 +4,7 @@ import { MainContent } from '../../src/components/App/appLayout';
 import { PokemonCardInfo } from '../../src/interfaces/interface';
 import Header from '../../src/components/header/header';
 import { Footer } from '../../src/components/footer/footer';
+import { useToggleTheme } from '../../src/components/context/useContext';
 
 interface PokemonsData {
   results: PokemonCardInfo[];
@@ -17,9 +18,10 @@ export const loader = async () => {
 export default function PageSearch() {
   const { page } = useParams();
   const allPokemons = useLoaderData<PokemonsData>();
+  const { isDark } = useToggleTheme();
 
   return (
-    <div>
+    <div className={`body-container ${isDark ? 'dark-body-container' : ''}`}>
       <Header />
       <MainContent
         allPokemons={allPokemons.results}

@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './pagination.scss';
 import { filterPokemons } from '../hooks/useFilterPokemons';
 import { Link } from '@remix-run/react';
-import { AppProps } from '../../interfaces/interface';
+import { AppProps, PokemonCardInfo } from '../../interfaces/interface';
 import { useCookie } from '../hooks/useCookies';
 
 const PAGES_PER_GROUP = 10;
@@ -10,16 +10,27 @@ const PAGES_PER_GROUP = 10;
 export function Pagination({ allPokemons, currentPage }: AppProps) {
   const [currentGroup, setCurrentGroup] = useState(0);
   const [storedValue] = useCookie('searchValueInput');
+  const [filteredPokemons, setFilteredPokemons] = useState<
+    PokemonCardInfo[] | { name: string; url: string }[][]
+  >([]);
 
-  const pagination = filterPokemons(
-    allPokemons,
-    currentPage,
-    storedValue,
-    true
-  );
+  useEffect(() => {
+    async function loadPokemons() {
+      const result = filterPokemons(allPokemons, currentPage, storedValue);
+      setFilteredPokemons(result);
+    }
+    loadPokemons();
+  }, [allPokemons, currentPage, storedValue]);
 
   const startPage = currentGroup * PAGES_PER_GROUP;
-  const endPage = Math.min(startPage + PAGES_PER_GROUP, pagination.length);
+  const endPage = Math.min(
+    startPage + PAGES_PER_GROUP,
+    filteredPokemons.length
+  );
+
+  if (filteredPokemons.length === 0) {
+    return;
+  }
 
   return (
     <section className="pagination-container">
@@ -30,7 +41,7 @@ export function Pagination({ allPokemons, currentPage }: AppProps) {
         onClick={() => setCurrentGroup(currentGroup - 1)}
       ></button>
       <div className="pagination">
-        {pagination.slice(startPage, endPage).map((_, index) => {
+        {filteredPokemons.slice(startPage, endPage).map((_, index) => {
           const pageIndex = startPage + index + 1;
           return (
             <Link
@@ -44,7 +55,9 @@ export function Pagination({ allPokemons, currentPage }: AppProps) {
         })}
       </div>
       <button
-        disabled={currentGroup === pagination.slice(startPage, endPage).length}
+        disabled={
+          currentGroup === filteredPokemons.slice(startPage, endPage).length
+        }
         className="pagination__button button-right"
         data-testid="button-right"
         onClick={() => {

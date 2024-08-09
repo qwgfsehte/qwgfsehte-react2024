@@ -4,12 +4,11 @@
   &-details {
     display: flex;
     width: 50%;
-    height: 100%;
+    height: fit-content;
     background-color: $primary-color;
     padding: 20px;
     border-radius: 6px;
     flex-direction: column;
-    justify-content: center;
     transition: 0.4s;
     gap: 10px;
     position: sticky;

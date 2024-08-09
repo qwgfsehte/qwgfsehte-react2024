@@ -1,15 +1,16 @@
 import './header.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useToggleTheme } from '../context/useContext';
 import Cookies from 'js-cookie';
 import { Link } from '@remix-run/react';
 
 function Header(): React.ReactElement {
-  const { toggleTheme } = useToggleTheme();
-  const { isDark } = useToggleTheme();
-  const [inputValue, setInputValue] = useState(
-    Cookies.get('searchValueInput') || ''
-  );
+  const { isDark, toggleTheme } = useToggleTheme();
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    setInputValue(Cookies.get('searchValueInput') || '');
+  }, []);
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(event.target.value);
@@ -20,7 +21,7 @@ function Header(): React.ReactElement {
   }
 
   return (
-    <header className={isDark ? 'dark header' : 'light header'}>
+    <header className={`header ${isDark ? 'dark header dark-header ' : ''}`}>
       <div className="logo-container">
         <img
           src="/src/assets/logo/logo.png"

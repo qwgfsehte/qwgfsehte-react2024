@@ -13,7 +13,7 @@ export function MainContent({ allPokemons, currentPage }: AppProps) {
   const { isDark } = useToggleTheme();
 
   return (
-    <>
+    <div>
       <main
         className={isDark ? 'dark' : 'light'}
         style={{ position: 'relative' }}
@@ -35,6 +35,6 @@ export function MainContent({ allPokemons, currentPage }: AppProps) {
           <Pagination allPokemons={allPokemons} currentPage={currentPage} />
         </>
       </main>
-    </>
+    </div>
   );
 }
