@@ -1,4 +1,3 @@
-import ErrorBoundary from '../Components/errorBoundary/errorBoundary';
 import { ThemeProvider } from '../Components/context/themeContext';
 import '../styles/global.scss';
 
@@ -18,9 +17,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" />
       </head>
       <body>
-        <ErrorBoundary>
-          <ThemeProvider>{children}</ThemeProvider>
-        </ErrorBoundary>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
