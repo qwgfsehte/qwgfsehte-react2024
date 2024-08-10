@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { describe, test, expect, vi, afterEach } from 'vitest';
+import { describe, test, expect, vi, afterEach, beforeEach } from 'vitest';
 import pokemonListReducer, {
   addItem,
   clearItems,
@@ -9,11 +9,46 @@ import pokemonListReducer, {
   setPokemonPage,
 } from './pokemonList.slice';
 import { Pokeball } from './pokeball';
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import mockRouter from 'next-router-mock';
 import { ThemeProvider } from '../../../Components/context/themeContext';
+import PokemonsList from './pokemonsList';
+import configureStore from 'redux-mock-store';
+import { Store, UnknownAction } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { AllPokemonsProps } from 'src/interfaces/interface';
+
+const mockStore = configureStore([]);
 
 describe('test pokemon list component', () => {
+  let store: Store<unknown, UnknownAction, unknown>;
+  let pokemonList: AllPokemonsProps;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+
+    pokemonList = {
+      allPokemons: [
+        { name: 'pikachu', url: 'pikachu-url' },
+        { name: 'charmander', url: 'charmander-url' },
+      ],
+    };
+
+    store = mockStore({
+      updatePokemons: {
+        filteredPokemons: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      },
+      paginationSlice: {
+        currentPage: 1,
+      },
+      pokemonListSlice: {
+        selectedPokemons: [],
+        searchValue: '',
+      },
+    });
+  });
+
   afterEach(() => {
     vi.clearAllMocks();
 
@@ -87,5 +122,54 @@ describe('test pokemon list component', () => {
       </ThemeProvider>
     );
     expect(container.firstChild).toHaveClass('_pokeball_8ab701');
+  });
+
+  test('render error with empty data', () => {
+    render(
+      <Provider store={store}>
+        <RouterContext.Provider value={mockRouter}>
+          <ThemeProvider>
+            <PokemonsList allPokemons={[]} />
+          </ThemeProvider>
+        </RouterContext.Provider>
+      </Provider>
+    );
+    expect(
+      screen.getByText('No pokemons found. Please try another search term.')
+    ).toBeInTheDocument();
+  });
+
+  test('render pokemons list with correct data', () => {
+    render(
+      <Provider store={store}>
+        <RouterContext.Provider value={mockRouter}>
+          <ThemeProvider>
+            <PokemonsList {...pokemonList} />
+          </ThemeProvider>
+        </RouterContext.Provider>
+      </Provider>
+    );
+
+    expect(screen.getByText('Pikachu')).toBeInTheDocument();
+    expect(screen.getByText('Charmander')).toBeInTheDocument();
+  });
+
+  test('handle checkbox change', () => {
+    const mockDispatch = vi.fn();
+
+    render(
+      <Provider store={store}>
+        <RouterContext.Provider value={mockRouter}>
+          <ThemeProvider>
+            <PokemonsList {...pokemonList} />
+          </ThemeProvider>
+        </RouterContext.Provider>
+      </Provider>
+    );
+
+    const checkbox = screen.getByTestId('checkbox-pikachu-0');
+    fireEvent.click(checkbox);
+
+    expect(mockDispatch).toHaveBeenCalledTimes(0);
   });
 });

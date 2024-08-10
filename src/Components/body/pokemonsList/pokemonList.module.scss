@@ -193,6 +193,15 @@
   }
 }
 
+.error-search {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(120px);
+  text-align: center;
+}
+
 @keyframes shake {
   0% {
     transform: translateX(0) rotate(0deg);

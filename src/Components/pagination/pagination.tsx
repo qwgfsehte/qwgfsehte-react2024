@@ -42,6 +42,10 @@ export function Pagination(pokemonList: AllPokemonsProps) {
   const startPage = currentGroup * PAGES_PER_GROUP;
   const endPage = Math.min(startPage + PAGES_PER_GROUP, pagination.length);
 
+  if (pagination.length === 0) {
+    return;
+  }
+
   return (
     <section className={styles['pagination-container']}>
       <button

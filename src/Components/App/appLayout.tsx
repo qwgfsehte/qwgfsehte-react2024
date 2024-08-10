@@ -46,7 +46,7 @@ export function AppContent(allPokemons: { allPokemons: AllPokemons[] }) {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={styles['content-container']}>
       <button
         className={styles['shadow-button']}
         onClick={() => {

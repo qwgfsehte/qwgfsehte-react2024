@@ -13,6 +13,7 @@ import { filterPokemons } from '../../hooks/useFilterPokemons';
 import { AllPokemonsProps, PokemonCardInfo } from 'src/interfaces/interface';
 import { useToggleTheme } from '../../../Components/context/useContext';
 import stylesTheme from '../../context/theme.module.scss';
+import Image from 'next/image';
 
 function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
   const { isDark } = useToggleTheme();
@@ -55,44 +56,60 @@ function PokemonsList(pokemonList: AllPokemonsProps): React.ReactElement {
 
   return (
     <div className={styles['pokemons-list']}>
-      {filterPokemons(pokemonList.allPokemons, currentPage, inputValue).map(
-        (pokemon, index) =>
-          pokemon ? (
-            <div key={index} className={`${styles['card-container']}`}>
-              <input
-                data-testid={`checkbox-${(pokemon as PokemonCardInfo).name}-${index}`}
-                id={
-                  (pokemon as PokemonCardInfo).name +
-                  ' - ' +
-                  (pokemon as PokemonCardInfo).url
-                }
-                className={`${styles['pokemon-select']} ${isDark ? stylesTheme['dark-pokemon-select'] : ''}`}
-                type="checkbox"
-                checked={selectedItems?.includes(
-                  (pokemon as PokemonCardInfo).name +
+      {filterPokemons(pokemonList.allPokemons, currentPage, inputValue).length >
+      0 ? (
+        filterPokemons(pokemonList.allPokemons, currentPage, inputValue).map(
+          (pokemon, index) =>
+            pokemon ? (
+              <div key={index} className={`${styles['card-container']}`}>
+                <input
+                  data-testid={`checkbox-${(pokemon as PokemonCardInfo).name}-${index}`}
+                  id={
+                    (pokemon as PokemonCardInfo).name +
                     ' - ' +
                     (pokemon as PokemonCardInfo).url
-                )}
-                onChange={handleCheckboxChange}
-              ></input>
-              <button
-                className={`${styles['card']} ${isDark ? stylesTheme['dark-card'] : ''}`}
-                onClick={() =>
-                  handlePokemonClick((pokemon as PokemonCardInfo).name)
-                }
-              >
-                <Pokeball />
-                <h3 className={styles['card-name']}>
-                  {(pokemon as PokemonCardInfo).name.charAt(0).toUpperCase() +
-                    (pokemon as PokemonCardInfo).name.slice(1)}
-                </h3>
-              </button>
-            </div>
-          ) : (
-            <div key={index} className={styles['placeholder']}>
-              pokemon not found
-            </div>
-          )
+                  }
+                  className={`${styles['pokemon-select']} ${isDark ? stylesTheme['dark-pokemon-select'] : ''}`}
+                  type="checkbox"
+                  checked={selectedItems?.includes(
+                    (pokemon as PokemonCardInfo).name +
+                      ' - ' +
+                      (pokemon as PokemonCardInfo).url
+                  )}
+                  onChange={handleCheckboxChange}
+                ></input>
+                <button
+                  className={`${styles['card']} ${isDark ? stylesTheme['dark-card'] : ''}`}
+                  onClick={() =>
+                    handlePokemonClick((pokemon as PokemonCardInfo).name)
+                  }
+                >
+                  <Pokeball />
+                  <h3 className={styles['card-name']}>
+                    {(pokemon as PokemonCardInfo).name.charAt(0).toUpperCase() +
+                      (pokemon as PokemonCardInfo).name.slice(1)}
+                  </h3>
+                </button>
+              </div>
+            ) : (
+              <div key={index} className={styles['placeholder']}>
+                pokemon not found
+              </div>
+            )
+        )
+      ) : (
+        <div className={styles['error-search']}>
+          <Image
+            alt={'pokemon'}
+            priority
+            src={'/assets/imgs/error-search.png'}
+            width={300}
+            height={300}
+          />
+          <div style={{ margin: '20px' }}>
+            {'No pokemons found. Please try another search term.'}
+          </div>
+        </div>
       )}
     </div>
   );

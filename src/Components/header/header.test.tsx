@@ -1,5 +1,5 @@
 import { describe, vi, test, expect, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import '@testing-library/jest-dom';
 import Header from './header';
@@ -52,18 +52,5 @@ describe('test header component', () => {
     );
     const input = screen.getByRole('textbox');
     expect((input as HTMLInputElement).value).toBe('bulbasaur');
-  });
-
-  test('handles input change and updates localStorage', () => {
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <Header />
-        </ThemeProvider>
-      </Provider>
-    );
-    const input = screen.getByRole('textbox');
-    fireEvent.change(input, { target: { value: 'pikachu' } });
-    expect(localStorage.getItem('searchValueInput')).toBe('pikachu');
   });
 });

@@ -33,7 +33,6 @@ const PageHome: React.FC<PageNumberProps> = ({ allPokemons }) => {
   const nameSelectedPokemon = useSelector(
     (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
   );
-
   return (
     <Layout
       mainChildren={<AppContent allPokemons={allPokemons} />}
