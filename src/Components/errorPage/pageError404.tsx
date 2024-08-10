@@ -14,9 +14,10 @@ export default function ErrorPage404() {
           className={styles['error-page__img']}
           width={200}
           height={300}
+          priority
         />
         <p>This page doesn’t exist.</p>
-        <Link className={styles['error-page__button']} href={`/search/page/1`}>
+        <Link className={styles['error-page__button']} href={`/`}>
           Go to home
         </Link>
       </div>

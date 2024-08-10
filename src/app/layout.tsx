@@ -1,5 +1,5 @@
-import { ThemeProvider } from '../../Components/context/themeContext';
-import '../../styles/global.scss';
+import { ThemeProvider } from '../Components/context/themeContext';
+import '../styles/global.scss';
 
 export const metadata = {
   title: 'PokePedia',

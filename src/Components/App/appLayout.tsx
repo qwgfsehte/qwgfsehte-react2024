@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import PokemonsList from '../body/pokemonsList/pokemonsList';
-import { Pagination } from '../pagination/pagination';
 import styles from './app.module.scss';
 import { PokemonCardInfo } from 'src/interfaces/interface';
+import { Pagination } from '../pagination/pagination';
 
 interface AppProps {
   allPokemons: PokemonCardInfo[];
@@ -11,7 +11,7 @@ interface AppProps {
 
 export function AppContent({ allPokemons, currentPage }: AppProps) {
   return (
-    <div>
+    <div className={styles['main-content']}>
       <Link
         className={styles['shadow-button']}
         href={`/search/page/${currentPage}`}

@@ -4,16 +4,32 @@ import Link from 'next/link';
 import styles from './pagination.module.scss';
 import { filterPokemons } from '../hooks/useFilterPokemons';
 import { MainProps } from 'src/interfaces/interface';
-import { useState } from 'react';
-import { useCookie } from '../hooks/useCookie';
+import { useEffect, useState } from 'react';
 import { useToggleTheme } from '../context/useContext';
 import stylesTheme from '../context/theme.module.scss';
+import Cookies from 'js-cookie';
 const PAGES_PER_GROUP = 10;
 
 export function Pagination({ allPokemons, currentPage }: MainProps) {
   const { isDark } = useToggleTheme();
   const [currentGroup, setCurrentGroup] = useState(0);
-  const [storedValue] = useCookie('searchValueInput');
+  const [storedValue, setStoredValue] = useState('');
+
+  useEffect(() => {
+    const savedValue = Cookies.get('searchValueInput');
+    if (savedValue) {
+      setStoredValue(savedValue);
+    }
+
+    const interval = setInterval(() => {
+      const newValue = Cookies.get('searchValueInput');
+      if (newValue !== storedValue) {
+        setStoredValue(newValue as string);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [storedValue]);
 
   const pagination = filterPokemons(
     allPokemons,
@@ -24,6 +40,10 @@ export function Pagination({ allPokemons, currentPage }: MainProps) {
 
   const startPage = currentGroup * PAGES_PER_GROUP;
   const endPage = Math.min(startPage + PAGES_PER_GROUP, pagination.length);
+
+  if (pagination.length === 0) {
+    return;
+  }
 
   return (
     <section className={styles['pagination-container']}>
