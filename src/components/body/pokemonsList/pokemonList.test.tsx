@@ -3,7 +3,7 @@ import { describe, test, expect } from 'vitest';
 import { Pokeball } from './pokeball';
 import { render, screen } from '@testing-library/react';
 import PokemonsList from './pokemonsList';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 describe('test pokemon list component', () => {
   const dataPokemons = [
@@ -17,21 +17,36 @@ describe('test pokemon list component', () => {
   });
 
   test('render pokemons list component', () => {
-    render(
-      <MemoryRouter>
-        <PokemonsList allPokemons={dataPokemons} currentPage={1} />
-      </MemoryRouter>
-    );
+    const routes = [
+      {
+        path: '/',
+        element: <PokemonsList allPokemons={dataPokemons} currentPage={1} />,
+      },
+    ];
+
+    const router = createMemoryRouter(routes, {
+      initialEntries: ['/'],
+    });
+
+    render(<RouterProvider router={router} />);
+
     expect(screen.getByText('pikachu')).toBeInTheDocument();
     expect(screen.getByText('charmander')).toBeInTheDocument();
   });
 
   test('renders placeholder when pokemon not found', () => {
-    render(
-      <MemoryRouter>
-        <PokemonsList allPokemons={[]} currentPage={1} />
-      </MemoryRouter>
-    );
+    const routes = [
+      {
+        path: '/',
+        element: <PokemonsList allPokemons={[]} currentPage={1} />,
+      },
+    ];
+
+    const router = createMemoryRouter(routes, {
+      initialEntries: ['/'],
+    });
+
+    render(<RouterProvider router={router} />);
 
     expect(
       screen.getByText('No pokemons found. Please try another search term.')

@@ -1,16 +1,16 @@
-import { Link } from 'react-router-dom';
 import PokemonsList from '../body/pokemonsList/pokemonsList';
 import { Pagination } from '../pagination/pagination';
 import '../App/app.scss';
 import './../context/theme.scss';
 import { AppProps } from '../../interfaces/interface';
-import { Outlet } from '@remix-run/react';
+import { Link, Outlet, useLocation } from '@remix-run/react';
 import { useToggleTheme } from '../context/useContext';
-import { Suspense } from 'react';
-import Loading from '../loading/loading';
 
 export function MainContent({ allPokemons, currentPage }: AppProps) {
   const { isDark } = useToggleTheme();
+  const location = useLocation();
+
+  const isDetailPageSelected = location.pathname.includes('/details');
 
   return (
     <div>
@@ -22,14 +22,12 @@ export function MainContent({ allPokemons, currentPage }: AppProps) {
           <Link
             className="shadow-button"
             to={`/search/page/${currentPage}`}
+            style={{
+              pointerEvents: isDetailPageSelected ? 'auto' : 'none',
+            }}
           ></Link>
           <section className="container-cards">
-            <Suspense fallback={<Loading />}>
-              <PokemonsList
-                allPokemons={allPokemons}
-                currentPage={currentPage}
-              />
-            </Suspense>
+            <PokemonsList allPokemons={allPokemons} currentPage={currentPage} />
             <Outlet />
           </section>
           <Pagination allPokemons={allPokemons} currentPage={currentPage} />
