@@ -78,9 +78,6 @@ describe('test pages', () => {
       </Provider>
     );
 
-    expect(
-      screen.getByText('Please, select a Pokemon for more information')
-    ).toBeInTheDocument();
     expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
     expect(screen.getByText('Ivysaur')).toBeInTheDocument();
     expect(screen.getByText('PokePedia')).toBeInTheDocument();

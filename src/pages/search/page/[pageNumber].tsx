@@ -1,10 +1,9 @@
 import { AllPokemons } from 'src/interfaces/interface';
 import { GetServerSideProps } from 'next';
-import { RootState, wrapper } from '../../../Components/store';
+import { wrapper } from '../../../Components/store';
 import { pokemonApi } from '../../../Components/pokemonAPI';
 import { AppContent } from '../../../Components/App/appLayout';
 import Layout from '../../../Components/Layout';
-import { useSelector } from 'react-redux';
 
 interface PageNumberProps {
   allPokemons: AllPokemons[];
@@ -30,19 +29,10 @@ export const getServerSideProps: GetServerSideProps =
   });
 
 const PageHome: React.FC<PageNumberProps> = ({ allPokemons }) => {
-  const nameSelectedPokemon = useSelector(
-    (state: RootState) => state.pokemonListSlice.nameSelectedPokemon
-  );
   return (
     <Layout
       mainChildren={<AppContent allPokemons={allPokemons} />}
-      secondaryChildren={
-        <div>
-          {nameSelectedPokemon
-            ? 'Loading..'
-            : 'Please, select a Pokemon for more information'}
-        </div>
-      }
+      secondaryChildren={<div></div>}
     ></Layout>
   );
 };
