@@ -1,5 +1,23 @@
 @import './src/utils/variables.scss';
 
+.body-container {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.dark-body-container {
+  background-color: $tertiary-color;
+}
+
+.light {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+}
+
 .container-cards {
   padding: 30px 20px;
   display: flex;
@@ -22,7 +40,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: -1;
+  z-index: 100000;
+  background: white;
 }
 
 .half-width {

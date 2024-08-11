@@ -21,10 +21,7 @@ module.exports = {
     'prettier',
   ],
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    'react-refresh/only-export-components': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/jsx-uses-react': 'error',

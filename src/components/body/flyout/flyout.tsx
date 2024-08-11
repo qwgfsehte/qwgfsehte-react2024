@@ -1,19 +1,19 @@
-import { useDispatch, useSelector } from 'react-redux';
 import './flyout.scss';
-import { RootState } from '../../store';
-import { clearItems } from '../pokemonsList/pokemonList.slice';
 import { createCSV } from './createCSV';
 import { useEffect, useRef, useState } from 'react';
 
-export const ModalWindow: React.FC = () => {
+interface ModalProps {
+  selectedItems: string[];
+  clearItems: () => void;
+}
+
+export const ModalWindow: React.FC<ModalProps> = ({
+  selectedItems,
+  clearItems,
+}) => {
   const downloadLinkRef = useRef<HTMLAnchorElement>(null);
   const [csvData, setCsvData] = useState<string | null>(null);
   const [filename, setFilename] = useState<string | null>(null);
-
-  const selectedItems = useSelector(
-    (state: RootState) => state.pokemonListSlice.selectedPokemons
-  );
-  const dispatch = useDispatch();
 
   const handleDownload = () => {
     if (selectedItems.length > 0) {
@@ -32,10 +32,6 @@ export const ModalWindow: React.FC = () => {
     }
   }, [csvData, filename]);
 
-  const clearSelectedPokemons = () => {
-    dispatch(clearItems([]));
-  };
-
   if (selectedItems.length === 0) {
     return null;
   }
@@ -43,7 +39,7 @@ export const ModalWindow: React.FC = () => {
   return (
     <div className="modal-window">
       <p>{selectedItems.length} items are selected</p>
-      <button onClick={clearSelectedPokemons} className="button-unselect">
+      <button onClick={clearItems} className="button-unselect">
         Unselect all
       </button>
       <button onClick={handleDownload} className="button-download">

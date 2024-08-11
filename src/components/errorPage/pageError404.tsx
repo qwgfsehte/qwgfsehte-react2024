@@ -1,19 +1,47 @@
-import { Link } from 'react-router-dom';
-import './pageError404.scss';
+import { Link } from '@remix-run/react';
 
 export default function ErrorPage404() {
   return (
-    <div id="error-page" className="error-page">
-      <div className="error-page__error-container">
-        <h1 style={{ fontSize: '45px' }}>404</h1>
+    <div
+      id="error-page"
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: '0',
+        right: '0',
+        left: '0',
+        bottom: '0',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <h1 style={{ fontSize: '45px', margin: '0' }}>404</h1>
         <h2>Not Found</h2>
         <img
-          src="./src/assets/imgs/img-for-error-page.png"
+          src="/src/assets/imgs/img-for-error-page.png"
           alt="pokemon-error"
-          className="error-page__img"
+          style={{
+            width: '300px',
+          }}
         />
-        <p>This page doesn’t exist.</p>
-        <Link className="error-page__button" to="/">
+        <p>{`This page doesn't exist.`}</p>
+        <Link
+          style={{
+            border: '1px solid',
+            textDecoration: 'none',
+            borderRadius: '6px',
+            padding: '10px',
+            color: 'black',
+          }}
+          to="/search/page/1"
+        >
           Go to home
         </Link>
       </div>
