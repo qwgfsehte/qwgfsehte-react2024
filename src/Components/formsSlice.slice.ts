@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { InputsForm } from '../utils/interfaces';
 
 const initialState = {
   countries: [
@@ -63,10 +64,17 @@ const initialState = {
     'Luxembourg',
     'Iceland',
   ],
+  uncontrolledFormUsers: [],
 };
 
 export const formsSlice = createSlice({
   name: 'forms',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setUncontrolledFormUser: (state, action) => {
+      state.uncontrolledFormUsers.push(action.payload as InputsForm as never);
+    },
+  },
 });
+
+export const { setUncontrolledFormUser } = formsSlice.actions;

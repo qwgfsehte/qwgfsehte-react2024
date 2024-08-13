@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './uncontrolledFormStyles.scss';
-import { schema } from '../../utils/yupSchema';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import AutocompleteCountry from '../autocompleteCountry/autocompleteCountry';
+import { createValidationSchema } from '../../utils/yupSchema';
+import { setUncontrolledFormUser } from '../formsSlice.slice';
+import { convertImageToBase64 } from '../../utils/convertImage';
 
 interface FormErrors {
   [key: string]: string;
@@ -27,6 +29,9 @@ function UncontrolledForm() {
   const arrayCountries = useSelector(
     (state: RootState) => state.forms.countries
   );
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const validationSchema = createValidationSchema(arrayCountries);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked, files } = event.target;
@@ -50,13 +55,26 @@ function UncontrolledForm() {
 
     const isValid = await validateForm();
     if (isValid) {
-      console.log('Form Data:', formData);
+      let pictureBase64 = '';
+
+      if (formData.userFavoritePicture) {
+        pictureBase64 = await convertImageToBase64(
+          formData.userFavoritePicture
+        );
+      }
+      const updatedFormData = {
+        ...formData,
+        userFavoritePicture: pictureBase64,
+      };
+
+      dispatch(setUncontrolledFormUser(updatedFormData));
+      navigate('/home');
     }
   };
 
   const validateForm = async () => {
     try {
-      await schema.validate(formData, { abortEarly: false });
+      await validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
       return true;
     } catch (err) {
@@ -75,8 +93,11 @@ function UncontrolledForm() {
 
   return (
     <div className="uncontrolled-form-container">
-      <Link to={'/home'}>Go to home</Link>
+      <Link className="button-home" to={'/home'}>
+        Go to home
+      </Link>
       <form className="uncontrolled-form" onSubmit={submitForm}>
+        <h3 className="uncontrolled-form__title">Uncontrolled Form</h3>
         <div className="uncontrolled-form__item">
           <label htmlFor="userName">Name</label>
           <input
@@ -132,6 +153,7 @@ function UncontrolledForm() {
             id="userPasswordConfirm"
             name="userPasswordConfirm"
             className="uncontrolled-form__input"
+            onChange={handleChange}
           />
           <p className="error-message">{errors.userPasswordConfirm}</p>
         </div>
@@ -173,7 +195,9 @@ function UncontrolledForm() {
             id="userFavoritePicture"
             type="file"
             name="userFavoritePicture"
+            onChange={handleChange}
           ></input>
+          <p className="error-message">{errors.userFavoritePicture}</p>
         </div>
 
         <div className="TnC-container">
@@ -191,7 +215,9 @@ function UncontrolledForm() {
           <p className="error-message">{errors.userTnC}</p>
         </div>
 
-        <button type="submit">Submit</button>
+        <button className="button-submit" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );

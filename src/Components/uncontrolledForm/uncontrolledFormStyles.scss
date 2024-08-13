@@ -1,11 +1,21 @@
 .uncontrolled-form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   background-color: #ffffffe0;
-  width: 40%;
+  width: 50%;
   border-radius: 50px;
   padding: 20px;
+  margin-bottom: 40px;
+  border: double 3px transparent;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.9)
+    ),
+    radial-gradient(circle at top left, #eb177e, #893ef9);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 
   &-container {
     background-image: url(/src/assets/backgrounds/uncontrolledFormBackground.jpg);
@@ -23,6 +33,11 @@
     font-size: 25px;
   }
 
+  &__title {
+    font-size: 35px;
+    padding-bottom: 20px;
+  }
+
   &__item-gender,
   &__item-TnC {
     width: 100%;
@@ -33,18 +48,31 @@
     font-size: 25px;
   }
 
-  &__input {
+  &__item-TnC {
+    font-size: 20px;
+  }
+
+  &__input,
+  &__input-country {
     height: 35px;
-    border-radius: 50px;
+    border-radius: 15px;
     border: 1px solid;
     padding: 20px;
+    font-size: 20px;
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  &__input-country {
+    position: relative;
   }
 }
 
 .error-message {
   min-height: 50px;
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
+  color: rgb(210, 12, 12);
 }
 
 .TnC-container {
@@ -59,4 +87,30 @@
   display: flex;
   flex-direction: column;
   width: 40%;
+}
+
+.button {
+  &-home,
+  &-submit {
+    font-size: 20px;
+    background-color: #ffffffe0;
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+    margin: 40px;
+    border-radius: 50px;
+    border: double 3px transparent;
+    background-image: linear-gradient(#fcf2ff, #fcf2ff),
+      radial-gradient(circle at top left, #89daed, #eb177e);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  &-submit {
+    width: 200px;
+    background-image: linear-gradient(#fcf2ff, #fcf2ff),
+      radial-gradient(circle at top left, #eb177e, #893ef9);
+    margin: 20px;
+  }
 }
