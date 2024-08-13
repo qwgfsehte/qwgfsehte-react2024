@@ -2,5 +2,61 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  background-color: #ffffffe0;
+  width: 40%;
+  border-radius: 50px;
+  padding: 20px;
+
+  &-container {
+    background-image: url(/src/assets/backgrounds/uncontrolledFormBackground.jpg);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    font-size: 25px;
+  }
+
+  &__item-gender,
+  &__item-TnC {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px;
+  }
+
+  &__input {
+    height: 35px;
+    border-radius: 50px;
+    border: 1px solid;
+    padding: 20px;
+  }
+}
+
+.error-message {
+  min-height: 50px;
+  width: 100%;
+  font-size: 20px;
+}
+
+.TnC-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 40%;
+}
+
+.gender-container {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
 }

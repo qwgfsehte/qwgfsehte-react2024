@@ -35,4 +35,6 @@ export const schema = Yup.object().shape({
   userTnC: Yup.boolean()
     .required()
     .isTrue('You must accept the terms and conditions'),
+
+  userCountry: Yup.string().required('Country is required'),
 });

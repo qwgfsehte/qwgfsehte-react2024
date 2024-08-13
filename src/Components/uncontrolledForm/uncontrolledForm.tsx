@@ -3,6 +3,9 @@ import './uncontrolledFormStyles.scss';
 import { schema } from '../../utils/yupSchema';
 import { useState } from 'react';
 import * as Yup from 'yup';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import AutocompleteCountry from '../autocompleteCountry/autocompleteCountry';
 
 interface FormErrors {
   [key: string]: string;
@@ -16,11 +19,14 @@ function UncontrolledForm() {
     userPassword: '',
     userPasswordConfirm: '',
     userGender: '',
-    country: '',
+    userCountry: '',
     userFavoritePicture: null,
     userTnC: false,
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const arrayCountries = useSelector(
+    (state: RootState) => state.forms.countries
+  );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked, files } = event.target;
@@ -29,6 +35,13 @@ function UncontrolledForm() {
     setFormData(prevData => ({
       ...prevData,
       [name]: type === 'checkbox' ? checked : type === 'file' ? file : value,
+    }));
+  };
+
+  const selectCountry = (countryName: string) => {
+    setFormData(prevData => ({
+      ...prevData,
+      ['userCountry']: countryName,
     }));
   };
 
@@ -42,7 +55,6 @@ function UncontrolledForm() {
   };
 
   const validateForm = async () => {
-    console.log(formData);
     try {
       await schema.validate(formData, { abortEarly: false });
       setErrors({});
@@ -62,66 +74,71 @@ function UncontrolledForm() {
   };
 
   return (
-    <>
+    <div className="uncontrolled-form-container">
       <Link to={'/home'}>Go to home</Link>
       <form className="uncontrolled-form" onSubmit={submitForm}>
-        <label htmlFor="userName">
-          Name
+        <div className="uncontrolled-form__item">
+          <label htmlFor="userName">Name</label>
           <input
             type="text"
             id="userName"
             onChange={handleChange}
             name="userName"
+            className="uncontrolled-form__input"
           />
-          {errors.userName && <p>{errors.userName}</p>}
-        </label>
+          <p className="error-message">{errors.userName}</p>
+        </div>
 
-        <label htmlFor="userAge">
-          Age
+        <div className="uncontrolled-form__item">
+          <label htmlFor="userAge">Age</label>
           <input
             type="number"
             id="userAge"
             onChange={handleChange}
             name="userAge"
+            className="uncontrolled-form__input"
           />
-          {errors.userAge && <p>{errors.userAge}</p>}
-        </label>
+          <p className="error-message">{errors.userAge}</p>
+        </div>
 
-        <label htmlFor="userEmail">
-          Email
+        <div className="uncontrolled-form__item">
+          <label htmlFor="userEmail">Email</label>
           <input
             type="text"
             id="userEmail"
             onChange={handleChange}
             name="userEmail"
+            className="uncontrolled-form__input"
           />
-          {errors.userEmail && <p>{errors.userEmail}</p>}
-        </label>
+          <p className="error-message">{errors.userEmail}</p>
+        </div>
 
-        <label htmlFor="userPassword">
-          Password
+        <div className="uncontrolled-form__item">
+          <label htmlFor="userPassword">Password</label>
           <input
             type="password"
             id="userPassword"
             name="userPassword"
             onChange={handleChange}
+            className="uncontrolled-form__input"
           />
-          {errors.userPassword && <p>{errors.userPassword}</p>}
-        </label>
+          <p className="error-message">{errors.userPassword}</p>
+        </div>
 
-        <label htmlFor="userPasswordConfirm">
-          Password confirm
+        <div className="uncontrolled-form__item">
+          <label htmlFor="userPasswordConfirm">Password confirm</label>
           <input
             type="password"
             id="userPasswordConfirm"
             name="userPasswordConfirm"
+            className="uncontrolled-form__input"
           />
-          {errors.userPasswordConfirm && <p>{errors.userPasswordConfirm}</p>}
-        </label>
+          <p className="error-message">{errors.userPasswordConfirm}</p>
+        </div>
 
-        <div>
-          Gender
-          <div>
+        <div className="gender-container">
+          <div className="uncontrolled-form__item-gender">
+            <p>Gender:</p>
             <input
               type="radio"
               id="male"
@@ -130,8 +147,6 @@ function UncontrolledForm() {
               onChange={handleChange}
             ></input>
             <label htmlFor="male">Male</label>
-          </div>
-          <div>
             <input
               type="radio"
               id="female"
@@ -141,39 +156,44 @@ function UncontrolledForm() {
             ></input>
             <label htmlFor="female">Female</label>
           </div>
-          {errors.userGender && <p>{errors.userGender}</p>}
+          <p className="error-message">{errors.userGender}</p>
         </div>
 
-        <label>
-          Country
-          <input type="text"></input>
-        </label>
+        <div className="uncontrolled-form__item">
+          <AutocompleteCountry
+            allCountries={arrayCountries}
+            selectCountry={selectCountry}
+          />
+          <p className="error-message">{errors.userCountry}</p>
+        </div>
 
-        <label htmlFor="userFavoritePicture">
-          Favorite picture
+        <div className="uncontrolled-form__item">
+          <label htmlFor="userFavoritePicture">Favorite picture</label>
           <input
             id="userFavoritePicture"
             type="file"
             name="userFavoritePicture"
           ></input>
-        </label>
+        </div>
 
-        <div>
-          <input
-            type="checkbox"
-            id="userTnC"
-            name="userTnC"
-            onChange={handleChange}
-          ></input>
-          <label htmlFor="userTnC">
-            I accept Terms and Conditions agreement
-          </label>
-          {errors.userTnC && <p>{errors.userTnC}</p>}
+        <div className="TnC-container">
+          <div className="uncontrolled-form__item-TnC">
+            <input
+              type="checkbox"
+              id="userTnC"
+              name="userTnC"
+              onChange={handleChange}
+            ></input>
+            <label htmlFor="userTnC">
+              I accept Terms and Conditions agreement
+            </label>
+          </div>
+          <p className="error-message">{errors.userTnC}</p>
         </div>
 
         <button type="submit">Submit</button>
       </form>
-    </>
+    </div>
   );
 }
 
