@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import './uncontrolledFormStyles.scss';
+import '../formsStyles.scss';
 import { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -81,74 +81,74 @@ function UncontrolledForm() {
   };
 
   return (
-    <div className="uncontrolled-form-container">
+    <div className="form-container uncontrolled-form">
       <Link className="button-home" to={'/home'}>
         Go to home
       </Link>
-      <form className="uncontrolled-form" onSubmit={submitForm}>
-        <h3 className="uncontrolled-form__title">Uncontrolled Form</h3>
-        <div className="uncontrolled-form__item">
+      <form className="form" onSubmit={submitForm}>
+        <h3 className="form__title">Uncontrolled Form</h3>
+        <div className="form__item">
           <label htmlFor="userName">Name</label>
           <input
             ref={userNameRef}
             type="text"
             id="userName"
             name="userName"
-            className="uncontrolled-form__input"
+            className="form__input"
           />
           <p className="error-message">{errors.userName}</p>
         </div>
 
-        <div className="uncontrolled-form__item">
+        <div className="form__item">
           <label htmlFor="userAge">Age</label>
           <input
             ref={userAgeRef}
             type="number"
             id="userAge"
             name="userAge"
-            className="uncontrolled-form__input"
+            className="form__input"
           />
           <p className="error-message">{errors.userAge}</p>
         </div>
 
-        <div className="uncontrolled-form__item">
+        <div className="form__item">
           <label htmlFor="userEmail">Email</label>
           <input
             ref={userEmailRef}
             type="text"
             id="userEmail"
             name="userEmail"
-            className="uncontrolled-form__input"
+            className="form__input"
           />
           <p className="error-message">{errors.userEmail}</p>
         </div>
 
-        <div className="uncontrolled-form__item">
+        <div className="form__item">
           <label htmlFor="userPassword">Password</label>
           <input
             ref={userPasswordRef}
             type="password"
             id="userPassword"
             name="userPassword"
-            className="uncontrolled-form__input"
+            className="form__input"
           />
           <p className="error-message">{errors.userPassword}</p>
         </div>
 
-        <div className="uncontrolled-form__item">
+        <div className="form__item">
           <label htmlFor="userPasswordConfirm">Password confirm</label>
           <input
             ref={userPasswordConfirmRef}
             type="password"
             id="userPasswordConfirm"
             name="userPasswordConfirm"
-            className="uncontrolled-form__input"
+            className="form__input"
           />
           <p className="error-message">{errors.userPasswordConfirm}</p>
         </div>
 
         <div className="gender-container">
-          <div className="uncontrolled-form__item-gender">
+          <div className="form__item-gender">
             <p>Gender:</p>
             <input
               ref={userGenderRef}
@@ -170,7 +170,7 @@ function UncontrolledForm() {
           <p className="error-message">{errors.userGender}</p>
         </div>
 
-        <div className="uncontrolled-form__item">
+        <div className="form__item">
           <AutocompleteCountry
             allCountries={arrayCountries}
             countryRef={userCountryRef}
@@ -178,7 +178,7 @@ function UncontrolledForm() {
           <p className="error-message">{errors.userCountry}</p>
         </div>
 
-        <div className="uncontrolled-form__item">
+        <div className="form__item">
           <label htmlFor="userFavoritePicture">Favorite picture</label>
           <input
             ref={userFavoritePictureRef}
@@ -190,7 +190,7 @@ function UncontrolledForm() {
         </div>
 
         <div className="TnC-container">
-          <div className="uncontrolled-form__item-TnC">
+          <div className="form__item-TnC">
             <input
               type="checkbox"
               id="userTnC"

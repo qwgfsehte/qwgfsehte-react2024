@@ -3,12 +3,14 @@ import './autocompleteCountryStyles.scss';
 
 interface AutocompleteCountryProps {
   allCountries: string[] | [];
-  countryRef: React.RefObject<HTMLInputElement>;
+  countryRef?: React.RefObject<HTMLInputElement>;
+  onChange?: (value: string) => void;
 }
 
 function AutocompleteCountry({
   allCountries,
   countryRef,
+  onChange,
 }: AutocompleteCountryProps) {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -16,6 +18,10 @@ function AutocompleteCountry({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setQuery(value);
+
+    if (onChange) {
+      onChange(value);
+    }
 
     if (value.length > 0) {
       const filteredCountries = allCountries.filter((country: string) =>
@@ -30,6 +36,10 @@ function AutocompleteCountry({
   const handleSuggestionClick = (country: string) => {
     setQuery(country);
     setSuggestions([]);
+
+    if (onChange) {
+      onChange(country);
+    }
   };
 
   return (
@@ -43,7 +53,7 @@ function AutocompleteCountry({
         onChange={handleInputChange}
         autoComplete="off"
         name="userCountry"
-        className="uncontrolled-form__input-country"
+        className="form__input-country"
       />
       {suggestions.length > 0 && (
         <ul className="countries-list">
