@@ -41,26 +41,50 @@ export const createValidationSchema = (arrayCountries: string[]) => {
       .required('Country is required')
       .oneOf(arrayCountries, 'Country is not valid'),
 
-    userFavoritePicture: Yup.mixed<File>()
+    userFavoritePicture: Yup.mixed<File | FileList>()
       .required('Picture is required')
+      .test('is-file-or-filelist', 'No file selected.', value => {
+        if (value instanceof File) {
+          return true;
+        } else if (value instanceof FileList && value.length > 0) {
+          return true;
+        }
+        return false;
+      })
       .test(
         'fileSize',
-        'File size is too large. Maximum allowed size is 5MB.',
+        'File size is too large. Maximum allowed size is 2MB.',
         value => {
-          if (value) {
-            return value.size <= 5 * 1024 * 1024;
+          if (!value) {
+            return false;
           }
-          return true;
+
+          if (value instanceof File) {
+            return value.size <= 2 * 1024 * 1024;
+          } else if (value instanceof FileList && value.length > 0) {
+            const file = value[0];
+            return file.size <= 2 * 1024 * 1024;
+          }
+          return false;
         }
       )
       .test(
         'fileType',
         'Only the following formats are accepted: .jpeg, .png',
         value => {
-          if (value) {
-            return ['image/jpeg', 'image/png'].includes(value.type);
+          if (!value) {
+            return false;
           }
-          return true;
+
+          const allowedTypes = ['image/jpeg', 'image/png'];
+
+          if (value instanceof File) {
+            return allowedTypes.includes(value.type);
+          } else if (value instanceof FileList && value.length > 0) {
+            const file = value[0];
+            return allowedTypes.includes(file.type);
+          }
+          return false;
         }
       ),
   });
