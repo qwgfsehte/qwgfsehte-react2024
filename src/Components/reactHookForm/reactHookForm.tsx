@@ -1,33 +1,57 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createValidationSchema } from '../../utils/yupSchema';
 import { RootState } from '../store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import AutocompleteCountry from '../autocompleteCountry/autocompleteCountry';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../formsStyles.scss';
+import { convertImageToBase64 } from '../../utils/convertImage';
+import { setReactHookFormUser } from '../formsSlice.slice';
+import { InputsForm } from '../../utils/interfaces';
 
 function ReactHookForm() {
   const arrayCountries = useSelector(
     (state: RootState) => state.forms.countries
   );
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const validationSchema = createValidationSchema(arrayCountries);
   const {
     register,
     control,
+    handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
   });
 
+  const onSubmit = async (data: InputsForm) => {
+    let pictureBase64 = '';
+
+    if (
+      data.userFavoritePicture instanceof FileList &&
+      data.userFavoritePicture.length > 0
+    ) {
+      const picture = data.userFavoritePicture[0];
+      pictureBase64 = await convertImageToBase64(picture);
+    }
+
+    const resultData = { ...data, userFavoritePicture: pictureBase64 };
+
+    dispatch(setReactHookFormUser(resultData));
+    navigate('/home');
+  };
+
   return (
     <div className="form-container react-hook-form">
       <Link className="button-home" to={'/home'}>
         Go to home
       </Link>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <h3 className="form__title">React Hook Form</h3>
         <div className="form__item">
           <label htmlFor="userName">Name</label>
@@ -89,25 +113,29 @@ function ReactHookForm() {
           <p className="error-message">{errors.userPasswordConfirm?.message}</p>
         </div>
 
-        <div className="form__item">
-          <div className="form__item-gender">
+        <div className="gender-container">
+          <div className="form__gender-list">
             <p>Gender:</p>
-            <input
-              {...register('userGender')}
-              type="radio"
-              id="male"
-              name="userGender"
-              value="male"
-            ></input>
-            <label htmlFor="male">Male</label>
-            <input
-              {...register('userGender')}
-              type="radio"
-              id="female"
-              name="userGender"
-              value="female"
-            ></input>
-            <label htmlFor="female">Female</label>
+            <div className="gender-list__item">
+              <input
+                {...register('userGender')}
+                type="radio"
+                id="male"
+                name="userGender"
+                value="male"
+              ></input>
+              <label htmlFor="male">Male</label>
+            </div>
+            <div className="gender-list__item">
+              <input
+                {...register('userGender')}
+                type="radio"
+                id="female"
+                name="userGender"
+                value="female"
+              ></input>
+              <label htmlFor="female">Female</label>
+            </div>
           </div>
           <p className="error-message">{errors.userGender?.message}</p>
         </div>
@@ -144,6 +172,7 @@ function ReactHookForm() {
               type="checkbox"
               id="userTnC"
               name="userTnC"
+              className="TnC-checkbox"
             ></input>
             <label htmlFor="userTnC">
               I accept Terms and Conditions agreement
@@ -152,7 +181,11 @@ function ReactHookForm() {
           <p className="error-message">{errors.userTnC?.message}</p>
         </div>
 
-        <button className="button-submit" type="submit">
+        <button
+          className="button-submit"
+          type="submit"
+          disabled={Object.keys(errors).length > 0}
+        >
           Submit
         </button>
       </form>

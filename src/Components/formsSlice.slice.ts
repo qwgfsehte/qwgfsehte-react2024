@@ -65,6 +65,7 @@ const initialState = {
     'Iceland',
   ],
   uncontrolledFormUsers: [],
+  reactHookFormUsers: [],
 };
 
 export const formsSlice = createSlice({
@@ -74,7 +75,11 @@ export const formsSlice = createSlice({
     setUncontrolledFormUser: (state, action) => {
       state.uncontrolledFormUsers.push(action.payload as InputsForm as never);
     },
+    setReactHookFormUser: (state, action) => {
+      state.reactHookFormUsers.push(action.payload as InputsForm as never);
+    },
   },
 });
 
-export const { setUncontrolledFormUser } = formsSlice.actions;
+export const { setUncontrolledFormUser, setReactHookFormUser } =
+  formsSlice.actions;

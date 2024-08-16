@@ -5,8 +5,11 @@ import SubmittedForm from '../layoutSubmittedForm/submittedForm';
 import { InputsForm } from '../../utils/interfaces';
 
 function Home() {
-  const arrayUsers = useSelector(
+  const arrayUncontrolledFormUsers = useSelector(
     (state: RootState) => state.forms.uncontrolledFormUsers
+  );
+  const arrayReactHookFormUsers = useSelector(
+    (state: RootState) => state.forms.reactHookFormUsers
   );
 
   return (
@@ -18,7 +21,10 @@ function Home() {
         <li>
           <Link to="/react-hook-form">React Hook Form</Link>
         </li>
-        {arrayUsers.map((item: InputsForm) => (
+        {arrayUncontrolledFormUsers.map((item: InputsForm) => (
+          <SubmittedForm key={item.userName} form={item} />
+        ))}
+        {arrayReactHookFormUsers.map((item: InputsForm) => (
           <SubmittedForm key={item.userName} form={item} />
         ))}
       </ul>

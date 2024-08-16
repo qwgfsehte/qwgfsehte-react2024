@@ -37,14 +37,18 @@
     padding-bottom: 20px;
   }
 
-  &__item-gender,
+  &__gender-list,
   &__item-TnC {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    gap: 10px;
     align-items: center;
     font-size: 25px;
+  }
+
+  &__gender-list {
+    justify-content: space-between;
   }
 
   &__item-TnC {
@@ -67,6 +71,11 @@
   }
 }
 
+.gender-list__item {
+  display: flex;
+  gap: 10px;
+}
+
 .react-hook-form {
   background-image: url(/src/assets/backgrounds/reactHookFormBackground.jpg);
 }
@@ -82,17 +91,25 @@
   color: rgb(210, 12, 12);
 }
 
-.TnC-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 40%;
+.TnC {
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 40%;
+  }
+
+  &-checkbox {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .gender-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 40%;
 }
 
@@ -112,6 +129,11 @@
       radial-gradient(circle at top left, #89daed, #eb177e);
     background-origin: border-box;
     background-clip: padding-box, border-box;
+
+    &:disabled {
+      background-image: linear-gradient(#fcf2ff, #fcf2ff),
+        radial-gradient(circle at top left, #89daed, #eb177e);
+    }
   }
 
   &-submit {

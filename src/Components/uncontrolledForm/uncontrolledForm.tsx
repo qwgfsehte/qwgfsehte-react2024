@@ -148,24 +148,28 @@ function UncontrolledForm() {
         </div>
 
         <div className="gender-container">
-          <div className="form__item-gender">
+          <div className="form__gender-list">
             <p>Gender:</p>
-            <input
-              ref={userGenderRef}
-              type="radio"
-              id="male"
-              name="userGender"
-              value="male"
-            ></input>
-            <label htmlFor="male">Male</label>
-            <input
-              ref={userGenderRef}
-              type="radio"
-              id="female"
-              name="userGender"
-              value="female"
-            ></input>
-            <label htmlFor="female">Female</label>
+            <div className="gender-list__item">
+              <input
+                ref={userGenderRef}
+                type="radio"
+                id="male"
+                name="userGender"
+                value="male"
+              ></input>
+              <label htmlFor="male">Male</label>
+            </div>
+            <div className="gender-list__item">
+              <input
+                ref={userGenderRef}
+                type="radio"
+                id="female"
+                name="userGender"
+                value="female"
+              ></input>
+              <label htmlFor="female">Female</label>
+            </div>
           </div>
           <p className="error-message">{errors.userGender}</p>
         </div>
@@ -196,6 +200,7 @@ function UncontrolledForm() {
               id="userTnC"
               name="userTnC"
               ref={userTnCRef}
+              className="TnC-checkbox"
             ></input>
             <label htmlFor="userTnC">
               I accept Terms and Conditions agreement
