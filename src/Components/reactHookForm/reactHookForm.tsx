@@ -9,11 +9,14 @@ import '../formsStyles.scss';
 import { convertImageToBase64 } from '../../utils/convertImage';
 import { setReactHookFormUser } from '../formsSlice.slice';
 import { InputsForm } from '../../utils/interfaces';
+import PasswordStrengthIndicator from '../passwordStrength/passwordStrength';
+import { useState } from 'react';
 
 function ReactHookForm() {
   const arrayCountries = useSelector(
     (state: RootState) => state.forms.countries
   );
+  const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,10 +49,16 @@ function ReactHookForm() {
     navigate('/home');
   };
 
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const minStrength = Object.keys(errors).length;
+
   return (
     <div className="form-container react-hook-form">
       <Link className="button-home" to={'/home'}>
-        Go to home
+        ← Go to home
       </Link>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <h3 className="form__title">React Hook Form</h3>
@@ -92,11 +101,19 @@ function ReactHookForm() {
         <div className="form__item">
           <label htmlFor="userPassword">Password</label>
           <input
-            {...register('userPassword')}
+            {...register('userPassword', {
+              onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                handlePasswordChange(event);
+              },
+            })}
             type="password"
             id="userPassword"
             name="userPassword"
             className="form__input"
+          />
+          <PasswordStrengthIndicator
+            password={password}
+            minStrength={minStrength}
           />
           <p className="error-message">{errors.userPassword?.message}</p>
         </div>

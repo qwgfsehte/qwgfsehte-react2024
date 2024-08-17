@@ -8,6 +8,7 @@ import AutocompleteCountry from '../autocompleteCountry/autocompleteCountry';
 import { createValidationSchema } from '../../utils/yupSchema';
 import { setUncontrolledFormUser } from '../formsSlice.slice';
 import { convertImageToBase64 } from '../../utils/convertImage';
+import PasswordStrengthIndicator from '../passwordStrength/passwordStrength';
 
 interface FormErrors {
   [key: string]: string;
@@ -80,10 +81,12 @@ function UncontrolledForm() {
     }
   };
 
+  const minStrength = Object.keys(errors).length;
+
   return (
     <div className="form-container uncontrolled-form">
       <Link className="button-home" to={'/home'}>
-        Go to home
+        ← Go to home
       </Link>
       <form className="form" onSubmit={submitForm}>
         <h3 className="form__title">Uncontrolled Form</h3>
@@ -131,6 +134,10 @@ function UncontrolledForm() {
             id="userPassword"
             name="userPassword"
             className="form__input"
+          />
+          <PasswordStrengthIndicator
+            password={userPasswordRef.current?.value || ''}
+            minStrength={minStrength}
           />
           <p className="error-message">{errors.userPassword}</p>
         </div>
