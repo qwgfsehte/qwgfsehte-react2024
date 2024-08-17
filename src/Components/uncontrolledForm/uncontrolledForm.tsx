@@ -20,7 +20,8 @@ function UncontrolledForm() {
   const userEmailRef = useRef<HTMLInputElement | null>(null);
   const userPasswordRef = useRef<HTMLInputElement | null>(null);
   const userPasswordConfirmRef = useRef<HTMLInputElement | null>(null);
-  const userGenderRef = useRef<HTMLInputElement | null>(null);
+  const userMaleRef = useRef<HTMLInputElement | null>(null);
+  const userFemaleRef = useRef<HTMLInputElement | null>(null);
   const userFavoritePictureRef = useRef<HTMLInputElement | null>(null);
   const userTnCRef = useRef<HTMLInputElement | null>(null);
   const userCountryRef = useRef<HTMLInputElement | null>(null);
@@ -44,7 +45,11 @@ function UncontrolledForm() {
       userEmail: userEmailRef.current?.value || '',
       userPassword: userPasswordRef.current?.value || '',
       userPasswordConfirm: userPasswordConfirmRef.current?.value || '',
-      userGender: userGenderRef.current?.checked || '',
+      userGender: userMaleRef.current?.checked
+        ? 'male'
+        : userFemaleRef.current?.checked
+          ? 'female'
+          : '',
       userFavoritePicture: userFavoritePictureRef.current?.files?.[0] || null,
       userTnC: userTnCRef.current?.checked || false,
       userCountry: userCountryRef.current?.value || '',
@@ -81,7 +86,9 @@ function UncontrolledForm() {
     }
   };
 
-  const minStrength = Object.keys(errors).length;
+  const minStrength = Object.keys(errors).filter(key =>
+    key.includes('userPassword')
+  ).length;
 
   return (
     <div className="form-container uncontrolled-form">
@@ -98,6 +105,7 @@ function UncontrolledForm() {
             id="userName"
             name="userName"
             className="form__input"
+            autoComplete="off"
           />
           <p className="error-message">{errors.userName}</p>
         </div>
@@ -122,6 +130,7 @@ function UncontrolledForm() {
             id="userEmail"
             name="userEmail"
             className="form__input"
+            autoComplete="off"
           />
           <p className="error-message">{errors.userEmail}</p>
         </div>
@@ -159,7 +168,7 @@ function UncontrolledForm() {
             <p>Gender:</p>
             <div className="gender-list__item">
               <input
-                ref={userGenderRef}
+                ref={userMaleRef}
                 type="radio"
                 id="male"
                 name="userGender"
@@ -169,7 +178,7 @@ function UncontrolledForm() {
             </div>
             <div className="gender-list__item">
               <input
-                ref={userGenderRef}
+                ref={userFemaleRef}
                 type="radio"
                 id="female"
                 name="userGender"
@@ -189,7 +198,7 @@ function UncontrolledForm() {
           <p className="error-message">{errors.userCountry}</p>
         </div>
 
-        <div className="form__item">
+        <div className="form__item-picture">
           <label htmlFor="userFavoritePicture">Favorite picture</label>
           <input
             ref={userFavoritePictureRef}

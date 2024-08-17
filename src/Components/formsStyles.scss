@@ -17,6 +17,14 @@
   background-origin: border-box;
   background-clip: padding-box, border-box;
 
+  @media (max-width: 1400px) {
+    width: 80%;
+  }
+
+  @media (max-width: 800px) {
+    width: 90%;
+  }
+
   &-container {
     background-size: cover;
     display: flex;
@@ -53,6 +61,13 @@
 
   &__item-TnC {
     font-size: 20px;
+  }
+
+  &__item-picture {
+    display: flex;
+    flex-direction: column;
+    font-size: 25px;
+    width: 40%;
   }
 
   &__input,
@@ -131,8 +146,15 @@
     background-clip: padding-box, border-box;
 
     &:disabled {
-      background-image: linear-gradient(#fcf2ff, #fcf2ff),
+      background-image: linear-gradient(#d1d1d1, #d7d7d7),
         radial-gradient(circle at top left, #89daed, #eb177e);
+      pointer-events: none;
+    }
+
+    &:hover {
+      background-image: linear-gradient(#f889be, #bf9df3),
+        radial-gradient(circle at top left, #d41270, #410d90);
+      color: white;
     }
   }
 

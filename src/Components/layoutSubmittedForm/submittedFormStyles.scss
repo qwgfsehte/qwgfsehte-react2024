@@ -1,6 +1,38 @@
 .submitted-form {
+  display: flex;
+  font-size: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  padding: 10px;
+
   &__image {
     width: auto;
-    height: 100px;
+    height: 200px;
   }
+}
+
+.highlight {
+  border: 2px solid;
+  animation: blink-border 1s infinite;
+}
+
+@keyframes blink-border {
+  0% {
+    border-color: rgb(121, 9, 129);
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: rgb(127, 11, 11);
+  }
+}
+
+.img-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

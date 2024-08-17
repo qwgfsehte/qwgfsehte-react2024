@@ -24,7 +24,6 @@ const PasswordStrengthIndicator = ({
 
   useEffect(() => {
     if (minStrength > 0) {
-      console.log(minStrength);
       const newStrength = evaluatePasswordStrength(password);
       setStrength(newStrength);
     }

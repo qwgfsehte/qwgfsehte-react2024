@@ -53,7 +53,9 @@ function ReactHookForm() {
     setPassword(event.target.value);
   };
 
-  const minStrength = Object.keys(errors).length;
+  const minStrength = Object.keys(errors).filter(key =>
+    key.includes('userPassword')
+  ).length;
 
   return (
     <div className="form-container react-hook-form">
@@ -70,6 +72,7 @@ function ReactHookForm() {
             id="userName"
             name="userName"
             className="form__input"
+            autoComplete="off"
           />
           <p className="error-message">{errors.userName?.message}</p>
         </div>
@@ -94,6 +97,7 @@ function ReactHookForm() {
             id="userEmail"
             name="userEmail"
             className="form__input"
+            autoComplete="off"
           />
           <p className="error-message">{errors.userEmail?.message}</p>
         </div>
@@ -171,7 +175,7 @@ function ReactHookForm() {
           <p className="error-message">{errors.userCountry?.message}</p>
         </div>
 
-        <div className="form__item">
+        <div className="form__item-picture">
           <label htmlFor="userFavoritePicture">Favorite picture</label>
           <input
             {...register('userFavoritePicture')}
