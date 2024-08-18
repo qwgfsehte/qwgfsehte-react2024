@@ -39,7 +39,7 @@ function Home() {
         arrayUncontrolledFormUsers.length === 0 ? (
           <div>It`s empty here for now</div>
         ) : (
-          <>
+          <div className="submitted-container">
             <div className="submitted-uncontrol">
               {arrayUncontrolledFormUsers.map((item: InputsForm, index) => (
                 <SubmittedForm
@@ -58,7 +58,7 @@ function Home() {
                 />
               ))}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
