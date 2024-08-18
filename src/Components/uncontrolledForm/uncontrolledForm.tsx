@@ -68,6 +68,7 @@ function UncontrolledForm() {
       const updatedFormData = {
         ...formData,
         userFavoritePicture: pictureBase64,
+        isNew: true,
       };
 
       dispatch(setUncontrolledFormUser(updatedFormData));

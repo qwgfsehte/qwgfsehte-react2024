@@ -8,4 +8,5 @@ export interface InputsForm {
   userCountry: string;
   userFavoritePicture: null | string | FileList | File;
   userTnC: boolean;
+  isNew?: boolean;
 }

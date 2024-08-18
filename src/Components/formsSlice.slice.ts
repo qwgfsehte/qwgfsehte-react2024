@@ -1,7 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { InputsForm } from '../utils/interfaces';
 
-const initialState = {
+interface FormsState {
+  countries: string[];
+  uncontrolledFormUsers: InputsForm[];
+  reactHookFormUsers: InputsForm[];
+}
+
+const initialState: FormsState = {
   countries: [
     'Australia',
     'India',
@@ -72,14 +78,25 @@ export const formsSlice = createSlice({
   name: 'forms',
   initialState: initialState,
   reducers: {
-    setUncontrolledFormUser: (state, action) => {
-      state.uncontrolledFormUsers.push(action.payload as InputsForm as never);
+    setUncontrolledFormUser: (state, action: PayloadAction<InputsForm>) => {
+      state.uncontrolledFormUsers.push(action.payload);
     },
-    setReactHookFormUser: (state, action) => {
-      state.reactHookFormUsers.push(action.payload as InputsForm as never);
+    setReactHookFormUser: (state, action: PayloadAction<InputsForm>) => {
+      state.reactHookFormUsers.push(action.payload);
+    },
+    markAllFormsAsOld: state => {
+      state.uncontrolledFormUsers.forEach(form => {
+        form.isNew = false;
+      });
+      state.reactHookFormUsers.forEach(form => {
+        form.isNew = false;
+      });
     },
   },
 });
 
-export const { setUncontrolledFormUser, setReactHookFormUser } =
-  formsSlice.actions;
+export const {
+  setUncontrolledFormUser,
+  setReactHookFormUser,
+  markAllFormsAsOld,
+} = formsSlice.actions;

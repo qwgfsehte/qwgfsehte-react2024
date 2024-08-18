@@ -43,7 +43,11 @@ function ReactHookForm() {
       pictureBase64 = await convertImageToBase64(picture);
     }
 
-    const resultData = { ...data, userFavoritePicture: pictureBase64 };
+    const resultData = {
+      ...data,
+      userFavoritePicture: pictureBase64,
+      isNew: true,
+    };
 
     dispatch(setReactHookFormUser(resultData));
     navigate('/home');
