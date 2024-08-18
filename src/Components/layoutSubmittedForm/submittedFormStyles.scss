@@ -1,0 +1,41 @@
+.submitted-form {
+  display: flex;
+  font-size: 25px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 50px;
+  padding: 15px;
+  gap: 30px;
+  background-color: rgba(239, 181, 225, 0.71);
+  border-radius: 15px;
+
+  &__image {
+    width: auto;
+    height: 200px;
+  }
+}
+
+.highlight {
+  border: 7px solid;
+  animation: blink-border 1s infinite;
+}
+
+@keyframes blink-border {
+  0% {
+    border-color: rgb(121, 9, 129);
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: rgb(127, 11, 11);
+  }
+}
+
+.img-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
