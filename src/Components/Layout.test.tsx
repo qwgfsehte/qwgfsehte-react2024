@@ -15,7 +15,7 @@ describe('Layout', () => {
       </ThemeProvider>
     );
 
-    expect(screen.getByText('PokePedia')).toBeInTheDocument();
+    expect(screen.getByText('PikaInfo')).toBeInTheDocument();
     expect(screen.getByText('2024')).toBeInTheDocument();
     expect(screen.getByText('Main Content')).toBeInTheDocument();
     expect(screen.getByText('Secondary Content')).toBeInTheDocument();

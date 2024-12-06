@@ -12,6 +12,6 @@ describe('test header component', () => {
       </ThemeProvider>
     );
     expect(screen.getByAltText('logo-pokepedia')).toBeInTheDocument();
-    expect(screen.getByText('PokePedia')).toBeInTheDocument();
+    expect(screen.getByText('PikaInfo')).toBeInTheDocument();
   });
 });

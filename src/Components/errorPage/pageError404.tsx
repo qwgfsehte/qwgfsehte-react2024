@@ -17,7 +17,7 @@ export default function ErrorPage404() {
           priority
         />
         <p>This page doesn’t exist.</p>
-        <Link className={styles['error-page__button']} href={`/`}>
+        <Link className={styles['error-page__button']} href={`/home`}>
           Go to home
         </Link>
       </div>

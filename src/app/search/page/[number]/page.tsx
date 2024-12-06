@@ -1,6 +1,6 @@
 import Layout from '../../../../Components/Layout';
 import { AppContent } from '../../../../Components/App/appLayout';
-import { fetchSearchResults } from '../../../api/fetchAllPokemons';
+import { fetchSearchResults } from '../../../../api/fetchAllPokemons';
 
 interface Params {
   params: {

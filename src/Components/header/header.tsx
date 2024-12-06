@@ -34,7 +34,7 @@ function Header(): React.ReactElement {
           height={60}
           priority
         />
-        <p className={styles['logo-title']}>PokePedia</p>
+        <p className={styles['logo-title']}>PikaInfo</p>
       </div>
       <div className={styles['search-form']}>
         <input

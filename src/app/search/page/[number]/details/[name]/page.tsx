@@ -3,8 +3,8 @@ import styles from '../../../../../../Components/body/pokemonDetails/pokemonDeta
 import { AppContent } from '../../../../../../Components/App/appLayout';
 import { use } from 'react';
 import { PokemonDetailsInfo } from '../../../../../../Components/body/pokemonDetails/pokemonDetailsInfo';
-import { fetchDetailsResults } from '../../../../../api/fetchDetailsPokemon';
-import { fetchSearchResults } from '../../../../../api/fetchAllPokemons';
+import { fetchDetailsResults } from '../../../../../../api/fetchDetailsPokemon';
+import { fetchSearchResults } from '../../../../../../api/fetchAllPokemons';
 
 interface Params {
   params: {
